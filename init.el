@@ -136,3 +136,24 @@
     (when filename
       (kill-new filename)
       (message "Copied buffer file name '%s' to the clipboard." filename))))
+
+
+; https://stackoverflow.com/a/37132338/2856535
+(defun my-org-inline-css-hook (exporter)
+  "Insert custom inline css"
+  (when (eq exporter 'html)
+    (let* ((dir (ignore-errors (file-name-directory (buffer-file-name))))
+           (path (concat dir "style.css"))
+           (homestyle (or (null dir) (null (file-exists-p path))))
+           (final (if homestyle "~/.emacs.d/org-style.css" path))) ;; <- set your own style file path
+      (setq org-html-head-include-default-style nil)
+      (setq org-html-head (concat
+                           "<style type=\"text/css\">\n"
+                           "<!--/*--><![CDATA[/*><!--*/\n"
+                           (with-temp-buffer
+                             (insert-file-contents final)
+                             (buffer-string))
+                           "/*]]>*/-->\n"
+                           "</style>\n")))))
+
+(add-hook 'org-export-before-processing-hook 'my-org-inline-css-hook)
