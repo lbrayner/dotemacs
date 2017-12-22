@@ -161,6 +161,19 @@
                 ; visual-line-mode
 (setq global-visual-line-mode t)
 
+    ; mode-line
+(setq mode-line-original-background (face-attribute 'mode-line :background))
+(setq evil-emacs-state-background "#444444")
+
+(add-hook 'evil-emacs-state-entry-hook
+          (lambda ()
+            (set-face-attribute 'mode-line nil :background
+                                evil-emacs-state-background)))
+(add-hook 'evil-emacs-state-exit-hook
+          (lambda ()
+            (set-face-attribute 'mode-line nil :background
+                                mode-line-original-background)))
+
 ; custom functions and respective mappings
 
 ; https://stackoverflow.com/a/9414763/2856535
