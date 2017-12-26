@@ -146,14 +146,30 @@
 ; auto-backup
 (setq make-backup-files nil)
 
+; encoding
+(set-buffer-file-coding-system 'utf-8-unix)
+(prefer-coding-system 'utf-8-unix)
+
 ;; Save all tempfiles in /var/tmp/emacs$UID
-(defconst emacs-tmp-dir (expand-file-name (format "emacs%d/" (user-uid)) "/var/tmp"))
+(defconst emacs-tmp-dir (expand-file-name (format
+                                            "emacs%d"
+                                            (user-uid))
+                                          "/var/tmp"))
 (setq backup-directory-alist `((".*" . ,emacs-tmp-dir)))
-(setq auto-save-file-name-transforms `((".*" ,emacs-tmp-dir t)))
-(setq auto-save-list-file-prefix emacs-tmp-dir)
+(setq auto-save-file-name-transforms `((".*" ,(file-name-as-directory emacs-tmp-dir) t)))
+(setq auto-save-list-file-prefix (file-name-as-directory emacs-tmp-dir))
 
 ; after
     ; configuration
+        ; major-mode
+            ; melpa
+                ; org-mode
+(add-to-list
+ 'org-publish-project-alist
+ '("CV" :html-head-include-scripts nil
+   :base-directory "~/Documents/orgmode/CV"
+   :publishing-function org-html-publish-to-html
+   :publishing-directory "~/Documents/orgmode/CV"))
         ; minor-modes
             ; built-in
                 ; linum
@@ -163,7 +179,7 @@
 
     ; mode-line
 (setq mode-line-original-background (face-attribute 'mode-line :background))
-(setq evil-emacs-state-background "#444444")
+(setq evil-emacs-state-background "#440044")
 
 (add-hook 'evil-emacs-state-entry-hook
           (lambda ()
