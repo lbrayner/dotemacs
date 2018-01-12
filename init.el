@@ -111,6 +111,8 @@
 ; themes
     ; melpa
         ; solarized
+(setq solarized-use-variable-pitch nil
+      solarized-scale-org-headlines nil)
 (load-theme 'solarized-dark t)
 (setq solarized-high-contrast-mode-line t)
 
