@@ -97,6 +97,15 @@
 (define-key evil-insert-state-map "\C-u" '(lambda () (interactive) (kill-line 0)))
 (define-key evil-insert-state-map (kbd "<f6>") '(lambda () (interactive)
                                                   (evil-normal-state) (save-buffer)))
+;; Bailey Ling
+(setq evil-emacs-state-cursor '("red" box))
+(setq evil-motion-state-cursor '("orange" box))
+(setq evil-normal-state-cursor '("green" box))
+(setq evil-visual-state-cursor '("orange" box))
+(setq evil-insert-state-cursor '("red" bar))
+(setq evil-replace-state-cursor '("red" bar))
+(setq evil-operator-state-cursor '("red" hollow))
+
         ; evil-surround
 (global-evil-surround-mode 1)
         ; paredit
@@ -183,18 +192,9 @@
 (setq mode-line-original-background (face-attribute 'mode-line :background))
 (setq evil-emacs-state-background "#440044")
 
-(add-hook 'evil-emacs-state-entry-hook
-          (lambda ()
-            (set-face-attribute 'mode-line nil :background
-                                evil-emacs-state-background)))
-(add-hook 'evil-emacs-state-exit-hook
-          (lambda ()
-            (set-face-attribute 'mode-line nil :background
-                                mode-line-original-background)))
-
 ; custom functions and respective mappings
 
-; https://stackoverflow.com/a/9414763/2856535
+;; https://stackoverflow.com/a/9414763/2856535
 (defun copy-file-name-to-clipboard ()
   "Copy the current buffer file name to the clipboard."
   (interactive)
