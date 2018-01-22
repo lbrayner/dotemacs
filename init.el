@@ -193,10 +193,6 @@
                 ; visual-line-mode
 (setq global-visual-line-mode t)
 
-    ; mode-line
-(setq mode-line-original-background (face-attribute 'mode-line :background))
-(setq evil-emacs-state-background "#440044")
-
 ; custom functions and respective mappings
 
 ;; https://stackoverflow.com/a/9414763/2856535
