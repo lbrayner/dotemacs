@@ -27,7 +27,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (htmlize paredit ox-reveal org-plus-contrib org-edna evil-surround solarized-theme linum-relative evil-leader evil))))
+    (org htmlize paredit ox-reveal org-plus-contrib org-edna evil-surround solarized-theme linum-relative evil-leader evil))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -77,6 +77,11 @@
 (setq-default org-export-with-sub-superscripts '{})
 (add-hook 'org-mode-hook 'lbrayner-org-mode-hook)
 (add-hook 'org-export-before-processing-hook 'my-org-inline-css-hook)
+        ; babel
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t)
+   (shell . t)))
 
 
 ; minor-modes
