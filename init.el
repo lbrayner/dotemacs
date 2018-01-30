@@ -130,6 +130,9 @@
 (add-to-list 'default-frame-alist
      '(vertical-scroll-bars . nil))
 
+; mouse
+(mouse-avoidance-mode 'banish)
+
 ; mode line
 (setq column-number-mode t)
 
