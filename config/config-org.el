@@ -21,7 +21,7 @@
                               "</style>\n"))))))
 
 (defun lbrayner-org-mode-hook ()
-      (visual-line-mode)
+      (visual-line-mode t)
       (org-indent-mode)
       (setq truncate-lines nil))
 
