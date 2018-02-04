@@ -21,6 +21,7 @@
 (define-key evil-motion-state-map "\C-l" 'evil-window-right)
 
 ;; Bailey Ling
+
 (setq evil-emacs-state-cursor '("red" box))
 (setq evil-motion-state-cursor '("orange" box))
 (setq evil-normal-state-cursor '("green" box))
@@ -28,3 +29,28 @@
 (setq evil-insert-state-cursor '("red" bar))
 (setq evil-replace-state-cursor '("red" bar))
 (setq evil-operator-state-cursor '("red" hollow))
+
+(let ((emacs-state-major-modes
+	'(eshell-mode
+	  term-mode
+	  calculator-mode
+	  dired-mode
+	  makey-key-mode)))
+  (cl-loop for mode in emacs-state-major-modes
+         do (evil-set-initial-state mode 'emacs)))
+
+(let ((emacs-state-minor-modes
+	'(edebug-mode
+	  git-commit-mode
+	  magit-blame-mode)))
+  (cl-loop for mode in emacs-state-minor-modes
+         do (let ((hook (concat (symbol-name mode) "-hook")))
+              (add-hook (intern hook) `(lambda ()
+                                         (if ,mode
+                                             (evil-emacs-state)
+                                           (evil-normal-state)))))))
+
+(let ((emacs-state-hooks '(org-log-buffer-setup-hook
+			   org-capture-mode-hook)))
+ (cl-loop for hook in emacs-state-hooks
+         do (add-hook hook #'evil-emacs-state)))
