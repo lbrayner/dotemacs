@@ -39,51 +39,6 @@
   "Returns the path to the user's home directory with a slash at the end."
   (file-name-as-directory (getenv "HOME")))
 
-; https://stackoverflow.com/a/37132338/2856535
-    ; modified
-(defun my-org-inline-css-hook (exporter)
-  "Insert custom inline css"
-  (when (eq exporter 'html)
-    (let* ((dir (ignore-errors (file-name-directory (buffer-file-name))))
-           (filename (concat (file-name-base (buffer-file-name)) ".css"))
-           (path (concat dir filename))
-           (default (or (null dir) (null (file-exists-p path))))
-           (default-file (expand-file-name ".emacs.d/org-style.css" (home-directory)))
-           (final (if default "~/.emacs.d/org-style.css" path)))
-      (setq org-html-head-include-default-style nil)
-      (setq org-html-head "")
-      (if (file-exists-p final)
-        (setq org-html-head (concat
-                              "<style type=\"text/css\">\n"
-                              "<!--/*--><![CDATA[/*><!--*/\n"
-                              (with-temp-buffer
-                                (insert-file-contents final)
-                                (buffer-string))
-                              "/*]]>*/-->\n"
-                              "</style>\n"))))))
-
-(defun lbrayner-org-mode-hook ()
-      (visual-line-mode)
-      (org-indent-mode)
-      (setq truncate-lines nil))
-
-; major modes
-    ; org
-(setq org-export-time-stamp-file nil)
-(setq org-html-validation-link nil)
-(setq-default org-export-with-author nil)
-(setq-default org-export-with-toc nil)
-(setq-default org-use-sub-superscripts '{})
-(setq-default org-export-with-sub-superscripts '{})
-(add-hook 'org-mode-hook 'lbrayner-org-mode-hook)
-(add-hook 'org-export-before-processing-hook 'my-org-inline-css-hook)
-        ; babel
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((emacs-lisp . t)
-   (shell . t)))
-
-
 ; minor-modes
     ; built-in
         ; linum
@@ -108,8 +63,8 @@
         ; solarized
 (setq solarized-use-variable-pitch nil
       solarized-scale-org-headlines nil)
-(load-theme 'solarized-dark t)
 (setq solarized-high-contrast-mode-line t)
+(load-theme 'solarized-dark t)
 
 ; extensions
     ; melpa
@@ -117,11 +72,12 @@
 (linum-relative-global-mode)
 (setq linum-relative-current-symbol "")
         ; ox-reveal
-(require 'ox-reveal)
 (setq org-reveal-root "file:///home/desenvolvedor/other/reveal.js-3.3.0")
-(setq org-reveal-title-slide "<h1> %t </h1>  <br> %a <br> %e")
 
+; various
 (setq default-directory "~/")
+
+; cursor
 (setq blink-cursor-blinks 1)
 
 ; menus and scroll bar
@@ -161,15 +117,6 @@
 
 ; after
     ; configuration
-        ; major-mode
-            ; melpa
-                ; org-mode
-(add-to-list
- 'org-publish-project-alist
- '("CV" :html-head-include-scripts nil
-   :base-directory "~/Documents/orgmode/CV"
-   :publishing-function org-html-publish-to-html
-   :publishing-directory "~/Documents/orgmode/CV"))
         ; minor-modes
             ; built-in
                 ; linum
@@ -178,6 +125,7 @@
 (setq global-visual-line-mode t)
 
 ; loading files from config folder
+;; from Bailey Ling's dotemacs
 
 (let* ((config-directory (concat user-emacs-directory "config/"))
        (directory-exists? (file-directory-p config-directory)))
@@ -187,16 +135,3 @@
 			    (load (file-name-sans-extension file))
 			    ('error (with-current-buffer "*scratch*"
 				    (insert (format "[INIT ERROR]\n%s\n%s\n\n" file ex))))))))
-
-; custom functions and respective mappings
-
-;; https://stackoverflow.com/a/9414763/2856535
-(defun copy-file-name-to-clipboard ()
-  "Copy the current buffer file name to the clipboard."
-  (interactive)
-  (let ((filename (if (equal major-mode 'dired-mode)
-                      default-directory
-                    (buffer-file-name))))
-    (when filename
-      (kill-new filename)
-      (message "Copied buffer file name '%s' to the clipboard." filename))))
