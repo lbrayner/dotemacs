@@ -12,6 +12,7 @@
 (define-key evil-motion-state-map "¬" 'evil-first-non-blank)
 (define-key evil-motion-state-map (kbd "<f6>") 'evil-write)
 (define-key evil-motion-state-map (kbd "<f5>") 'list-buffers)
+(define-key evil-motion-state-map (kbd "<f9>") 'delete-window)
 (define-key evil-insert-state-map "\C-u" '(lambda () (interactive) (kill-line 0)))
 (define-key evil-insert-state-map (kbd "<f6>") '(lambda () (interactive)
                                                   (evil-normal-state) (save-buffer)))
@@ -19,6 +20,17 @@
 (define-key evil-motion-state-map "\C-j" 'evil-window-down)
 (define-key evil-motion-state-map "\C-k" 'evil-window-up)
 (define-key evil-motion-state-map "\C-l" 'evil-window-right)
+
+(defun my-evil-record-macro (register)
+  "For recursive binding of keys following q."
+ (interactive
+   (list (unless (and evil-this-macro defining-kbd-macro)
+           (or evil-this-register (evil-read-key)))))
+ (cond ((eq register ?ç)
+	(evil-command-window-ex))
+       (t (evil-record-macro register))))
+
+(define-key evil-normal-state-map "q" 'my-evil-record-macro)
 
 ;; Bailey Ling
 
