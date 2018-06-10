@@ -1,3 +1,9 @@
+(setq org-pandoc-options '((standalone . t)
+			   (variable "margin-top:15"
+				     "margin-bottom:15"
+				     "margin-left:15"
+				     "margin-right:15")))
+
 (defvar my-org-pandoc-temporary-css-file nil)
 
 (defun my-org-pandoc-inline-css-hook (exporter)
