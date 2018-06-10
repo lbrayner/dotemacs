@@ -26,11 +26,13 @@
 		    (save-excursion (insert (concat "/*]]>*/-->\n"
 						    "</style>\n")))
 		    (insert-file-contents final))
-		  temp-file))))))
+		  temp-file))
+	(setq org-pandoc-options (assq-delete-all 'include-before-body org-pandoc-options))))))
 
 (defun my-org-pandoc-delete-temporary-css-file-hook ()
   "Deletes the temporary css file."
-  (delete-file my-org-pandoc-temporary-css-file)
+  (if my-org-pandoc-temporary-css-file
+      (delete-file my-org-pandoc-temporary-css-file))
   (setq my-org-pandoc-temporary-css-file nil))
 
 (add-hook 'org-export-before-processing-hook 'my-org-pandoc-inline-css-hook)
