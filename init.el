@@ -135,3 +135,6 @@
 			    (load (file-name-sans-extension file))
 			    ('error (with-current-buffer "*scratch*"
 				    (insert (format "[INIT ERROR]\n%s\n%s\n\n" file ex))))))))
+
+;; disabling annoying commands
+(put 'view-hello-file 'disabled t)
