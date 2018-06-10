@@ -2,7 +2,8 @@
 			   (variable "margin-top:15"
 				     "margin-bottom:15"
 				     "margin-left:15"
-				     "margin-right:15")))
+				     "margin-right:15")
+			   (pdf-engine . "wkhtmltopdf")))
 
 (defvar my-org-pandoc-temporary-css-file nil)
 
