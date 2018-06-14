@@ -41,6 +41,34 @@
  '((emacs-lisp . t)
    (shell . t)))
 
+
+;; allows org-time-stamp-custom-formats to be file-local:
+
+;; https://emacs.stackexchange.com/a/2247
+(defun org-time-stamp-custom-formats-safep (value)
+  (and (consp value)
+       (stringp (car value))
+       (stringp (cdr value))))
+
+(put 'org-time-stamp-custom-formats 'safe-local-variable
+     #'org-time-stamp-custom-formats-safep)
+
+;; creates "my-"-prefixed wrappers for functions inside
+;; my-org-export-functions-to-wrap:
+(cl-labels ((my-org-export-functions-to-wrap
+	     () '(org-ascii-export-as-ascii
+		  org-html-export-as-html))
+	    (create-wrapper (as)
+		       (if (not (eq as nil))
+			   (let ((a (car as)))
+			     (fset (intern (concat "my-" (symbol-name a)))
+				   `(lambda ()
+				     (interactive)
+				    (let ((org-display-custom-times t))
+				      (,a))))
+			     (create-wrapper (cdr as))))))
+  (create-wrapper (my-org-export-functions-to-wrap)))
+
     ; melpa
         ; ox-reveal
 (require 'ox-reveal)

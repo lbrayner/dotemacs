@@ -82,9 +82,10 @@
 
 ; menus and scroll bar
 (menu-bar-mode -1)
+; (toggle-scroll-bar -1)
+(add-to-list 'default-frame-alist '(vertical-scroll-bars . nil))
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
 (tool-bar-mode -1)
-(add-to-list 'default-frame-alist
-     '(vertical-scroll-bars . nil))
 
 ; mouse
 (mouse-avoidance-mode 'banish)
@@ -126,6 +127,9 @@
 
 ; loading files from config folder
 ;; from Bailey Ling's dotemacs
+
+;; libraries used throughout
+(require 'cl)
 
 (let* ((config-directory (concat user-emacs-directory "config/"))
        (directory-exists? (file-directory-p config-directory)))
