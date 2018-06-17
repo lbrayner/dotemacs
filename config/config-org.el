@@ -56,23 +56,23 @@
 ;; creates "my-"-prefixed wrappers for functions inside
 ;; my-org-export-functions-to-wrap:
 (cl-labels ((my-org-export-functions-to-wrap
-	     () '(org-html-export-as-html
-		  org-html-export-to-html
-		  org-pandoc-export-as-html5
-		  org-pandoc-export-to-html5
-		  org-pandoc-export-to-html5-and-open
-		  org-pandoc-export-to-html5-pdf
-		  org-pandoc-export-to-html5-pdf-and-open))
-	    (create-wrapper (as)
-			    (if (not (eq as nil))
-				(let ((a (car as)))
-				  (fset (intern (concat "my-" (symbol-name a)))
-				   ;; see `org-export-to-file'
-				   `(lambda (&optional y s v b e)
-				     (interactive)
-				    (let ((org-display-custom-times t))
-				      (,a y s v b e))))
-			     (create-wrapper (cdr as))))))
+             () '(org-html-export-as-html
+                  org-html-export-to-html
+                  org-pandoc-export-as-html5
+                  org-pandoc-export-to-html5
+                  org-pandoc-export-to-html5-and-open
+                  org-pandoc-export-to-html5-pdf
+                  org-pandoc-export-to-html5-pdf-and-open))
+            (create-wrapper (as)
+                            (if (not (eq as nil))
+                                (let ((a (car as)))
+                                  (fset (intern (concat "my-" (symbol-name a)))
+                                   ;; see `org-export-to-file'
+                                   `(lambda (&optional y s v b e)
+                                     (interactive)
+                                    (let ((org-display-custom-times t))
+                                      (,a y s v b e))))
+                             (create-wrapper (cdr as))))))
   (create-wrapper (my-org-export-functions-to-wrap)))
 
     ; melpa

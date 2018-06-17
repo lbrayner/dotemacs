@@ -35,7 +35,7 @@
    (list (unless (and evil-this-macro defining-kbd-macro)
            (or evil-this-register (evil-read-key)))))
  (cond ((eq register ?ç)
-	(evil-command-window-ex))
+        (evil-command-window-ex))
        (t (evil-record-macro register))))
 
 (define-key evil-normal-state-map "q" 'my-evil-record-macro)
@@ -51,18 +51,18 @@
 (setq evil-operator-state-cursor '("red" hollow))
 
 (let ((emacs-state-major-modes
-	'(eshell-mode
-	  term-mode
-	  calculator-mode
-	  dired-mode
-	  makey-key-mode)))
+        '(eshell-mode
+          term-mode
+          calculator-mode
+          dired-mode
+          makey-key-mode)))
   (cl-loop for mode in emacs-state-major-modes
          do (evil-set-initial-state mode 'emacs)))
 
 (let ((emacs-state-minor-modes
-	'(edebug-mode
-	  git-commit-mode
-	  magit-blame-mode)))
+        '(edebug-mode
+          git-commit-mode
+          magit-blame-mode)))
   (cl-loop for mode in emacs-state-minor-modes
          do (let ((hook (concat (symbol-name mode) "-hook")))
               (add-hook (intern hook) `(lambda ()
@@ -71,6 +71,6 @@
                                            (evil-normal-state)))))))
 
 (let ((emacs-state-hooks '(org-log-buffer-setup-hook
-			   org-capture-mode-hook)))
+                           org-capture-mode-hook)))
  (cl-loop for hook in emacs-state-hooks
          do (add-hook hook #'evil-emacs-state)))

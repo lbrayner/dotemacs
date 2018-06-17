@@ -15,6 +15,6 @@
 If buffer-or-name is nil return current buffer's mode."
   (interactive)
   (message "%s"
-	   (buffer-local-value
-	    'major-mode
-	    (if buffer-or-name (get-buffer buffer-or-name) (current-buffer)))))
+           (buffer-local-value
+            'major-mode
+            (if buffer-or-name (get-buffer buffer-or-name) (current-buffer)))))

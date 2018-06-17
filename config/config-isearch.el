@@ -12,7 +12,7 @@
   (interactive)
   (let ((sym (find-tag-default)))
     (if (null sym)
-	(message "No symbol at point")
+        (message "No symbol at point")
       (isearch-yank-regexp
        (concat "\\_<" (regexp-quote sym) "\\_>")))))
 

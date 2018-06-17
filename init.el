@@ -42,11 +42,11 @@
 ; minor-modes
     ; built-in
         ; linum
-	; show-paren-mode
+        ; show-paren-mode
 (show-paren-mode 1)
 (global-linum-mode 1)
     ; melpa
-	; slime
+        ; slime
 (setq inferior-lisp-program "sbcl")
 (setq slime-contribs '(slime-fancy))
         ; paredit
@@ -103,6 +103,10 @@
 ; auto-backup
 (setq make-backup-files nil)
 
+;; tabs
+(setq-default indent-tabs-mode nil)
+(setq tab-stop-list (number-sequence 4 120 4))
+
 ; encoding
 (set-buffer-file-coding-system 'utf-8-unix)
 (prefer-coding-system 'utf-8-unix)
@@ -135,10 +139,10 @@
        (directory-exists? (file-directory-p config-directory)))
   (if directory-exists?
       (cl-loop for file in (directory-files-recursively config-directory "\\.el$")
-			do (condition-case ex
-			    (load (file-name-sans-extension file))
-			    ('error (with-current-buffer "*scratch*"
-				    (insert (format "[INIT ERROR]\n%s\n%s\n\n" file ex))))))))
+                        do (condition-case ex
+                            (load (file-name-sans-extension file))
+                            ('error (with-current-buffer "*scratch*"
+                                    (insert (format "[INIT ERROR]\n%s\n%s\n\n" file ex))))))))
 
 ;; disabling annoying commands
 (put 'view-hello-file 'disabled t)
