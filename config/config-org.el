@@ -58,12 +58,15 @@
 (cl-labels ((my-org-export-functions-to-wrap
 	     () '(org-html-export-as-html
 		  org-html-export-to-html
+		  org-pandoc-export-as-html5
+		  org-pandoc-export-to-html5
+		  org-pandoc-export-to-html5-and-open
 		  org-pandoc-export-to-html5-pdf
 		  org-pandoc-export-to-html5-pdf-and-open))
 	    (create-wrapper (as)
-		       (if (not (eq as nil))
-			   (let ((a (car as)))
-			     (fset (intern (concat "my-" (symbol-name a)))
+			    (if (not (eq as nil))
+				(let ((a (car as)))
+				  (fset (intern (concat "my-" (symbol-name a)))
 				   ;; see `org-export-to-file'
 				   `(lambda (&optional y s v b e)
 				     (interactive)

@@ -68,10 +68,23 @@
 			     (org-export-get-backend 'pandoc)))
 	    'my-org-pandoc-headline))))
 
+;; customizing the export menu
+;; for each menu key in my-org-pandoc-menu-keys, replace the current
+;; action with a "my-" prefixed function
 (with-eval-after-load 'ox-pandoc
-  (setf (alist-get ?% org-pandoc-menu-entry)
-	'("to html5-pdf."
-	  my-org-pandoc-export-to-html5-pdf))
-  (setf (alist-get ?5 org-pandoc-menu-entry)
-	'("to html5-pdf and open."
-	  my-org-pandoc-export-to-html5-pdf-and-open)))
+  (cl-labels ((my-org-pandoc-menu-keys
+	       () '(?$ ?4 ?% ?5))
+	      (customize-menu-entries
+	       (as)
+	       (if (not (eq as nil))
+		   (let* ((a (car as))
+			  (description-action (alist-get a org-pandoc-menu-entry))
+			  (description (car description-action))
+			  (action (car (cdr description-action))))
+		     (setf
+		      (alist-get a org-pandoc-menu-entry)
+		      (list description
+			    (intern-soft
+			     (concat "my-" (symbol-name action)))))
+		     (customize-menu-entries (cdr as))))))
+    (customize-menu-entries (my-org-pandoc-menu-keys))))
