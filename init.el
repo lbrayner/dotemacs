@@ -47,6 +47,8 @@
 (show-paren-mode 1)
         ;; dired
 (setq dired-isearch-filenames t)
+        ;; autorevert
+(global-auto-revert-mode)
     ; melpa
         ; slime
 (setq inferior-lisp-program "sbcl")
@@ -72,7 +74,7 @@
     ; melpa
         ; linum-relative
 (linum-relative-global-mode)
-(setq linum-relative-current-symbol "")
+(setq linum-relative-current-symbol "0")
         ; ox-reveal
 (setq org-reveal-root "file:///home/desenvolvedor/other/reveal.js-3.3.0")
 
