@@ -42,9 +42,9 @@
 ; minor-modes
     ; built-in
         ; linum
-        ; show-paren-mode
-(show-paren-mode 1)
 (global-linum-mode 1)
+        ; paren
+(show-paren-mode 1)
     ; melpa
         ; slime
 (setq inferior-lisp-program "sbcl")
