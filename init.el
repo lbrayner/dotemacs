@@ -45,6 +45,8 @@
 (global-linum-mode 1)
         ; paren
 (show-paren-mode 1)
+        ;; dired
+(setq dired-isearch-filenames t)
     ; melpa
         ; slime
 (setq inferior-lisp-program "sbcl")
