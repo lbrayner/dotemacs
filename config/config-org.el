@@ -22,7 +22,6 @@
 
 (defun lbrayner-org-mode-hook ()
       (visual-line-mode t)
-      (org-indent-mode)
       (setq truncate-lines nil))
 
 ; major modes
@@ -63,16 +62,20 @@
                   org-pandoc-export-to-html5-and-open
                   org-pandoc-export-to-html5-pdf
                   org-pandoc-export-to-html5-pdf-and-open))
-            (create-wrapper (as)
-                            (if (not (eq as nil))
-                                (let ((a (car as)))
-                                  (fset (intern (concat "my-" (symbol-name a)))
-                                   ;; see `org-export-to-file'
-                                   `(lambda (&optional y s v b e)
-                                     (interactive)
-                                    (let ((org-display-custom-times t))
-                                      (,a y s v b e))))
-                             (create-wrapper (cdr as))))))
+            (create-wrapper
+             (as)
+             (if (not (eq as nil))
+                 (let ((a (car as)))
+                   (fset (intern (concat "my-" (symbol-name a)))
+                         ;; see `org-export-to-file'
+                         `(lambda (&optional y s v b e)
+                            (interactive)
+                            (let ((org-display-custom-times t)
+                                  (system-time-locale (alist-get
+                                                       'file-local-time-locale
+                                                       file-local-variables-alist)))
+                              (,a y s v b e))))
+                   (create-wrapper (cdr as))))))
   (create-wrapper (my-org-export-functions-to-wrap)))
 
     ; melpa

@@ -39,6 +39,17 @@
 (add-hook 'org-pandoc-after-processing-html5-pdf-hook 'my-org-pandoc-delete-temporary-css-file-hook)
 (add-hook 'org-pandoc-after-processing-html5-hook 'my-org-pandoc-delete-temporary-css-file-hook)
 
+;; custom vars
+
+(defvar-local file-local-time-locale nil
+  "Overrides system-time-locale.")
+
+(defun file-local-time-locale-safep (value)
+  (stringp value))
+
+(put 'file-local-time-locale 'safe-local-variable
+     #'file-local-time-locale-safep)
+
 ;; filters timestamps through org-timestamp-translate
 
 (defun my-org-pandoc-timestamp (timestamp _contents info)
