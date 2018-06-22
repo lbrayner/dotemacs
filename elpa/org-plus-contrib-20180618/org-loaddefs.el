@@ -2526,8 +2526,8 @@ DIRECTORY is where the directory org-mode/ lives (i.e. the
 
 ;;;***
 
-;;;### (autoloads nil "org-version" "org-version.el" (23316 33038
-;;;;;;  598393 297000))
+;;;### (autoloads nil "org-version" "org-version.el" (23334 62989
+;;;;;;  636907 402000))
 ;;; Generated autoloads from org-version.el
 
 (autoload 'org-release "org-version" "\
