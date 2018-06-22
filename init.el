@@ -136,8 +136,15 @@
 ; loading files from config folder
 ;; from Bailey Ling's dotemacs
 
-;; libraries used throughout
-(require 'cl)
+;; requiring libraries used throughout
+(cl-labels ((features () '(cl f))
+            (require-features
+             (as)
+             (if (not (eq as nil))
+                 (let ((a (car as)))
+                   (require a)
+                   (require-features (cdr as))))))
+  (require-features (features)))
 
 (let* ((config-directory (concat user-emacs-directory "config/"))
        (directory-exists? (file-directory-p config-directory)))
@@ -147,6 +154,13 @@
                             (load (file-name-sans-extension file))
                             ('error (with-current-buffer "*scratch*"
                                     (insert (format "[INIT ERROR]\n%s\n%s\n\n" file ex))))))))
+
+;; github packages
+(let* ((github-directory (concat user-emacs-directory "github/"))
+       (directory-exists? (file-directory-p github-directory)))
+  (if directory-exists?
+      (cl-loop for dir in (f-entries github-directory)
+                        do (add-to-list 'load-path dir))))
 
 ;; disabling annoying commands
 (put 'view-hello-file 'disabled t)
