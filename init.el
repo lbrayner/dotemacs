@@ -146,6 +146,13 @@
                    (require-features (cdr as))))))
   (require-features (features)))
 
+;; github packages
+(let* ((github-directory (concat user-emacs-directory "github/"))
+       (directory-exists? (file-directory-p github-directory)))
+  (if directory-exists?
+      (cl-loop for dir in (f-entries github-directory)
+                        do (add-to-list 'load-path dir))))
+
 (let* ((config-directory (concat user-emacs-directory "config/"))
        (directory-exists? (file-directory-p config-directory)))
   (if directory-exists?
@@ -154,13 +161,6 @@
                             (load (file-name-sans-extension file))
                             ('error (with-current-buffer "*scratch*"
                                     (insert (format "[INIT ERROR]\n%s\n%s\n\n" file ex))))))))
-
-;; github packages
-(let* ((github-directory (concat user-emacs-directory "github/"))
-       (directory-exists? (file-directory-p github-directory)))
-  (if directory-exists?
-      (cl-loop for dir in (f-entries github-directory)
-                        do (add-to-list 'load-path dir))))
 
 ;; disabling annoying commands
 (put 'view-hello-file 'disabled t)
