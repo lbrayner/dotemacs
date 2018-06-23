@@ -5,7 +5,8 @@
                                      "margin-right:15")
                            (pdf-engine . "wkhtmltopdf")))
 
-(defvar my-org-pandoc-temporary-css-file nil)
+(defvar my-org-pandoc-temporary-css-file nil
+  "Temporary css file to be deleted.")
 
 (defun my-org-pandoc-inline-css-hook (exporter)
   "Insert custom inline css (pandoc)"

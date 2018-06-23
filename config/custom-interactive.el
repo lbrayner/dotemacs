@@ -47,3 +47,21 @@ If buffer-or-name is nil return current buffer's mode."
 
 ;; bind it
 (global-set-key (kbd "C-c b i") 'bjm/insert-file-name)
+
+;; recompile all github directories
+
+(defun my-byte-recompile-github-subdirectories ()
+  "Recompiles all subdirectories under
+  `my-emacs-github-packages-dir'."
+  (interactive)
+  (let* ((github-directory my-emacs-github-packages-dir)
+         (directory-exists? (file-directory-p github-directory)))
+    (if directory-exists?
+        (let ((subdirs (f-directories github-directory)))
+          (cl-labels ((recompile-dirs
+                       (as)
+                       (if (not (eq as nil))
+                           (let ((a (car as)))
+                             (byte-recompile-directory a)
+                             (recompile-dirs (cdr as))))))
+            (recompile-dirs subdirs))))))

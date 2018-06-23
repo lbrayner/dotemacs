@@ -151,10 +151,14 @@
   (require-features (features)))
 
 ;; github packages
-(let* ((github-directory (concat user-emacs-directory "github/"))
+
+(defvar my-emacs-github-packages-dir (concat user-emacs-directory "github/")
+  "Temporary css file to be deleted.")
+
+(let* ((github-directory my-emacs-github-packages-dir)
        (directory-exists? (file-directory-p github-directory)))
   (if directory-exists?
-      (cl-loop for dir in (f-entries github-directory)
+      (cl-loop for dir in (f-directories github-directory)
                         do (add-to-list 'load-path dir))))
 
 (let* ((config-directory (concat user-emacs-directory "config/"))
