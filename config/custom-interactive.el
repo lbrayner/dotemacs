@@ -62,6 +62,6 @@ If buffer-or-name is nil return current buffer's mode."
                        (as)
                        (if (not (eq as nil))
                            (let ((a (car as)))
-                             (byte-recompile-directory a)
+                             (byte-recompile-directory a 0)
                              (recompile-dirs (cdr as))))))
             (recompile-dirs subdirs))))))
