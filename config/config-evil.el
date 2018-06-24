@@ -11,7 +11,6 @@
 (define-key evil-visual-state-map "ç" 'evil-ex)
 (define-key evil-motion-state-map "¬" 'evil-first-non-blank)
 (define-key evil-motion-state-map (kbd "<f6>") 'evil-write)
-(define-key evil-motion-state-map (kbd "<f5>") 'list-buffers)
 (define-key evil-motion-state-map (kbd "<f9>") 'delete-window)
 (define-key evil-insert-state-map "\C-u" '(lambda () (interactive) (kill-line 0)))
 (define-key evil-insert-state-map (kbd "<f6>") '(lambda () (interactive)
