@@ -1,6 +1,3 @@
-[submodule "github/bookmark-plus"]
-	path = github/bookmark-plus
-	url = https://github.com/emacsmirror/bookmark-plus
 [submodule "github/icicles"]
 	path = github/icicles
 	url = https://github.com/emacsmirror/icicles
