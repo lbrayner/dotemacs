@@ -40,6 +40,9 @@
  '((emacs-lisp . t)
    (shell . t)))
 
+;; I'm big on org exporting
+(with-eval-after-load 'org
+  (require 'ox))
 
 ;; allows org-time-stamp-custom-formats to be file-local:
 
