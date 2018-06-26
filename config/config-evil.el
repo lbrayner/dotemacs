@@ -54,6 +54,7 @@
           term-mode
           calculator-mode
           dired-mode
+          Info-mode
           makey-key-mode)))
   (cl-loop for mode in emacs-state-major-modes
          do (evil-set-initial-state mode 'emacs)))
