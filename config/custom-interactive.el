@@ -1,3 +1,8 @@
+(defun other-frame-reverse (arg)
+  "Negates arg and sends it to `other-frame'."
+  (interactive "p")
+  (other-frame (- arg)))
+
 ;; https://stackoverflow.com/a/9414763/2856535
 (defun copy-file-name-to-clipboard ()
   "Copy the current buffer file name to the clipboard."
@@ -65,3 +70,6 @@ If buffer-or-name is nil return current buffer's mode."
                              (byte-recompile-directory a 0)
                              (recompile-dirs (cdr as))))))
             (recompile-dirs subdirs))))))
+
+
+(provide 'custom-interactive)

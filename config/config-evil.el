@@ -20,13 +20,10 @@
 (define-key evil-motion-state-map "\C-k" 'evil-window-up)
 (define-key evil-motion-state-map "\C-l" 'evil-window-right)
 
-(defun other-frame-reverse (arg)
-  "Negates arg and sends it to `other-frame'."
-  (interactive "p")
-  (other-frame (- arg)))
-
 (define-key evil-motion-state-map "gt" 'other-frame)
-(define-key evil-motion-state-map "gT" 'other-frame-reverse)
+
+(with-eval-after-load 'custom-interactive
+  (define-key evil-motion-state-map "gT" 'other-frame-reverse))
 
 (defun my-evil-record-macro (register)
   "For recursive binding of keys following q."

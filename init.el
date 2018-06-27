@@ -74,7 +74,7 @@
     ; melpa
         ; linum-relative
 (linum-relative-global-mode)
-(setq linum-relative-current-symbol "0")
+(setq linum-relative-current-symbol "→")
         ; ox-reveal
 (setq org-reveal-root "file:///home/desenvolvedor/other/reveal.js-3.3.0")
 
