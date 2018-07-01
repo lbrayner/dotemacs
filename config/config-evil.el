@@ -7,23 +7,33 @@
 (global-evil-surround-mode 1)
 
             ; custom bindings
-(define-key evil-motion-state-map "ç" 'evil-ex)
-(define-key evil-visual-state-map "ç" 'evil-ex)
-(define-key evil-motion-state-map "¬" 'evil-first-non-blank)
-(define-key evil-motion-state-map (kbd "<f6>") 'evil-write)
-(define-key evil-motion-state-map (kbd "<f9>") 'delete-window)
-(define-key evil-insert-state-map "\C-u" '(lambda () (interactive) (kill-line 0)))
-(define-key evil-insert-state-map (kbd "<f6>") '(lambda () (interactive)
-                                                  (evil-normal-state) (save-buffer)))
-(define-key evil-motion-state-map "\C-h" 'evil-window-left)
-(define-key evil-motion-state-map "\C-j" 'evil-window-down)
-(define-key evil-motion-state-map "\C-k" 'evil-window-up)
-(define-key evil-motion-state-map "\C-l" 'evil-window-right)
+(define-key evil-motion-state-map "ç" #'evil-ex)
+(define-key evil-visual-state-map "ç" #'evil-ex)
+(define-key evil-motion-state-map "¬" #'evil-first-non-blank)
+(define-key evil-motion-state-map (kbd "<f6>") #'evil-write)
+(define-key evil-motion-state-map (kbd "<f9>") #'delete-window)
 
-(define-key evil-motion-state-map "gt" 'other-frame)
+(defun my-kill-line ()
+  "Kills text before point."
+  (interactive) (kill-line 0))
+
+(defun my-evil-save-buffer ()
+  "Enters `evil-normal-state' and saves the buffer."
+  (interactive)
+  (evil-normal-state) (save-buffer))
+
+(define-key evil-insert-state-map "\C-u" #'my-kill-line)
+(define-key evil-insert-state-map (kbd "<f6>") #'my-evil-save-buffer)
+
+(define-key evil-motion-state-map "\C-h" #'evil-window-left)
+(define-key evil-motion-state-map "\C-j" #'evil-window-down)
+(define-key evil-motion-state-map "\C-k" #'evil-window-up)
+(define-key evil-motion-state-map "\C-l" #'evil-window-right)
+
+(define-key evil-motion-state-map "gt" #'other-frame)
 
 (with-eval-after-load 'custom-interactive
-  (define-key evil-motion-state-map "gT" 'other-frame-reverse))
+  (define-key evil-motion-state-map "gT" #'other-frame-reverse))
 
 (defun my-evil-record-macro (register)
   "For recursive binding of keys following q."
@@ -34,7 +44,7 @@
         (evil-command-window-ex))
        (t (evil-record-macro register))))
 
-(define-key evil-normal-state-map "q" 'my-evil-record-macro)
+(define-key evil-normal-state-map "q" #'my-evil-record-macro)
 
 ;; Bailey Ling
 
