@@ -140,7 +140,7 @@
 ;; from Bailey Ling's dotemacs
 
 ;; requiring libraries used throughout
-(cl-labels ((features () '(cl f))
+(cl-labels ((features () '(cl-lib f))
             (require-features
              (as)
              (if (not (eq as nil))
