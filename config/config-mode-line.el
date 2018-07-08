@@ -17,6 +17,8 @@
   and `column-number-mode' are set.")
 
 ;; modifying the mode-line
+
+;; https://emacs.stackexchange.com/a/26724
 (defun total-lines-as-string ()
   "Returns the total number of lines of buffer as a string."
   (save-excursion
