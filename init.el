@@ -152,7 +152,7 @@
 ;; github packages
 
 (defvar my-emacs-github-packages-dir (concat user-emacs-directory "github/")
-  "Temporary css file to be deleted.")
+  "Where Github packages are stored.")
 
 (let* ((github-directory my-emacs-github-packages-dir)
        (directory-exists? (file-directory-p github-directory)))
