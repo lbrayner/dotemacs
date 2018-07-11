@@ -46,6 +46,23 @@
 
 (define-key evil-normal-state-map "q" #'my-evil-record-macro)
 
+(defun evil-unimpaired-open-line (n)
+  "Performs Tim Pope's unimpaired ]<Space>."
+  (interactive "p")
+  (save-excursion
+    (move-end-of-line 1)
+    (open-line n)))
+
+(defun evil-unimpaired-open-line-above (n)
+  "Performs Tim Pope's unimpaired [<Space>."
+  (interactive "p")
+  (save-excursion
+    (move-beginning-of-line 1)
+    (open-line n)))
+
+(define-key evil-normal-state-map "] " #'evil-unimpaired-open-line)
+(define-key evil-normal-state-map "[ " #'evil-unimpaired-open-line-above)
+
 ;; Bailey Ling
 
 (setq evil-emacs-state-cursor '("red" box))
