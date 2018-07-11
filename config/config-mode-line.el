@@ -23,6 +23,7 @@
   "Returns the total number of lines of buffer as a string."
   (save-excursion
     (goto-char (point-max))
+    (backward-char)
     (format-mode-line "%l")))
 
 (setf (get-line-mode-column-mode-format mode-line-position)
