@@ -44,11 +44,11 @@ If buffer-or-name is nil return current buffer's mode."
   ;; Based on insert-file in Emacs -- ashawley 20080926
   (interactive "*fInsert file name: \nP")
   (cond ((eq '- args)
-         (insert (expand-file-name filename)))
+        (insert (expand-file-name filename)))
         ((not (null args))
-         (insert filename))
+         (insert (file-relative-name filename)))
         (t
-         (insert (file-relative-name filename)))))
+         (insert filename))))
 
 ;; bind it
 (global-set-key (kbd "C-c b i") 'bjm/insert-file-name)
