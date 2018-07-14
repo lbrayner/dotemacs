@@ -4,3 +4,5 @@
   (global-set-key (kbd "C-,") #'other-frame-reverse))
 
 (global-set-key (kbd "C-x C-b") #'ibuffer)
+
+(windmove-default-keybindings)
