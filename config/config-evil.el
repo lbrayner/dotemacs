@@ -56,9 +56,12 @@
 (defun evil-unimpaired-open-line-above (n)
   "Performs Tim Pope's unimpaired [<Space>."
   (interactive "p")
-  (save-excursion
-    (move-beginning-of-line 1)
-    (open-line n)))
+  (cond ((bolp)
+         (open-line n)
+         (forward-line n))
+        (t (save-excursion
+             (move-beginning-of-line 1)
+             (open-line n)))))
 
 (define-key evil-normal-state-map "] " #'evil-unimpaired-open-line)
 (define-key evil-normal-state-map "[ " #'evil-unimpaired-open-line-above)
