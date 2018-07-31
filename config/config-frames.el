@@ -1,3 +1,3 @@
 (require 'frames)
 
-(global-set-key (kbd "F8") #'frames)
+(global-set-key (kbd "<f8>") #'frames)
