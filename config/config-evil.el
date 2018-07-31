@@ -66,7 +66,7 @@
 (define-key evil-normal-state-map "] " #'evil-unimpaired-open-line)
 (define-key evil-normal-state-map "[ " #'evil-unimpaired-open-line-above)
 
-;; Bailey Ling
+;; Bailey Ling's snippets
 
 (setq evil-emacs-state-cursor '("red" box))
 (setq evil-motion-state-cursor '("orange" box))
@@ -101,3 +101,15 @@
                            org-capture-mode-hook)))
  (cl-loop for hook in emacs-state-hooks
          do (add-hook hook #'evil-emacs-state)))
+
+;; End of Bailey Ling's snippets
+
+(let ((motion-state-major-modes '(frames-mode)))
+  (cl-labels
+      ((set-initial-state-motion
+        (modes)
+        (if (not (eq modes nil))
+            (let ((mode (car modes)))
+              (evil-set-initial-state mode 'motion)
+              (set-initial-state-motion (cdr modes))))))
+    (set-initial-state-motion motion-state-major-modes)))
