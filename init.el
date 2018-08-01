@@ -3,19 +3,6 @@
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
-
-; https://www.reddit.com/r/emacs/comments/4fqu0a/automatically_install_packages_on_startup/
-;; === CUSTOM CHECK FUNCTION ===
-; (defun ensure-package-installed (&rest packages)
-;   "Assure every package is installed, ask for installation if it’s not.
-;    Return a list of installed packages or nil for every skipped package."
-;   (mapcar
-;    (lambda (package)
-;      (unless (package-installed-p package)
-;        (package-install package)))
-;      packages)
-; )
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -34,10 +21,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-
-(defun home-directory ()
-  "Returns the path to the user's home directory with a slash at the end."
-  (file-name-as-directory (getenv "HOME")))
 
 ; minor-modes
     ; built-in
@@ -75,8 +58,6 @@
         ; linum-relative
 (linum-relative-global-mode)
 (setq linum-relative-current-symbol "→")
-        ; ox-reveal
-(setq org-reveal-root "file:///home/desenvolvedor/other/reveal.js-3.3.0")
 
 ; various
 (setq default-directory "~/")
@@ -102,7 +83,6 @@
 
 ; ispell
 (setq ispell-program-name "aspell") 
-(setq ispell-complete-word-dict "/usr/local/share/dict/brazilian")
 
 ; auto-backup
 (setq make-backup-files nil)
@@ -117,15 +97,6 @@
 ; encoding
 (set-buffer-file-coding-system 'utf-8-unix)
 (prefer-coding-system 'utf-8-unix)
-
-;; Save all tempfiles in /var/tmp/emacs$UID
-(defconst emacs-tmp-dir (expand-file-name (format
-                                            "emacs%d"
-                                            (user-uid))
-                                          "/var/tmp"))
-(setq backup-directory-alist `((".*" . ,emacs-tmp-dir)))
-(setq auto-save-file-name-transforms `((".*" ,(file-name-as-directory emacs-tmp-dir) t)))
-(setq auto-save-list-file-prefix (file-name-as-directory emacs-tmp-dir))
 
 ; after
     ; configuration
