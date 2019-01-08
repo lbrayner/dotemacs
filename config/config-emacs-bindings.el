@@ -6,3 +6,5 @@
 (global-set-key (kbd "C-x C-b") #'ibuffer)
 
 (windmove-default-keybindings)
+
+(global-set-key (kbd "<f12>") #'whitespace-mode)
