@@ -46,6 +46,25 @@
 
 (define-key evil-normal-state-map "q" #'my-evil-record-macro)
 
+;; Tim Pope's vim-commentary-like functionality
+
+(evil-define-command my-evil-comment (beg end)
+  "Comment text from BEG to END."
+  (interactive "<r>")
+  (cond
+   ((= (count-lines beg end) 1)
+    (save-excursion
+      (comment-line 1)))
+   (t
+    (activate-mark)
+    (comment-or-uncomment-region beg end))))
+
+;; Makes `g' a prefix key in evil-normal-state-map
+(define-key evil-normal-state-map "g" nil)
+(define-key evil-normal-state-map "gc" #'my-evil-comment)
+
+(define-key evil-visual-state-map "gc" #'my-evil-comment)
+
 (defun evil-unimpaired-open-line (n)
   "Performs Tim Pope's unimpaired ]<Space>."
   (interactive "p")
