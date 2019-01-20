@@ -14,7 +14,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (f ox-pandoc slime org htmlize paredit ox-reveal org-plus-contrib org-edna evil-surround solarized-theme linum-relative evil-leader evil))))
+    (f ox-pandoc slime org htmlize paredit ox-reveal org-plus-contrib org-edna evil-surround solarized-theme evil-leader evil))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -24,8 +24,9 @@
 
 ; minor-modes
     ; built-in
-        ; linum
-(global-linum-mode 1)
+        ; Display-Line-Numbers
+(when (version<= "26.0.50" emacs-version)
+  (setq-default display-line-numbers 'relative))
         ; paren
 (show-paren-mode 1)
         ;; dired
@@ -56,8 +57,8 @@
 ; extensions
     ; melpa
         ; linum-relative
-(linum-relative-global-mode)
-(setq linum-relative-current-symbol "→")
+;; (linum-relative-global-mode)
+;; (setq linum-relative-current-symbol "→")
 
 ; various
 (setq default-directory "~/")
@@ -103,7 +104,7 @@
         ; minor-modes
             ; built-in
                 ; linum
-(set-face-attribute 'linum nil :height 100)
+;; (set-face-attribute 'linum nil :height 100)
                 ; visual-line-mode
 (setq global-visual-line-mode t)
 
