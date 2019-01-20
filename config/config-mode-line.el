@@ -1,12 +1,16 @@
 (defun get-line-mode-column-mode-format (mode-line-position)
   "Gets `mode-line-position's construct when both `line-number-mode'
   and `column-number-mode' are set."
-  (cadr (cadr (car (cadr (nth 2 mode-line-position))))))
+  (if (version<= "26.0.50" emacs-version)
+      (cadr (cadr (cadr (car (cadr (nth 2 mode-line-position))))))
+    (cadr (cadr (car (cadr (nth 2 mode-line-position)))))))
 
 (defun set-line-mode-column-mode-format (mode-line-position value)
   "Sets `mode-line-position's construct to VALUE when both
   `line-number-mode'and `column-number-mode' are set."
-  (setf (cadr (cadr (car (cadr (nth 2 mode-line-position))))) value))
+  (if (version<= "26.0.50" emacs-version)
+      (setf (cadr (cadr (cadr (car (cadr (nth 2 mode-line-position)))))) value)
+    (setf (cadr (cadr (car (cadr (nth 2 mode-line-position))))) value)))
 
 (gv-define-simple-setter get-line-mode-column-mode-format
                          set-line-mode-column-mode-format)
