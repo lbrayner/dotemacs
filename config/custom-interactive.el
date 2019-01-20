@@ -71,5 +71,41 @@ If buffer-or-name is nil return current buffer's mode."
                              (recompile-dirs (cdr as))))))
             (recompile-dirs subdirs))))))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; quit special buffers
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; https://stackoverflow.com/a/36551971
+
+(defvar other/help-window-names
+  '(
+    ;; Ubiquitous help buffers
+    "*Help*"
+    "*Apropos*"
+    "*Messages*"
+    "*Completions*"
+    ;; Other general buffers
+    "*Command History*"
+    "*Compile-Log*"
+    "*disabled command*")
+  "Names of buffers that `other/quit-help-windows' should quit.")
+
+(defun other/quit-help-windows (&optional kill frame)
+  "Quit all windows with help-like buffers.
+
+Call `quit-windows-on' for every buffer named in
+`other/help-windows-name'.  The optional parameters KILL and FRAME
+are just as in `quit-windows-on', except FRAME defaults to t (so
+that only windows on the selected frame are considered).
+
+Note that a nil value for FRAME cannot be distinguished from an
+omitted parameter and will be ignored; use some other value if
+you want to quit windows on all frames."
+  (interactive)
+  (let ((frame (or frame t)))
+    (dolist (name other/help-window-names)
+      (ignore-errors
+        (quit-windows-on name kill frame)))))
+
+(global-set-key (kbd "C-c q") 'other/quit-help-windows)
 
 (provide 'custom-interactive)
