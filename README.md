@@ -3,4 +3,4 @@
 It's fun reproducing my Vim workflow on Emacs. Plus Lisp is such a nice
 (family of) language(s).
 
-I have, for instance, a few of Tim Pope's ideas and bindings ported to Emacs.
+I have ported, for instance, a few of Tim Pope's ideas and bindings.
