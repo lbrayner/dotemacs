@@ -101,6 +101,7 @@
           calculator-mode
           dired-mode
           Info-mode
+          slime-repl-mode
           makey-key-mode)))
   (cl-loop for mode in emacs-state-major-modes
          do (evil-set-initial-state mode 'emacs)))
