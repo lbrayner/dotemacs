@@ -22,22 +22,22 @@
  ;; If there is more than one, they won't work right.
  )
 
-; minor-modes
-    ; built-in
-        ; Display-Line-Numbers
+;; minor-modes
+    ;; built-in
+        ;; Display-Line-Numbers
 (when (version<= "26.0.50" emacs-version)
   (setq-default display-line-numbers 'relative))
-        ; paren
+        ;; paren
 (show-paren-mode 1)
         ;; dired
 (setq dired-isearch-filenames t)
         ;; autorevert
 (global-auto-revert-mode)
-    ; melpa
-        ; slime
+    ;; melpa
+        ;; slime
 (setq inferior-lisp-program "sbcl")
 (setq slime-contribs '(slime-fancy))
-        ; paredit
+        ;; paredit
 (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
 (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
 (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
@@ -46,46 +46,46 @@
 (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
 (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
 
-; themes
-    ; melpa
-        ; solarized
+;; themes
+    ;; melpa
+        ;; solarized
 (setq solarized-use-variable-pitch nil
       solarized-scale-org-headlines nil)
 (setq solarized-high-contrast-mode-line t)
 (load-theme 'solarized-dark t)
 
-; extensions
-    ; melpa
-        ; linum-relative
+;; extensions
+    ;; melpa
+        ;; linum-relative
 ;; (linum-relative-global-mode)
 ;; (setq linum-relative-current-symbol "→")
 
-; various
+;; various
 (setq default-directory "~/")
 
-; cursor
+;; cursor
 (setq blink-cursor-blinks 1)
 
-; menus and scroll bar
+;; menus and scroll bar
 (menu-bar-mode -1)
-; (toggle-scroll-bar -1)
+;; (toggle-scroll-bar -1)
 (add-to-list 'default-frame-alist '(vertical-scroll-bars . nil))
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 (tool-bar-mode -1)
 
-; mouse
+;; mouse
 (mouse-avoidance-mode 'banish)
 
-; mode line
+;; mode line
 (setq column-number-mode t)
 
-; narrow mode
+;; narrow mode
 (put 'narrow-to-region 'disabled nil)
 
-; ispell
+;; ispell
 (setq ispell-program-name "aspell") 
 
-; auto-backup
+;; auto-backup
 (setq make-backup-files nil)
 
 ;; tabs
@@ -95,20 +95,20 @@
 ;; files
 (setq delete-old-versions t)
 
-; encoding
+;; encoding
 (set-buffer-file-coding-system 'utf-8-unix)
 (prefer-coding-system 'utf-8-unix)
 
-; after
-    ; configuration
-        ; minor-modes
-            ; built-in
-                ; linum
+;; after
+    ;; configuration
+        ;; minor-modes
+            ;; built-in
+                ;; linum
 ;; (set-face-attribute 'linum nil :height 100)
-                ; visual-line-mode
+                ;; visual-line-mode
 (setq global-visual-line-mode t)
 
-; loading files from config folder
+;; loading files from config folder
 ;; from Bailey Ling's dotemacs
 
 ;; requiring libraries used throughout

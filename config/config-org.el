@@ -1,4 +1,4 @@
-; https://stackoverflow.com/a/37132338/2856535
+;; https://stackoverflow.com/a/37132338/2856535
 (defun my-org-inline-css-hook (exporter)
   "Insert custom inline css"
   (when (eq exporter 'html)
@@ -24,8 +24,8 @@
       (visual-line-mode t)
       (setq truncate-lines nil))
 
-; major modes
-    ; org
+;; major modes
+    ;; org
 (setq org-export-time-stamp-file nil)
 (setq org-html-validation-link nil)
 (setq-default org-export-with-author nil)
@@ -34,7 +34,7 @@
 (setq-default org-export-with-sub-superscripts '{})
 (add-hook 'org-mode-hook 'lbrayner-org-mode-hook)
 (add-hook 'org-export-before-processing-hook 'my-org-inline-css-hook)
-        ; babel
+        ;; babel
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((emacs-lisp . t)
@@ -81,7 +81,7 @@
                    (create-wrapper (cdr as))))))
   (create-wrapper (my-org-export-functions-to-wrap)))
 
-    ; melpa
-        ; ox-reveal
+    ;; melpa
+        ;; ox-reveal
 (require 'ox-reveal)
 (setq org-reveal-title-slide "<h1> %t </h1>  <br> %a <br> %e")

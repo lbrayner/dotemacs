@@ -3,10 +3,10 @@
 (setq evil-want-Y-yank-to-eol nil)
 (setq evil-search-module 'evil-search)
 
-        ; evil-surround
+        ;; evil-surround
 (global-evil-surround-mode 1)
 
-            ; custom bindings
+            ;; custom bindings
 (define-key evil-motion-state-map "ç" #'evil-ex)
 (define-key evil-visual-state-map "ç" #'evil-ex)
 (define-key evil-motion-state-map "¬" #'evil-first-non-blank)
