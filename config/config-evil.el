@@ -85,6 +85,36 @@
 (define-key evil-normal-state-map "] " #'evil-unimpaired-open-line)
 (define-key evil-normal-state-map "[ " #'evil-unimpaired-open-line-above)
 
+;; https://github.com/emacs-evil/evil-collection
+
+;;; evil-collection has too many features for my current needs
+;;; (i.e. it's bloated).
+
+(defun evil-collection-slime-last-sexp (command &rest args)
+  "In normal-state or motion-state, last sexp ends at point."
+  (if (and (not evil-move-beyond-eol)
+           (or (evil-normal-state-p) (evil-motion-state-p)))
+      (save-excursion
+        (unless (or (eobp) (eolp)) (forward-char))
+        (apply command args))
+(apply command args)))
+
+(defun evil-collection-slime-setup ()
+  "Set up `evil' bindings for `slime'."
+  (unless evil-move-beyond-eol
+    (advice-add 'slime-eval-last-expression :around 'evil-collection-slime-last-sexp)
+    (advice-add 'slime-pprint-eval-last-expression :around 'evil-collection-slime-last-sexp)
+    (advice-add 'slime-eval-print-last-expression :around 'evil-collection-slime-last-sexp)
+    (advice-add 'slime-eval-last-expression-in-repl
+                :around 'evil-collection-slime-last-sexp)))
+
+(defun evil-collection-setup ()
+  "Sets up evil-collection bindings."
+  (evil-collection-slime-setup))
+
+(with-eval-after-load 'slime
+  (evil-collection-setup))
+
 ;; Bailey Ling's snippets
 
 (setq evil-emacs-state-cursor '("red" box))
