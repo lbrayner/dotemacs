@@ -115,7 +115,7 @@
 (cl-labels ((features () '(cl-lib f))
             (require-features
              (as)
-             (if (not (eq as nil))
+             (if (not (null as))
                  (let ((a (car as)))
                    (require a)
                    (require-features (cdr as))))))

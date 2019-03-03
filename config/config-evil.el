@@ -128,7 +128,7 @@
   (cl-labels
       ((set-initial-state-motion
         (modes)
-        (if (not (eq modes nil))
+        (if (not (null modes))
             (let ((mode (car modes)))
               (evil-set-initial-state mode 'motion)
               (set-initial-state-motion (cdr modes))))))

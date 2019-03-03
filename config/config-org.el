@@ -67,7 +67,7 @@
                   org-pandoc-export-to-html5-pdf-and-open))
             (create-wrapper
              (as)
-             (if (not (eq as nil))
+             (if (not (null as))
                  (let ((a (car as)))
                    (fset (intern (concat "my-" (symbol-name a)))
                          ;; see `org-export-to-file'

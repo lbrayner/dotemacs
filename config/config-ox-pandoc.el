@@ -88,7 +88,7 @@
                () '(?$ ?4 ?% ?5))
               (customize-menu-entries
                (as)
-               (if (not (eq as nil))
+               (if (not (null as))
                    (let* ((a (car as))
                           (description-action (alist-get a org-pandoc-menu-entry))
                           (description (car description-action))
