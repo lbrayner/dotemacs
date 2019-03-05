@@ -13,6 +13,14 @@
 (define-key evil-motion-state-map (kbd "<f6>") #'evil-write)
 (define-key evil-motion-state-map (kbd "<f9>") #'delete-window)
 
+(with-eval-after-load 'paredit
+  (evil-define-key 'insert lisp-mode-map (kbd "ESC <left>") #'paredit-backward-barf-sexp)
+  (evil-define-key 'insert lisp-mode-map (kbd "ESC <right>") #'paredit-backward-barf-sexp)
+  (evil-define-key 'insert lisp-mode-map (kbd "<M-left>") #'paredit-backward-barf-sexp)
+  (evil-define-key 'insert lisp-mode-map (kbd "<M-right>") #'paredit-backward-barf-sexp)
+  (evil-define-key 'insert lisp-mode-map (kbd "<S-left>") #'paredit-backward-slurp-sexp)
+  (evil-define-key 'insert lisp-mode-map (kbd "<S-right>") #'paredit-forward-slurp-sexp))
+
 (defun my-kill-line ()
   "Kills text before point."
   (interactive) (kill-line 0))
