@@ -10,5 +10,7 @@
 (global-set-key (kbd "<f12>") #'whitespace-mode)
 
 ;; scroll up and down one line
+(global-set-key (kbd "ESC <down>") #'scroll-up-line)
+(global-set-key (kbd "ESC <up>") #'scroll-down-line) 
 (global-set-key (kbd "<M-down>") #'scroll-up-line)
 (global-set-key (kbd "<M-up>") #'scroll-down-line) 
