@@ -6,20 +6,34 @@
         ;; evil-surround
 (global-evil-surround-mode 1)
 
-            ;; custom bindings
+;; custom bindings
+
+(defun my-evil-paredit-define-keys (map)
+  (evil-define-key 'insert map (kbd "ESC <left>") #'paredit-backward-barf-sexp)
+  (evil-define-key 'insert map (kbd "ESC <right>") #'paredit-backward-barf-sexp)
+  (evil-define-key 'insert map (kbd "<M-left>") #'paredit-backward-barf-sexp)
+  (evil-define-key 'insert map (kbd "<M-right>") #'paredit-backward-barf-sexp)
+  (evil-define-key 'insert map (kbd "<S-left>") #'paredit-backward-slurp-sexp)
+  (evil-define-key 'insert map (kbd "<S-right>") #'paredit-forward-slurp-sexp))
+
+(with-eval-after-load 'paredit
+  (let ((lisp-modes '(lisp-mode
+                      emacs-lisp-mode)))
+    (cl-labels
+        ((evil-define-paredit
+          (modes)
+          (if (not (null modes))
+              (let* ((mode (car modes))
+                     (map (concat (symbol-name mode) "-map")))
+                (my-evil-paredit-define-keys (symbol-value (intern map)))
+                (evil-define-paredit (cdr modes))))))
+      (evil-define-paredit lisp-modes))))
+
 (define-key evil-motion-state-map "ç" #'evil-ex)
 (define-key evil-visual-state-map "ç" #'evil-ex)
 (define-key evil-motion-state-map "¬" #'evil-first-non-blank)
 (define-key evil-motion-state-map (kbd "<f6>") #'evil-write)
 (define-key evil-motion-state-map (kbd "<f9>") #'delete-window)
-
-(with-eval-after-load 'paredit
-  (evil-define-key 'insert lisp-mode-map (kbd "ESC <left>") #'paredit-backward-barf-sexp)
-  (evil-define-key 'insert lisp-mode-map (kbd "ESC <right>") #'paredit-backward-barf-sexp)
-  (evil-define-key 'insert lisp-mode-map (kbd "<M-left>") #'paredit-backward-barf-sexp)
-  (evil-define-key 'insert lisp-mode-map (kbd "<M-right>") #'paredit-backward-barf-sexp)
-  (evil-define-key 'insert lisp-mode-map (kbd "<S-left>") #'paredit-backward-slurp-sexp)
-  (evil-define-key 'insert lisp-mode-map (kbd "<S-right>") #'paredit-forward-slurp-sexp))
 
 (defun my-kill-line ()
   "Kills text before point."
