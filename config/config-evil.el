@@ -18,6 +18,7 @@
 
 (with-eval-after-load 'paredit
   (let ((lisp-modes '(lisp-mode
+                      lisp-interaction-mode
                       emacs-lisp-mode)))
     (cl-labels
         ((evil-define-paredit
