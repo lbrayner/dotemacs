@@ -60,13 +60,13 @@
 (setq solarized-high-contrast-mode-line t)
 (load-theme 'solarized-dark t)
   ;; solarized-dark
-(let ((violet    "#6c71c4")
+(let ((yellow    "#b58900")
       (s-base02  "#073642"))
   (when my-display-line-numbers-should-be-enabled
     (set-face-attribute 'line-number-current-line nil
                         :weight 'bold
                         :background s-base02
-                        :foreground violet)))
+                        :foreground yellow)))
 
 ;; extensions
     ;; melpa
