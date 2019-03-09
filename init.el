@@ -22,10 +22,16 @@
  ;; If there is more than one, they won't work right.
  )
 
+(defvar my-display-line-numbers-should-be-enabled (version<= "26.0.50" emacs-version)
+  "If `display-line-numbers' should be enabled.")
+
+(defvar my-linum-mode-should-be-enabled (version< emacs-version "26.0.50")
+  "If `linum-mode' should be enabled.")
+
 ;; minor-modes
     ;; built-in
         ;; Display-Line-Numbers
-(when (version<= "26.0.50" emacs-version)
+(when my-display-line-numbers-should-be-enabled
   (setq-default display-line-numbers 'relative))
         ;; paren
 (show-paren-mode 1)
@@ -53,12 +59,20 @@
       solarized-scale-org-headlines nil)
 (setq solarized-high-contrast-mode-line t)
 (load-theme 'solarized-dark t)
+  ;; solarized-dark
+(let ((violet    "#6c71c4")
+      (s-base02  "#073642"))
+  (when my-display-line-numbers-should-be-enabled
+    (set-face-attribute 'line-number-current-line nil
+                        :background s-base02
+                        :foreground violet)))
 
 ;; extensions
     ;; melpa
         ;; linum-relative
-;; (linum-relative-global-mode)
-;; (setq linum-relative-current-symbol "→")
+(when my-linum-mode-should-be-enabled
+  (linum-relative-global-mode)
+  (setq linum-relative-current-symbol "→"))
 
 ;; various
 (setq default-directory "~/")
