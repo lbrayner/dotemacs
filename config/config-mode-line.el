@@ -44,6 +44,8 @@
            (package-suffix (match-string 1 name)))
           ((string-match "^\"\\(.*\\)\"$" name)
            (package-suffix (match-string 1 name)))
+          ((string= name "COMMON-LISP-USER")
+           "CL-USER")
           (t name))))
 
 (with-eval-after-load 'slime
