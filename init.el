@@ -64,6 +64,7 @@
       (s-base02  "#073642"))
   (when my-display-line-numbers-should-be-enabled
     (set-face-attribute 'line-number-current-line nil
+                        :weight 'bold
                         :background s-base02
                         :foreground violet)))
 
