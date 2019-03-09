@@ -8,6 +8,15 @@
 
 ;; custom bindings
 
+(defun my-evil-normal-eval-print-last-sexp ()
+  "`eval-print-last-sexp' adjusted for Evil's normal mode."
+  (interactive)
+  (evil-append 1) (eval-print-last-sexp) (evil-normal-state) (message nil))
+
+(defun my-evil-eval-print-define-keys (map)
+  (evil-define-key 'normal map (kbd "C-c j") #'my-evil-normal-eval-print-last-sexp)
+  (evil-define-key 'insert map (kbd "C-c j") #'eval-print-last-sexp))
+
 (defun my-evil-paredit-define-keys (map)
   (evil-define-key 'insert map (kbd "ESC <left>") #'paredit-backward-barf-sexp)
   (evil-define-key 'insert map (kbd "ESC <right>") #'paredit-backward-barf-sexp)
@@ -26,6 +35,7 @@
           (if (not (null modes))
               (let* ((mode (car modes))
                      (map (concat (symbol-name mode) "-map")))
+                (my-evil-eval-print-define-keys (symbol-value (intern map)))
                 (my-evil-paredit-define-keys (symbol-value (intern map)))
                 (evil-define-paredit (cdr modes))))))
       (evil-define-paredit lisp-modes))))
