@@ -32,12 +32,12 @@
     (cl-labels
         ((evil-define-paredit
           (modes)
-          (if (not (null modes))
-              (let* ((mode (car modes))
-                     (map (concat (symbol-name mode) "-map")))
-                (my-evil-eval-print-define-keys (symbol-value (intern map)))
-                (my-evil-paredit-define-keys (symbol-value (intern map)))
-                (evil-define-paredit (cdr modes))))))
+          (unless (null modes)
+            (let* ((mode (car modes))
+                   (map (concat (symbol-name mode) "-map")))
+              (my-evil-eval-print-define-keys (symbol-value (intern map)))
+              (my-evil-paredit-define-keys (symbol-value (intern map)))
+              (evil-define-paredit (cdr modes))))))
       (evil-define-paredit lisp-modes))))
 
 (define-key evil-motion-state-map "ç" #'evil-ex)
@@ -191,8 +191,8 @@
   (cl-labels
       ((set-initial-state-motion
         (modes)
-        (if (not (null modes))
-            (let ((mode (car modes)))
-              (evil-set-initial-state mode 'motion)
-              (set-initial-state-motion (cdr modes))))))
+        (unless (null modes)
+          (let ((mode (car modes)))
+            (evil-set-initial-state mode 'motion)
+            (set-initial-state-motion (cdr modes))))))
     (set-initial-state-motion motion-state-major-modes)))

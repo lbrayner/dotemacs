@@ -88,15 +88,15 @@
                () '(?$ ?4 ?% ?5))
               (customize-menu-entries
                (as)
-               (if (not (null as))
-                   (let* ((a (car as))
-                          (description-action (alist-get a org-pandoc-menu-entry))
-                          (description (car description-action))
-                          (action (car (cdr description-action))))
-                     (setf
-                      (alist-get a org-pandoc-menu-entry)
-                      (list description
-                            (intern-soft
-                             (concat "my-" (symbol-name action)))))
-                     (customize-menu-entries (cdr as))))))
+               (unless (null as)
+                 (let* ((a (car as))
+                        (description-action (alist-get a org-pandoc-menu-entry))
+                        (description (car description-action))
+                        (action (car (cdr description-action))))
+                   (setf
+                    (alist-get a org-pandoc-menu-entry)
+                    (list description
+                          (intern-soft
+                           (concat "my-" (symbol-name action)))))
+                   (customize-menu-entries (cdr as))))))
     (customize-menu-entries (my-org-pandoc-menu-keys))))

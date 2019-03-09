@@ -65,10 +65,10 @@ If buffer-or-name is nil return current buffer's mode."
         (let ((subdirs (f-directories github-directory)))
           (cl-labels ((recompile-dirs
                        (as)
-                       (if (not (null as))
-                           (let ((a (car as)))
-                             (byte-recompile-directory a 0)
-                             (recompile-dirs (cdr as))))))
+                       (unless (null as)
+                         (let ((a (car as)))
+                           (byte-recompile-directory a 0)
+                           (recompile-dirs (cdr as))))))
             (recompile-dirs subdirs))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
