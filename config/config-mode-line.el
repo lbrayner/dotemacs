@@ -34,6 +34,21 @@
       `(:eval (concat ,line-mode-column-mode-original-format " "
                       (total-lines-as-string))))
 
+;; slime
+
+(defun my-slime-pretty-package-name (name)
+  "Return a pretty shortened version of a package name NAME."
+  (cl-labels ((package-suffix (package-name)
+                              (car (reverse (split-string package-name "\\.")))))
+    (cond ((string-match "^#?:\\(.*\\)$" name)
+           (package-suffix (match-string 1 name)))
+          ((string-match "^\"\\(.*\\)\"$" name)
+           (package-suffix (match-string 1 name)))
+          (t name))))
+
+(with-eval-after-load 'slime
+  (advice-add 'slime-pretty-package-name :override 'my-slime-pretty-package-name))
+
 ;; https://www.masteringemacs.org/article/hiding-replacing-modeline-strings
 
 ;;; Hiding and replacing modeline strings with clean-mode-line
@@ -45,11 +60,13 @@
     (paredit-mode . " π")
     (eldoc-mode . "")
     (abbrev-mode . "")
+    (undo-tree-mode . " U")
     ;; Major modes
     (lisp-interaction-mode . "λ")
     (hi-lock-mode . "")
     (python-mode . "Py")
     (emacs-lisp-mode . "EL")
+    (lisp-mode . "£")
     (nxhtml-mode . "nx"))
   "Alist for `clean-mode-line'.
 
