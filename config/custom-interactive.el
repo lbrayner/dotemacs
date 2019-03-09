@@ -86,7 +86,9 @@ If buffer-or-name is nil return current buffer's mode."
     ;; Other general buffers
     "*Command History*"
     "*Compile-Log*"
-    "*disabled command*")
+    "*disabled command*"
+    ;; Custom buffers
+    "*Frames*")
   "Names of buffers that `other/quit-help-windows' should quit.")
 
 (defun other/quit-help-windows (&optional kill frame)
