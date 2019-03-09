@@ -112,14 +112,14 @@
 ;; from Bailey Ling's dotemacs
 
 ;; requiring libraries used throughout
-(let ((features '(cl-lib f)))
+(let ((features-to-require '(cl-lib f)))
   (cl-labels ((require-features
                (as)
                (unless (null as)
                  (let ((a (car as)))
                    (require a)
                    (require-features (cdr as))))))
-    (require-features features)))
+    (require-features features-to-require)))
 
 ;; github packages
 
