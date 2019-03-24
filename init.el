@@ -29,12 +29,10 @@
   "If `linum-mode' should be enabled.")
 
   ;; from solarized-dark
-(let ((yellow    "#b58900")
-      (s-base02  "#073642"))
+(let ((yellow    "#b58900"))
   (when my-display-line-numbers-should-be-enabled
     (set-face-attribute 'line-number-current-line nil
                         :weight 'bold
-                        :background s-base02
                         :foreground yellow)))
 
 ;; minor-modes
