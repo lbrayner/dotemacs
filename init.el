@@ -14,7 +14,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (f ox-pandoc slime org htmlize paredit ox-reveal org-plus-contrib org-edna evil-surround solarized-theme evil-leader evil))))
+    (dracula-theme f ox-pandoc slime org htmlize paredit ox-reveal org-plus-contrib org-edna evil-surround solarized-theme evil-leader evil))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -27,6 +27,15 @@
 
 (defvar my-linum-mode-should-be-enabled (version< emacs-version "26.0.50")
   "If `linum-mode' should be enabled.")
+
+  ;; from solarized-dark
+(let ((yellow    "#b58900")
+      (s-base02  "#073642"))
+  (when my-display-line-numbers-should-be-enabled
+    (set-face-attribute 'line-number-current-line nil
+                        :weight 'bold
+                        :background s-base02
+                        :foreground yellow)))
 
 ;; minor-modes
     ;; built-in
@@ -58,15 +67,9 @@
 (setq solarized-use-variable-pitch nil
       solarized-scale-org-headlines nil)
 (setq solarized-high-contrast-mode-line t)
-(load-theme 'solarized-dark t)
-  ;; solarized-dark
-(let ((yellow    "#b58900")
-      (s-base02  "#073642"))
-  (when my-display-line-numbers-should-be-enabled
-    (set-face-attribute 'line-number-current-line nil
-                        :weight 'bold
-                        :background s-base02
-                        :foreground yellow)))
+;; (load-theme 'solarized-dark t)
+        ;; dracula
+(load-theme 'dracula t)
 
 ;; extensions
     ;; melpa
