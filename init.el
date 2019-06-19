@@ -14,7 +14,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (dracula-theme f ox-pandoc slime org htmlize paredit ox-reveal org-plus-contrib org-edna evil-surround solarized-theme evil-leader evil))))
+    (haskell-mode dracula-theme f ox-pandoc slime org htmlize paredit ox-reveal org-plus-contrib org-edna evil-surround solarized-theme evil-leader evil))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
