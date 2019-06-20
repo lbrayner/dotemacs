@@ -58,6 +58,8 @@
 (add-hook 'lisp-mode-hook             #'enable-paredit-mode)
 (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
 (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
+        ;; haskell-mode
+(add-hook 'haskell-mode-hook (lambda () (setq-local eldoc-documentation-function nil)))
 
 ;; themes
     ;; melpa
