@@ -83,9 +83,10 @@ want to use in the modeline *in lieu of* the original.")
         do (let* ((mode (car cleaner))
                  (mode-str (cdr cleaner))
                  (old-mode-str (cdr (assq mode minor-mode-alist))))
+             ;; minor mode
              (when old-mode-str
                  (setcar old-mode-str mode-str))
-               ;; major mode
+             ;; major mode
              (when (eq mode major-mode)
                (setq mode-name mode-str)))))
 
