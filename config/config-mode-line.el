@@ -76,7 +76,6 @@ When you add a new element to the alist, keep in mind that you
 must pass the correct minor/major mode symbol and a string you
 want to use in the modeline *in lieu of* the original.")
 
-
 (defun clean-mode-line ()
   (interactive)
   (loop for cleaner in mode-line-cleaner-alist
@@ -89,7 +88,6 @@ want to use in the modeline *in lieu of* the original.")
              ;; major mode
              (when (eq mode major-mode)
                (setq mode-name mode-str)))))
-
 
 (add-hook 'after-change-major-mode-hook 'clean-mode-line)
 
