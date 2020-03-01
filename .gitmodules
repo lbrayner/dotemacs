@@ -1,6 +1,6 @@
 [submodule "github/icicles"]
-	path = github/icicles
+	path = github/packages/icicles
 	url = https://github.com/emacsmirror/icicles
 [submodule "github/elisp-custom-features"]
-	path = github/elisp-custom-features
+	path = github/packages/elisp-custom-features
 	url = https://github.com/lbrayner/elisp-custom-features

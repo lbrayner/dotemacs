@@ -62,15 +62,17 @@
 (add-hook 'haskell-mode-hook (lambda () (setq-local eldoc-documentation-function nil)))
 
 ;; themes
+    ;; emacs-color-theme-solarized
+(load-theme 'solarized t)
     ;; melpa
         ;; solarized
-(setq solarized-use-variable-pitch nil
-      solarized-scale-org-headlines nil)
-(setq solarized-high-contrast-mode-line t)
+;; (setq solarized-use-variable-pitch nil
+;;       solarized-scale-org-headlines nil)
+;; (setq solarized-high-contrast-mode-line t)
 ;; (load-theme 'solarized-dark t)
         ;; dracula
-(if (window-system)
-    (load-theme 'dracula t))
+; (if (window-system)
+;     (load-theme 'dracula t))
 
 ;; extensions
     ;; melpa
@@ -145,11 +147,15 @@
 (defvar my-emacs-github-packages-dir (concat user-emacs-directory "github/")
   "Where Github packages are stored.")
 
-(let* ((github-directory my-emacs-github-packages-dir)
-       (directory-exists? (file-directory-p github-directory)))
-  (if directory-exists?
-      (cl-loop for dir in (f-directories github-directory)
-                        do (add-to-list 'load-path dir))))
+(let* ((github-packages (concat my-emacs-github-packages-dir "packages/"))
+       (github-color-themes (concat my-emacs-github-packages-dir "color-themes/"))
+       (directory-exists? (file-directory-p github-packages)))
+  (if (file-directory-p github-packages)
+      (cl-loop for dir in (f-directories github-packages)
+                        do (add-to-list 'load-path dir)))
+  (if (file-directory-p github-color-themes)
+      (cl-loop for dir in (f-directories github-color-themes)
+                        do (add-to-list 'custom-theme-load-path dir))))
 
 (let* ((config-directory (concat user-emacs-directory "config/"))
        (directory-exists? (file-directory-p config-directory)))
