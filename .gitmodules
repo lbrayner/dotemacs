@@ -4,3 +4,6 @@
 [submodule "github/elisp-custom-features"]
 	path = github/packages/elisp-custom-features
 	url = https://github.com/lbrayner/elisp-custom-features
+[submodule "github/color-themes/emacs-color-theme-solarized"]
+	path = github/color-themes/emacs-color-theme-solarized
+	url = https://github.com/sellout/emacs-color-theme-solarized

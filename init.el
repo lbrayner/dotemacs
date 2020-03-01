@@ -28,13 +28,6 @@
 (defvar my-linum-mode-should-be-enabled (version< emacs-version "26.0.50")
   "If `linum-mode' should be enabled.")
 
-  ;; from solarized-dark
-(let ((yellow    "#b58900"))
-  (when my-display-line-numbers-should-be-enabled
-    (set-face-attribute 'line-number-current-line nil
-                        :weight 'bold
-                        :foreground yellow)))
-
 ;; minor-modes
     ;; built-in
         ;; Display-Line-Numbers
@@ -60,19 +53,6 @@
 (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
         ;; haskell-mode
 (add-hook 'haskell-mode-hook (lambda () (setq-local eldoc-documentation-function nil)))
-
-;; themes
-    ;; emacs-color-theme-solarized
-(load-theme 'solarized t)
-    ;; melpa
-        ;; solarized
-;; (setq solarized-use-variable-pitch nil
-;;       solarized-scale-org-headlines nil)
-;; (setq solarized-high-contrast-mode-line t)
-;; (load-theme 'solarized-dark t)
-        ;; dracula
-; (if (window-system)
-;     (load-theme 'dracula t))
 
 ;; extensions
     ;; melpa
