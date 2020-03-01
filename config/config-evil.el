@@ -154,8 +154,8 @@
 (setq evil-motion-state-cursor '("orange" box))
 (setq evil-normal-state-cursor '("green" box))
 (setq evil-visual-state-cursor '("orange" box))
-(setq evil-insert-state-cursor '("red" bar))
-(setq evil-replace-state-cursor '("red" bar))
+(setq evil-insert-state-cursor '("green" bar))
+(setq evil-replace-state-cursor '("green" bar))
 (setq evil-operator-state-cursor '("red" hollow))
 
 (let ((emacs-state-major-modes
