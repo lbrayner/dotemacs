@@ -28,3 +28,6 @@
 ;; point at top or bottom of screen
 (global-set-key (kbd "<C-home>") #'my-move-to-window-line-top)
 (global-set-key (kbd "<C-end>") #'my-move-to-window-line-bottom)
+
+;; hippie-expand
+(global-set-key (kbd "M-/") 'hippie-expand)
