@@ -69,7 +69,8 @@
 (setq solarized-high-contrast-mode-line t)
 ;; (load-theme 'solarized-dark t)
         ;; dracula
-(load-theme 'dracula t)
+(if (window-system)
+    (load-theme 'dracula t))
 
 ;; extensions
     ;; melpa
