@@ -60,8 +60,7 @@ If buffer-or-name is nil return current buffer's mode."
   `my-emacs-github-packages-dir'."
   (interactive)
   (let* ((github-packages (concat my-emacs-github-packages-dir "packages/"))
-         (github-color-themes (concat my-emacs-github-packages-dir "color-themes/"))
-         )
+         (github-color-themes (concat my-emacs-github-packages-dir "color-themes/")))
     (if (file-directory-p github-packages)
         (let ((subdirs (append (f-directories github-packages)
                                (f-directories github-color-themes))))
