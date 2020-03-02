@@ -1,14 +1,15 @@
 ;; themes
     ;; emacs-color-theme-solarized
+(customize-set-variable 'frame-background-mode 'dark)
 (load-theme 'solarized t)
 
-(defun solarized-init-frame (frame)
-  (let ((mode (if (display-graphic-p frame) 'light 'dark)))
-    (set-frame-parameter frame 'background-mode mode)
-    (set-terminal-parameter frame 'background-mode mode))
-  (enable-theme 'solarized))
+;; (defun solarized-init-frame (frame)
+;;   (let ((mode (if (display-graphic-p frame) 'light 'dark)))
+;;     (set-frame-parameter frame 'background-mode mode)
+;;     (set-terminal-parameter frame 'background-mode mode))
+;;   (enable-theme 'solarized))
 
-(add-hook 'after-make-frame-functions #'solarized-init-frame)
+;; (add-hook 'after-make-frame-functions #'solarized-init-frame)
 
     ;; melpa
         ;; solarized
