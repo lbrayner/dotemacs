@@ -36,9 +36,11 @@
       (delete-file my-org-pandoc-temporary-css-file))
   (setq my-org-pandoc-temporary-css-file nil))
 
-(add-hook 'org-export-before-processing-hook 'my-org-pandoc-inline-css-hook)
-(add-hook 'org-pandoc-after-processing-html5-pdf-hook 'my-org-pandoc-delete-temporary-css-file-hook)
-(add-hook 'org-pandoc-after-processing-html5-hook 'my-org-pandoc-delete-temporary-css-file-hook)
+(add-hook 'org-export-before-processing-hook #'my-org-pandoc-inline-css-hook)
+(add-hook 'org-pandoc-after-processing-html5-pdf-hook
+          #'my-org-pandoc-delete-temporary-css-file-hook)
+(add-hook 'org-pandoc-after-processing-html5-hook
+          #'my-org-pandoc-delete-temporary-css-file-hook)
 
 ;; custom vars
 

@@ -32,8 +32,8 @@
 (setq-default org-export-with-toc nil)
 (setq-default org-use-sub-superscripts '{})
 (setq-default org-export-with-sub-superscripts '{})
-(add-hook 'org-mode-hook 'lbrayner-org-mode-hook)
-(add-hook 'org-export-before-processing-hook 'my-org-inline-css-hook)
+(add-hook 'org-mode-hook #'lbrayner-org-mode-hook)
+(add-hook 'org-export-before-processing-hook #'my-org-inline-css-hook)
         ;; babel
 (org-babel-do-load-languages
  'org-babel-load-languages
