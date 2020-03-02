@@ -128,11 +128,12 @@
   "Where Github packages are stored.")
 
 (let* ((github-packages (concat my-emacs-github-packages-dir "packages/"))
-       (github-color-themes (concat my-emacs-github-packages-dir "color-themes/"))
-       (directory-exists? (file-directory-p github-packages)))
+       (github-color-themes (concat my-emacs-github-packages-dir "color-themes/")))
   (if (file-directory-p github-packages)
-      (cl-loop for dir in (f-directories github-packages)
-                        do (add-to-list 'load-path dir)))
+      (let ((subdirs (append (f-directories github-packages)
+                             (f-directories github-color-themes))))
+        (cl-loop for dir in subdirs
+                 do (add-to-list 'load-path dir))))
   (if (file-directory-p github-color-themes)
       (cl-loop for dir in (f-directories github-color-themes)
                         do (add-to-list 'custom-theme-load-path dir))))
