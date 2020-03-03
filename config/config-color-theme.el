@@ -2,6 +2,7 @@
     ;; emacs-color-theme-solarized
 (customize-set-variable 'frame-background-mode 'dark)
 (load-theme 'solarized t)
+(set-face-attribute 'default nil :height 105)
 
 ;; (defun solarized-init-frame (frame)
 ;;   (let ((mode (if (display-graphic-p frame) 'light 'dark)))
