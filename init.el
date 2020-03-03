@@ -84,7 +84,7 @@
 (put 'narrow-to-region 'disabled nil)
 
 ;; ispell
-(setq ispell-program-name "aspell") 
+(setq ispell-program-name "aspell")
 
 ;; auto-backup
 (setq make-backup-files nil)
