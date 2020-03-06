@@ -11,10 +11,11 @@
  '(custom-safe-themes
    (quote
     ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" default)))
+ '(frame-background-mode (quote dark))
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (haskell-mode dracula-theme f ox-pandoc slime org htmlize paredit ox-reveal org-plus-contrib org-edna evil-surround solarized-theme evil-leader evil))))
+    (haskell-mode dracula-theme f ox-pandoc slime org htmlize paredit ox-reveal org-plus-contrib org-edna evil-surround evil-leader evil))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
