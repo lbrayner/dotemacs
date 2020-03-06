@@ -4,7 +4,8 @@
   "Calls `icicle-read-choose-window-args' with `current-prefix-arg'
 set to \\='- and then selects window via
 `icicle-choose-window-by-name'."
-  (interactive (let ((current-prefix-arg  '-))
+  (interactive (let ((current-prefix-arg (cond ((display-graphic-p) '-)
+                                               (t nil))))
                  (icicle-read-choose-window-args)))
   (icicle-choose-window-by-name win-name window-alist))
 
