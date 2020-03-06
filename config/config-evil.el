@@ -198,3 +198,11 @@
             (evil-set-initial-state mode 'motion)
             (set-initial-state-motion (cdr modes))))))
     (set-initial-state-motion motion-state-major-modes)))
+
+;; https://emacs.stackexchange.com/a/31649
+;; Advise end-of-buffer to just go up a line if it leaves you on an empty line
+(defun my-evil-window-bottom-after (&rest _)
+  "If current line is empty, call `evil-previous-line'."
+  (when (looking-at-p "^$") (evil-previous-line)))
+
+(advice-add #'evil-window-bottom :after #'my-evil-window-bottom-after)
