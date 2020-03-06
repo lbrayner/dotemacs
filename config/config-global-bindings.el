@@ -31,3 +31,21 @@
 
 ;; hippie-expand
 (global-set-key (kbd "M-/") 'hippie-expand)
+
+;; https://emacs.stackexchange.com/a/31649
+;; Advise end-of-buffer to just go up a line if it leaves you on an empty line
+(defun my-end-of-buffer-dwim (&rest _)
+  "If current line is empty, call `previous-line'."
+  (when (looking-at-p "^$")
+    (cond ((eq major-mode 'dired-mode)
+           (dired-previous-line 1))
+          (t (previous-line)))))
+
+(advice-add #'end-of-buffer :after #'my-end-of-buffer-dwim)
+
+(defun my-beginning-of-buffer-dwim (&rest _)
+  "Commands run after `beginning-of-buffer' depending on the value of `major-mode'."
+  (cond ((eq major-mode 'dired-mode)
+           (dired-next-dirline 1))))
+
+(advice-add #'beginning-of-buffer :after #'my-beginning-of-buffer-dwim)
