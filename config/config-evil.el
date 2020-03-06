@@ -188,6 +188,7 @@
 
 ;; End of Bailey Ling's snippets
 
+;; motion-state-major-modes currently contains only 1 item
 (let ((motion-state-major-modes '(frames-mode)))
   (cl-labels
       ((set-initial-state-motion
