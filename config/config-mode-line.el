@@ -67,7 +67,7 @@
     (lisp-interaction-mode . "λ")
     (hi-lock-mode . "")
     (python-mode . "Py")
-    (emacs-lisp-mode . "EL")
+    (emacs-lisp-mode . "Ɛ")
     (lisp-mode . "£")
     (nxhtml-mode . "nx"))
   "Alist for `clean-mode-line'.
