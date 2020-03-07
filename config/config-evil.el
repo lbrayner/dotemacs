@@ -89,14 +89,21 @@
     (save-excursion
       (comment-line 1)))
    (t
-    (activate-mark)
     (comment-or-uncomment-region beg end))))
 
 ;; Makes `g' a prefix key in evil-normal-state-map
 (define-key evil-normal-state-map "g" nil)
-(define-key evil-normal-state-map "gc" #'my-evil-comment)
 
+(define-key evil-normal-state-map "gc" #'my-evil-comment)
 (define-key evil-visual-state-map "gc" #'my-evil-comment)
+
+(evil-define-command my-evil-fill (beg end)
+  "Fill text from BED to END."
+  (interactive "<r>")
+  (fill-region beg end))
+
+(define-key evil-normal-state-map "gq" #'my-evil-fill)
+(define-key evil-visual-state-map "gq" #'my-evil-fill)
 
 (defun evil-unimpaired-open-line (n)
   "Performs Tim Pope's unimpaired ]<Space>."
