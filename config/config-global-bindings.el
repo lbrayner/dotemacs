@@ -11,9 +11,9 @@
 
 ;; scroll up and down one line
 (global-set-key (kbd "ESC <down>") #'scroll-up-line)
-(global-set-key (kbd "ESC <up>") #'scroll-down-line) 
+(global-set-key (kbd "ESC <up>") #'scroll-down-line)
 (global-set-key (kbd "<M-down>") #'scroll-up-line)
-(global-set-key (kbd "<M-up>") #'scroll-down-line) 
+(global-set-key (kbd "<M-up>") #'scroll-down-line)
 
 (defun my-move-to-window-line-top ()
   "Position point at the top of the window."
@@ -32,19 +32,6 @@
 ;; hippie-expand
 (global-set-key (kbd "M-/") 'hippie-expand)
 
-;; https://emacs.stackexchange.com/a/4249
-;; remove the functions try-expand-line and try-expand-list from the
-;; list of functions hippie-expand uses to produce expansions
-;; (let ((hippie-functions-to-remove '(try-expand-line try-expand-list)))
-;;   (cl-labels
-;;       ((hippie-remove-functions
-;;         (functions)
-;;         (unless (null functions)
-;;           (let ((function-to-remove (car functions)))
-;;             (delq function-to-remove hippie-expand-try-functions-list)
-;;             (hippie-remove-functions (cdr functions))))))
-;;     (hippie-remove-functions hippie-functions-to-remove)))
-
 (defconst my-hippie-expand-try-functions-list
   (remq 'try-expand-list (remq 'try-expand-line hippie-expand-try-functions-list))
   "A limited set of try functions for `hippie-expand'.")
@@ -55,12 +42,6 @@
                                     my-hippie-expand-try-functions-list))
 
 (add-hook 'paredit-mode-hook #'my-paredit-hippie-try-functions-list)
-
-; (defun my-hippie-expand (arg)
-;   "Performs `hippie-expand' with less functions."
-;   (interactive "P")
-;   (let ((hippie-expand-try-functions-list my-hippie-expand-try-functions-list))
-;     (hippie-expand arg)))
 
 ;; https://emacs.stackexchange.com/a/31649
 ;; Advise end-of-buffer to just go up a line if it leaves you on an empty line
