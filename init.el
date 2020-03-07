@@ -29,6 +29,12 @@
 (defvar my-linum-mode-should-be-enabled (version< emacs-version "26.0.50")
   "If `linum-mode' should be enabled.")
 
+;; major-modes
+    ;; built-in
+        ;; dired
+(setq dired-isearch-filenames t)
+(setq-default dired-omit-mode t)
+
 ;; minor-modes
     ;; built-in
         ;; Display-Line-Numbers
@@ -36,8 +42,6 @@
   (setq-default display-line-numbers 'relative))
         ;; paren
 (show-paren-mode 1)
-        ;; dired
-(setq dired-isearch-filenames t)
         ;; autorevert
 (global-auto-revert-mode)
     ;; melpa
@@ -52,6 +56,7 @@
 (add-hook 'lisp-mode-hook             #'enable-paredit-mode)
 (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
 (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
+(add-hook 'slime-repl-mode-hook       #'enable-paredit-mode)
         ;; haskell-mode
 (add-hook 'haskell-mode-hook (lambda () (setq-local eldoc-documentation-function nil)))
 
