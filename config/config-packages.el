@@ -3,3 +3,6 @@
 
 (require 'smart-tab)
 (global-smart-tab-mode 1)
+;; see function `smart-tab-call-completion-function'
+(setq smart-tab-using-hippie-expand t)
+(setq smart-tab-user-provided-completion-function 'completion-at-point)
