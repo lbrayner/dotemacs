@@ -32,6 +32,7 @@
 ;; major-modes
     ;; built-in
         ;; dired
+(setq dired-listing-switches "-alh")
 (setq dired-isearch-filenames t)
 (setq-default dired-omit-mode t)
 
