@@ -84,12 +84,7 @@
 (evil-define-command my-evil-comment (beg end)
   "Comment text from BEG to END."
   (interactive "<r>")
-  (cond
-   ((= (count-lines beg end) 1)
-    (save-excursion
-      (comment-line 1)))
-   (t
-    (comment-or-uncomment-region beg end))))
+  (comment-or-uncomment-region beg end))
 
 ;; Makes `g' a prefix key in evil-normal-state-map
 (define-key evil-normal-state-map "g" nil)
