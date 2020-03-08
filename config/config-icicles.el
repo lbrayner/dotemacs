@@ -9,4 +9,4 @@ set to \\='- and then selects window via
                  (icicle-read-choose-window-args)))
   (icicle-choose-window-by-name win-name window-alist))
 
-(global-set-key (kbd "<f5>") 'my-icicle-select-window)
+(global-set-key (kbd "<F5>") 'my-icicle-select-window)
