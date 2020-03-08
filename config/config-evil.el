@@ -208,3 +208,13 @@
   (when (looking-at-p "^$") (evil-previous-line)))
 
 (advice-add #'evil-window-bottom :after #'my-evil-window-bottom-after)
+
+(defun my-evil-command-window-ex-after (&rest _)
+  "Insert last selected visual area marks."
+  (let ((other-window-evil-visual-state-p
+         (save-selected-window (select-window (previous-window))
+                               (evil-visual-state-p))))
+    (if other-window-evil-visual-state-p
+        (insert "'<,'>"))))
+
+(advice-add #'evil-command-window-ex :after #'my-evil-command-window-ex-after)
