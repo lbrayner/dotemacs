@@ -7,3 +7,6 @@
 [submodule "github/color-themes/emacs-color-theme-solarized"]
 	path = github/color-themes/emacs-color-theme-solarized
 	url = https://github.com/sellout/emacs-color-theme-solarized
+[submodule "github/packages/smart-tab"]
+	path = github/packages/smart-tab
+	url = https://github.com/genehack/smart-tab
