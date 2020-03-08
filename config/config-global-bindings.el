@@ -1,3 +1,5 @@
+(global-set-key (kbd "C-x C-b") #'ibuffer)
+
 (global-set-key (kbd "C-.") #'other-frame)
 
 (with-eval-after-load 'custom-interactive
@@ -58,6 +60,3 @@
          (dired-next-line 2))))
 
 (advice-add #'beginning-of-buffer :after #'my-beginning-of-buffer-dwim)
-
-;; ace-window
-(global-set-key (kbd "<f10>") 'ace-window)

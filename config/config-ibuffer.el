@@ -1,5 +1,3 @@
-(global-set-key (kbd "C-x C-b") #'ibuffer)
-
 ;; https://www.emacswiki.org/emacs/IbufferMode#toc11
 ;; https://github.com/purcell/emacs.d/blob/master/lisp/init-ibuffer.el
 (with-eval-after-load 'ibuffer
