@@ -14,45 +14,6 @@
       (kill-new filename)
       (message "Copied buffer file name '%s' to the clipboard." filename))))
 
-;; https://stackoverflow.com/a/22460428/2856535
-(defun buffer-mode (&optional buffer-or-name)
-  "Returns the major mode associated with a buffer.
-If buffer-or-name is nil return current buffer's mode."
-  (interactive)
-  (message "%s"
-           (buffer-local-value
-            'major-mode
-            (if buffer-or-name (get-buffer buffer-or-name) (current-buffer)))))
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; insert file name at point                                              ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; https://www.emacswiki.org/emacs/InsertFileName
-(defun bjm/insert-file-name (filename &optional args)
-  "Insert name of file FILENAME into buffer after point.
-
-  Prefixed with \\[universal-argument], expand the file name to
-  its fully canocalized path.  See `expand-file-name'.
-
-  Prefixed with \\[negative-argument], use relative path to file
-  name from current directory, `default-directory'.  See
-  `file-relative-name'.
-
-  The default with no prefix is to insert the file name exactly as
-  it appears in the minibuffer prompt."
-  ;; Based on insert-file in Emacs -- ashawley 20080926
-  (interactive "*fInsert file name: \nP")
-  (cond ((eq '- args)
-        (insert (expand-file-name filename)))
-        ((not (null args))
-         (insert (file-relative-name filename)))
-        (t
-         (insert filename))))
-
-;; bind it
-(global-set-key (kbd "C-c b i") 'bjm/insert-file-name)
-
 ;; recompile all github directories
 
 (defun my-byte-recompile-github-subdirectories ()
