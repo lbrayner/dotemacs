@@ -15,7 +15,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (haskell-mode dracula-theme f ox-pandoc slime org htmlize paredit ox-reveal org-plus-contrib org-edna evil-surround evil-leader evil))))
+    (ace-window haskell-mode dracula-theme f ox-pandoc slime org htmlize paredit ox-reveal org-plus-contrib org-edna evil-surround evil-leader evil))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -23,33 +23,63 @@
  ;; If there is more than one, they won't work right.
  )
 
-(defvar my-display-line-numbers-should-be-enabled (version<= "26.0.50" emacs-version)
-  "If `display-line-numbers' should be enabled.")
+;; |               |
+;; | CONFIGURATION |
+;; |               |
 
-(defvar my-linum-mode-should-be-enabled (version< emacs-version "26.0.50")
-  "If `linum-mode' should be enabled.")
-
-;; major-modes
-    ;; built-in
-        ;; dired
+    ;; default-directory
+(setq default-directory "~/")
+    ;; cursor
+(setq blink-cursor-blinks 1)
+    ;; menus and scroll bar
+(menu-bar-mode -1)
+    ;; (toggle-scroll-bar -1)
+(add-to-list 'default-frame-alist '(vertical-scroll-bars . nil))
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+(tool-bar-mode -1)
+    ;; mouse
+(mouse-avoidance-mode 'banish)
+    ;; mode line
+(setq column-number-mode t)
+    ;; narrow mode
+(put 'narrow-to-region 'disabled nil)
+    ;; ispell
+(setq ispell-program-name "aspell")
+    ;; auto-backup
+(setq make-backup-files nil)
+    ;; tabs
+(setq-default indent-tabs-mode nil)
+(setq tab-stop-list (number-sequence 4 120 4))
+    ;; files
+(setq delete-old-versions t)
+    ;; encoding
+(set-buffer-file-coding-system 'utf-8-unix)
+(prefer-coding-system 'utf-8-unix)
+    ;; paren
+(show-paren-mode 1)
+    ;; autorevert
+(global-auto-revert-mode)
+    ;; dired
 (setq dired-listing-switches "-alh")
 (setq dired-isearch-filenames t)
 (setq-default dired-omit-mode t)
-
-;; minor-modes
-    ;; built-in
-        ;; Display-Line-Numbers
+    ;; Display-Line-Numbers
+(defvar my-display-line-numbers-should-be-enabled (version<= "26.0.50" emacs-version)
+  "If `display-line-numbers' should be enabled.")
 (when my-display-line-numbers-should-be-enabled
   (setq-default display-line-numbers 'relative))
-        ;; paren
-(show-paren-mode 1)
-        ;; autorevert
-(global-auto-revert-mode)
-    ;; melpa
-        ;; slime
+(setq global-visual-line-mode t)
+    ;; disabling annoying commands
+(put 'view-hello-file 'disabled t)
+
+;; |                             |
+;; | MELPA PACKAGE CONFIGURATION |
+;; |                             |
+
+    ;; slime
 (setq inferior-lisp-program "sbcl")
 (setq slime-contribs '(slime-fancy))
-        ;; paredit
+    ;; paredit
 (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
 (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
 (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
@@ -58,63 +88,12 @@
 (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
 (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
 (add-hook 'slime-repl-mode-hook       #'enable-paredit-mode)
-        ;; haskell-mode
+    ;; haskell-mode
 (add-hook 'haskell-mode-hook (lambda () (setq-local eldoc-documentation-function nil)))
 
-;; extensions
-    ;; melpa
-        ;; linum-relative
-(when my-linum-mode-should-be-enabled
-  (linum-relative-global-mode)
-  (setq linum-relative-current-symbol "→"))
-
-;; various
-(setq default-directory "~/")
-
-;; cursor
-(setq blink-cursor-blinks 1)
-
-;; menus and scroll bar
-(menu-bar-mode -1)
-;; (toggle-scroll-bar -1)
-(add-to-list 'default-frame-alist '(vertical-scroll-bars . nil))
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
-(tool-bar-mode -1)
-
-;; mouse
-(mouse-avoidance-mode 'banish)
-
-;; mode line
-(setq column-number-mode t)
-
-;; narrow mode
-(put 'narrow-to-region 'disabled nil)
-
-;; ispell
-(setq ispell-program-name "aspell")
-
-;; auto-backup
-(setq make-backup-files nil)
-
-;; tabs
-(setq-default indent-tabs-mode nil)
-(setq tab-stop-list (number-sequence 4 120 4))
-
-;; files
-(setq delete-old-versions t)
-
-;; encoding
-(set-buffer-file-coding-system 'utf-8-unix)
-(prefer-coding-system 'utf-8-unix)
-
-;; after
-    ;; configuration
-        ;; minor-modes
-            ;; built-in
-                ;; linum
-;; (set-face-attribute 'linum nil :height 100)
-                ;; visual-line-mode
-(setq global-visual-line-mode t)
+;; |                                 |
+;; | CONFIG FOLDER & GITHUB PACKAGES |
+;; |                                 |
 
 ;; loading files from config folder
 ;; from Bailey Ling's dotemacs
@@ -153,6 +132,3 @@
                             (load (file-name-sans-extension file))
                             ('error (with-current-buffer "*scratch*"
                                     (insert (format "[INIT ERROR]\n%s\n%s\n\n" file ex))))))))
-
-;; disabling annoying commands
-(put 'view-hello-file 'disabled t)
