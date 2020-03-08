@@ -2,11 +2,11 @@
 
 ;; https://www.emacswiki.org/emacs/IbufferMode#toc11
 ;; https://github.com/purcell/emacs.d/blob/master/lisp/init-ibuffer.el
-(after-load 'ibuffer
-            ;; Use human readable Size column instead of original one
-            (define-ibuffer-column size-h
-              (:name "Size" :inline t)
-              (file-size-human-readable (buffer-size))))
+(with-eval-after-load 'ibuffer
+  ;; Use human readable Size column instead of original one
+  (define-ibuffer-column size-h
+    (:name "Size" :inline t)
+    (file-size-human-readable (buffer-size))))
 
 ;; Modify the default ibuffer-formats
 (setq ibuffer-formats
