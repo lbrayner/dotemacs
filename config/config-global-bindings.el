@@ -58,3 +58,6 @@
          (dired-next-line 2))))
 
 (advice-add #'beginning-of-buffer :after #'my-beginning-of-buffer-dwim)
+
+;; ace-window
+(global-set-key (kbd "<F10>") 'ace-window)
