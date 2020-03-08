@@ -211,10 +211,10 @@
 
 (defun my-evil-command-window-ex-after (&rest _)
   "Insert last selected visual area marks."
-  (let ((other-window-evil-visual-state-p
+  (let ((previous-window-evil-visual-state-p
          (save-selected-window (select-window (previous-window))
                                (evil-visual-state-p))))
-    (if other-window-evil-visual-state-p
+    (if previous-window-evil-visual-state-p
         (insert "'<,'>"))))
 
 (advice-add #'evil-command-window-ex :after #'my-evil-command-window-ex-after)
