@@ -124,13 +124,13 @@
                  do (add-to-list 'load-path dir))))
   (if (file-directory-p github-color-themes)
       (cl-loop for dir in (f-directories github-color-themes)
-                        do (add-to-list 'custom-theme-load-path dir))))
+               do (add-to-list 'custom-theme-load-path dir))))
 
 (let* ((config-directory (concat user-emacs-directory "config/"))
        (directory-exists? (file-directory-p config-directory)))
   (if directory-exists?
       (cl-loop for file in (directory-files-recursively config-directory "\\.el$")
-                        do (condition-case ex
-                            (load (file-name-sans-extension file))
-                            ('error (with-current-buffer "*scratch*"
-                                    (insert (format "[INIT ERROR]\n%s\n%s\n\n" file ex))))))))
+               do (condition-case ex
+                      (load (file-name-sans-extension file))
+                    ('error (with-current-buffer "*scratch*"
+                              (insert (format "[INIT ERROR]\n%s\n%s\n\n" file ex))))))))
