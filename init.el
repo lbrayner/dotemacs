@@ -15,7 +15,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (ace-window haskell-mode dracula-theme f ox-pandoc slime org htmlize paredit ox-reveal org-plus-contrib org-edna evil-surround evil-leader evil))))
+    (auto-dim-other-buffers ace-window haskell-mode dracula-theme f ox-pandoc slime org htmlize paredit ox-reveal org-plus-contrib org-edna evil-surround evil-leader evil))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -90,6 +90,8 @@
 (add-hook 'slime-repl-mode-hook       #'enable-paredit-mode)
     ;; haskell-mode
 (add-hook 'haskell-mode-hook (lambda () (setq-local eldoc-documentation-function nil)))
+    ;; auto-dim-other-buffers
+(auto-dim-other-buffers-mode)
 
 ;; |                                 |
 ;; | CONFIG FOLDER & GITHUB PACKAGES |
