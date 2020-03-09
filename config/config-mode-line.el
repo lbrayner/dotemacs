@@ -63,6 +63,8 @@
     (eldoc-mode . "")
     (abbrev-mode . "")
     (undo-tree-mode . " U")
+    (auto-dim-other-buffers-mode . " Д")
+    (smart-tab-mode . " ➤")
     ;; Major modes
     (lisp-interaction-mode . "λ")
     (hi-lock-mode . "")
