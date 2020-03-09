@@ -62,7 +62,8 @@
     ;; dired
 (setq dired-listing-switches "-alh")
 (setq dired-isearch-filenames t)
-(setq-default dired-omit-mode t)
+(with-eval-after-load 'dired (require 'dired-x))
+(add-hook 'dired-mode-hook (lambda () (dired-omit-mode 1)))
     ;; Display-Line-Numbers
 (defvar my-display-line-numbers-should-be-enabled (version<= "26.0.50" emacs-version)
   "If `display-line-numbers' should be enabled.")
