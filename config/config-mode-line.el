@@ -61,9 +61,10 @@
     (yas/minor-mode . " υ")
     (paredit-mode . " π")
     (eldoc-mode . "")
+    (slime-autodoc-mode . "")
     (abbrev-mode . "")
-    (undo-tree-mode . " U")
-    (auto-dim-other-buffers-mode . " Д")
+    (undo-tree-mode . "")
+    (auto-dim-other-buffers-mode . "")
     (smart-tab-mode . " ➤")
     ;; Major modes
     (lisp-interaction-mode . "λ")
