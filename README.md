@@ -1,4 +1,4 @@
-![Screenshot](https://user-images.githubusercontent.com/5733531/75808663-3b3b2280-5d66-11ea-810c-9fe5569063d8.png)
+![Screenshot](https://user-images.githubusercontent.com/5733531/76449465-e5402d80-63aa-11ea-8478-889294d7badf.png)
 
 It's fun reproducing my Vim workflow on Emacs. Plus Lisp is such a nice
 (family of) language(s).
