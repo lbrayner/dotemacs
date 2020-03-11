@@ -19,9 +19,9 @@
 
 (defun my-evil-paredit-define-keys (map)
   (evil-define-key 'insert map (kbd "ESC <left>") #'paredit-backward-barf-sexp)
-  (evil-define-key 'insert map (kbd "ESC <right>") #'paredit-backward-barf-sexp)
+  (evil-define-key 'insert map (kbd "ESC <right>") #'paredit-forward-barf-sexp)
   (evil-define-key 'insert map (kbd "<M-left>") #'paredit-backward-barf-sexp)
-  (evil-define-key 'insert map (kbd "<M-right>") #'paredit-backward-barf-sexp)
+  (evil-define-key 'insert map (kbd "<M-right>") #'paredit-forward-barf-sexp)
   (evil-define-key 'insert map (kbd "<S-left>") #'paredit-backward-slurp-sexp)
   (evil-define-key 'insert map (kbd "<S-right>") #'paredit-forward-slurp-sexp))
 

@@ -89,6 +89,10 @@
 (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
 (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
 (add-hook 'slime-repl-mode-hook       #'enable-paredit-mode)
+
+(let ((modifier 'shift))
+  (global-set-key (vector (list modifier 'left))  #'paredit-backward-slurp-sexp)
+  (global-set-key (vector (list modifier 'right)) #'paredit-forward-slurp-sexp))
     ;; haskell-mode
 (add-hook 'haskell-mode-hook (lambda () (setq-local eldoc-documentation-function nil)))
     ;; auto-dim-other-buffers

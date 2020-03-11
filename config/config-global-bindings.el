@@ -5,7 +5,8 @@
 (with-eval-after-load 'custom-interactive
   (global-set-key (kbd "C-,") #'other-frame-reverse))
 
-(windmove-default-keybindings)
+;; windmove on hold (in favor of paredit) till I find a suitable modifier
+;; (windmove-default-keybindings)
 
 (global-set-key (kbd "<f12>") #'whitespace-mode)
 
