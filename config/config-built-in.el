@@ -1,7 +1,7 @@
     ;; ISEARCH
 ;; https://www.emacswiki.org/emacs/SearchAtPoint
 (defun isearch-yank-regexp (regexp)
-  "Pull REGEXP into search regexp." 
+  "Pull REGEXP into search regexp."
   (let ((isearch-regexp nil)) ;; Dynamic binding of global.
     (isearch-yank-string regexp))
   (if (not isearch-regexp)

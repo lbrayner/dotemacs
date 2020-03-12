@@ -72,6 +72,8 @@
 (setq global-visual-line-mode t)
     ;; disabling annoying commands
 (put 'view-hello-file 'disabled t)
+    ;; highlighting trailing whitespace
+(setq-default show-trailing-whitespace t)
 
 ;; |                             |
 ;; | MELPA PACKAGE CONFIGURATION |
