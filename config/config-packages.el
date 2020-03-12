@@ -30,17 +30,20 @@ set to \\='- and then selects window via
     ;; PAREDIT & EVIL-PAREDIT
 (require 'evil-paredit)
 
-(let ((paredit-major-modes '(emacs-lisp-mode
-                             eval-expression-minibuffer-setup
+(let ((evil-paredit-major-modes '(emacs-lisp-mode
+                                  lisp-mode
+                                  lisp-interaction-mode
+                                  scheme-mode))
+      (paredit-major-modes '(eval-expression-minibuffer-setup
                              ielm-mode
-                             lisp-mode
-                             lisp-interaction-mode
-                             scheme-mode
                              slime-repl-mode)))
-  (cl-loop for mode in paredit-major-modes
+  (cl-loop for mode in evil-paredit-major-modes
            do (let ((hook (concat (symbol-name mode) "-hook")))
                 (add-hook (intern hook) #'enable-paredit-mode)
-                (add-hook (intern hook) #'evil-paredit-mode))))
+                (add-hook (intern hook) #'evil-paredit-mode)))
+  (cl-loop for mode in paredit-major-modes
+           do (let ((hook (concat (symbol-name mode) "-hook")))
+                (add-hook (intern hook) #'enable-paredit-mode))))
 
 (let ((modifier 'shift))
   (global-set-key (vector (list modifier 'left))  #'paredit-backward-slurp-sexp)
