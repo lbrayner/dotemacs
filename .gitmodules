@@ -10,3 +10,6 @@
 [submodule "github/packages/smart-tab"]
 	path = github/packages/smart-tab
 	url = https://github.com/genehack/smart-tab
+[submodule "github/packages/evil-paredit"]
+	path = github/packages/evil-paredit
+	url = https://github.com/roman/evil-paredit
