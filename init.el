@@ -74,6 +74,7 @@
 (put 'view-hello-file 'disabled t)
     ;; highlighting trailing whitespace
 (setq-default show-trailing-whitespace t)
+(add-hook 'slime-repl-mode-hook (lambda () (setq show-trailing-whitespace nil)))
 
 ;; |                             |
 ;; | MELPA PACKAGE CONFIGURATION |
@@ -84,13 +85,17 @@
 (setq slime-contribs '(slime-fancy))
     ;; paredit
 (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
-(add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
-(add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
-(add-hook 'ielm-mode-hook             #'enable-paredit-mode)
-(add-hook 'lisp-mode-hook             #'enable-paredit-mode)
-(add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
-(add-hook 'scheme-mode-hook           #'enable-paredit-mode)
-(add-hook 'slime-repl-mode-hook       #'enable-paredit-mode)
+
+(let ((paredit-major-modes '(emacs-lisp-mode
+                             eval-expression-minibuffer-setup
+                             ielm-mode
+                             lisp-mode
+                             lisp-interaction-mode
+                             scheme-mode
+                             slime-repl-mode)))
+  (cl-loop for mode in paredit-major-modes
+           do (let ((hook (concat (symbol-name mode) "-hook")))
+                (add-hook (intern hook) #'enable-paredit-mode))))
 
 (let ((modifier 'shift))
   (global-set-key (vector (list modifier 'left))  #'paredit-backward-slurp-sexp)
