@@ -67,6 +67,7 @@
     (auto-dim-other-buffers-mode . "")
     (smart-tab-mode . " ➤")
     ;; Major modes
+    (fundamental-mode . "Φ")
     (lisp-interaction-mode . "λ")
     (hi-lock-mode . "")
     (python-mode . "Py")
