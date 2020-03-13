@@ -74,7 +74,11 @@
 (put 'view-hello-file 'disabled t)
     ;; highlighting trailing whitespace
 (setq-default show-trailing-whitespace t)
-(add-hook 'slime-repl-mode-hook (lambda () (setq show-trailing-whitespace nil)))
+(let ((no-show-trailing-space '(slime-repl-mode
+                                help-mode)))
+  (cl-loop for mode in no-show-trailing-space
+           do (let ((hook (concat (symbol-name mode) "-hook")))
+                (add-hook (intern hook) (lambda () (setq show-trailing-whitespace nil))))))
 
 ;; |                             |
 ;; | MELPA PACKAGE CONFIGURATION |
