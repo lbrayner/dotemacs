@@ -33,16 +33,23 @@
 ;; hippie-expand
 (global-set-key (kbd "M-/") 'hippie-expand)
 
+;; modify the order of my-hippie-expand-try-functions-list
+(cl-labels
+    ((add-to-last (item list)
+                  "Adds ITEM to the end of LIST uniquely. No side effects."
+                  (append (remq item list) (list item))))
+  (setq hippie-expand-try-functions-list
+        (add-to-last 'try-complete-file-name
+                     (add-to-last 'try-complete-file-name-partially
+                                  hippie-expand-try-functions-list))))
+
 (defconst my-hippie-expand-try-functions-list
   (remq 'try-expand-list (remq 'try-expand-line hippie-expand-try-functions-list))
   "A limited set of try functions for `hippie-expand'.")
 
-(defun my-paredit-hippie-try-functions-list ()
-  "Makes a buffer-local variable that shadows `hippie-expand-try-functions-list'."
-  (set (make-local-variable 'hippie-expand-try-functions-list)
-                                    my-hippie-expand-try-functions-list))
-
-(add-hook 'paredit-mode-hook #'my-paredit-hippie-try-functions-list)
+(add-hook 'paredit-mode-hook (lambda ()
+                               (setq-local hippie-expand-try-functions-list
+                                           my-hippie-expand-try-functions-list)))
 
 ;; https://emacs.stackexchange.com/a/31649
 ;; Advise end-of-buffer to just go up a line if it leaves you on an empty line
