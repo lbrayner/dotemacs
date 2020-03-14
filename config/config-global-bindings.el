@@ -33,7 +33,7 @@
 ;; hippie-expand
 (global-set-key (kbd "M-/") 'hippie-expand)
 
-;; modify the order of my-hippie-expand-try-functions-list
+;; modifying the order of hippie-expand-try-functions-list
 (cl-labels
     ((add-to-last (item list)
                   "Adds ITEM to the end of LIST uniquely. No side effects."
