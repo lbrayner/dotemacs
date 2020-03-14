@@ -27,24 +27,27 @@ set to \\='- and then selects window via
     ;; ACE-WINDOW
 (global-set-key (kbd "<f10>") 'ace-window)
 
-    ;; PAREDIT & EVIL-PAREDIT
-(require 'evil-paredit)
+    ;; SMARTPARENS
+(require 'smartparens-config)
 
-(let ((evil-paredit-major-modes '(emacs-lisp-mode
-                                  lisp-mode
-                                  lisp-interaction-mode
-                                  scheme-mode))
-      (paredit-major-modes '(eval-expression-minibuffer-setup
-                             ielm-mode
-                             slime-repl-mode)))
-  (cl-loop for mode in evil-paredit-major-modes
+(let ((smartparens-evil-major-modes '(emacs-lisp-mode
+                                      lisp-mode
+                                      lisp-interaction-mode
+                                      scheme-mode))
+      (smartparens-major-modes '(eval-expression-minibuffer-setup
+                                 ielm-mode
+                                 slime-repl-mode)))
+  (cl-loop for mode in smartparens-evil-major-modes
+           do (add-hook 'smartparens-enabled-hook #'evil-smartparens-mode))
+  (cl-loop for mode in (append smartparens-evil-major-modes
+                               smartparens-major-modes)
            do (let ((hook (concat (symbol-name mode) "-hook")))
-                (add-hook (intern hook) #'enable-paredit-mode)
-                (add-hook (intern hook) #'evil-paredit-mode)))
-  (cl-loop for mode in paredit-major-modes
-           do (let ((hook (concat (symbol-name mode) "-hook")))
-                (add-hook (intern hook) #'enable-paredit-mode))))
+                (add-hook (intern hook) #'smartparens-strict-mode))))
+
+(sp-use-smartparens-bindings)
 
 (let ((modifier 'shift))
-  (global-set-key (vector (list modifier 'left))  #'paredit-backward-slurp-sexp)
-  (global-set-key (vector (list modifier 'right)) #'paredit-forward-slurp-sexp))
+  (global-set-key (vector (list modifier 'up))    #'sp-backward-slurp-sexp)
+  (global-set-key (vector (list modifier 'down))  #'sp-backward-barf-sexp)
+  (global-set-key (vector (list modifier 'left))  #'sp-forward-barf-sexp)
+  (global-set-key (vector (list modifier 'right)) #'sp-forward-slurp-sexp))

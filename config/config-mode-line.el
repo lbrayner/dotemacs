@@ -59,7 +59,8 @@
 (defvar mode-line-cleaner-alist
   `((auto-complete-mode . " α")
     (yas/minor-mode . " υ")
-    (paredit-mode . " π")
+    (smartparens-mode . " π")
+    (evil-smartparens-mode . "")
     (eldoc-mode . "")
     (slime-autodoc-mode . "")
     (abbrev-mode . "")

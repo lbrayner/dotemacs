@@ -15,7 +15,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (auto-dim-other-buffers ace-window haskell-mode dracula-theme f ox-pandoc slime org htmlize paredit ox-reveal org-plus-contrib org-edna evil-surround evil-leader evil))))
+    (evil-smartparens smartparens auto-dim-other-buffers ace-window haskell-mode dracula-theme f ox-pandoc slime org htmlize paredit ox-reveal org-plus-contrib org-edna evil-surround evil-leader evil))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
