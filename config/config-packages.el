@@ -1,3 +1,36 @@
+;; |       |
+;; | MELPA |
+;; |       |
+
+    ;; SMARTPARENS
+(require 'smartparens-config)
+
+(let ((smartparens-evil-major-modes '(emacs-lisp-mode
+                                      lisp-mode
+                                      lisp-interaction-mode
+                                      scheme-mode))
+      (smartparens-major-modes '(eval-expression-minibuffer-setup
+                                 ielm-mode
+                                 slime-repl-mode)))
+  (cl-loop for mode in smartparens-evil-major-modes
+           do (add-hook 'smartparens-enabled-hook #'evil-smartparens-mode))
+  (cl-loop for mode in (append smartparens-evil-major-modes
+                               smartparens-major-modes)
+           do (let ((hook (concat (symbol-name mode) "-hook")))
+                (add-hook (intern hook) #'smartparens-strict-mode))))
+
+(sp-use-smartparens-bindings)
+
+(let ((modifier 'shift))
+  (global-set-key (vector (list modifier 'up))    #'sp-backward-slurp-sexp)
+  (global-set-key (vector (list modifier 'down))  #'sp-backward-barf-sexp)
+  (global-set-key (vector (list modifier 'left))  #'sp-forward-barf-sexp)
+  (global-set-key (vector (list modifier 'right)) #'sp-forward-slurp-sexp))
+
+;; |        |
+;; | GitHub |
+;; |        |
+
     ;; FRAMES
 (require 'frames)
 (global-set-key (kbd "<f8>") #'frames)
@@ -26,28 +59,3 @@ set to \\='- and then selects window via
 
     ;; ACE-WINDOW
 (global-set-key (kbd "<f10>") 'ace-window)
-
-    ;; SMARTPARENS
-(require 'smartparens-config)
-
-(let ((smartparens-evil-major-modes '(emacs-lisp-mode
-                                      lisp-mode
-                                      lisp-interaction-mode
-                                      scheme-mode))
-      (smartparens-major-modes '(eval-expression-minibuffer-setup
-                                 ielm-mode
-                                 slime-repl-mode)))
-  (cl-loop for mode in smartparens-evil-major-modes
-           do (add-hook 'smartparens-enabled-hook #'evil-smartparens-mode))
-  (cl-loop for mode in (append smartparens-evil-major-modes
-                               smartparens-major-modes)
-           do (let ((hook (concat (symbol-name mode) "-hook")))
-                (add-hook (intern hook) #'smartparens-strict-mode))))
-
-(sp-use-smartparens-bindings)
-
-(let ((modifier 'shift))
-  (global-set-key (vector (list modifier 'up))    #'sp-backward-slurp-sexp)
-  (global-set-key (vector (list modifier 'down))  #'sp-backward-barf-sexp)
-  (global-set-key (vector (list modifier 'left))  #'sp-forward-barf-sexp)
-  (global-set-key (vector (list modifier 'right)) #'sp-forward-slurp-sexp))

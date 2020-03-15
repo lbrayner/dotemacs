@@ -91,23 +91,18 @@
 (add-hook 'haskell-mode-hook (lambda () (setq-local eldoc-documentation-function nil)))
     ;; auto-dim-other-buffers
 (auto-dim-other-buffers-mode)
-
-;; |                                 |
-;; | CONFIG FOLDER & GITHUB PACKAGES |
-;; |                                 |
-
-;; loading files from config folder
-;; from Bailey Ling's dotemacs
-
+    ;; f
 (require 'f)
 
-;; github packages
+;; |                 |
+;; | GitHub PACKAGES |
+;; |                 |
 
 (defvar my-emacs-github-packages-dir (concat user-emacs-directory "github/")
   "Where Github packages are stored.")
 
-(let* ((github-packages (concat my-emacs-github-packages-dir "packages/"))
-       (github-color-themes (concat my-emacs-github-packages-dir "color-themes/")))
+(let ((github-packages (concat my-emacs-github-packages-dir "packages/"))
+      (github-color-themes (concat my-emacs-github-packages-dir "color-themes/")))
   (if (file-directory-p github-packages)
       (let ((subdirs (append (f-directories github-packages)
                              (f-directories github-color-themes))))
@@ -116,6 +111,13 @@
   (if (file-directory-p github-color-themes)
       (cl-loop for dir in (f-directories github-color-themes)
                do (add-to-list 'custom-theme-load-path dir))))
+
+;; |               |
+;; | CONFIG FOLDER |
+;; |               |
+
+;; loading files from config folder
+;; from Bailey Ling's dotemacs
 
 (let* ((config-directory (concat user-emacs-directory "config/"))
        (directory-exists? (file-directory-p config-directory)))
