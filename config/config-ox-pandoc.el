@@ -8,7 +8,7 @@
 (defvar my-org-pandoc-temporary-css-file nil
   "Temporary css file to be deleted.")
 
-(defun my-org-pandoc-inline-css-hook (exporter)
+(defun org-pandoc-inline-css (exporter)
   "Insert custom inline css (pandoc)"
   (when (eq exporter 'pandoc)
     (let* ((dir (ignore-errors (file-name-directory (buffer-file-name))))
@@ -30,17 +30,17 @@
                   temp-file))
         (setq org-pandoc-options (assq-delete-all 'include-before-body org-pandoc-options))))))
 
-(defun my-org-pandoc-delete-temporary-css-file-hook ()
+(defun org-pandoc-delete-temporary-css-file ()
   "Deletes the temporary css file."
   (if my-org-pandoc-temporary-css-file
       (delete-file my-org-pandoc-temporary-css-file))
   (setq my-org-pandoc-temporary-css-file nil))
 
-(add-hook 'org-export-before-processing-hook #'my-org-pandoc-inline-css-hook)
+(add-hook 'org-export-before-processing-hook #'org-pandoc-inline-css)
 (add-hook 'org-pandoc-after-processing-html5-pdf-hook
-          #'my-org-pandoc-delete-temporary-css-file-hook)
+          #'org-pandoc-delete-temporary-css-file)
 (add-hook 'org-pandoc-after-processing-html5-hook
-          #'my-org-pandoc-delete-temporary-css-file-hook)
+          #'org-pandoc-delete-temporary-css-file)
 
 ;; custom vars
 
@@ -55,16 +55,16 @@
 
 ;; filters timestamps through org-timestamp-translate
 
-(defun my-org-pandoc-timestamp (timestamp _contents info)
+(defun my-org-pandoc-timestamp-transcoder (timestamp _contents info)
   (org-timestamp-translate timestamp))
 
 ;; interprets the title of a headline before sending it to the
 ;; underlying transcoder
-(defun my-org-pandoc-headline (headline contents info)
+(defun my-org-pandoc-headline-transcoder (headline contents info)
   (let* ((text (org-export-data
                 (org-element-property :title headline) info))
-        (alt-headline (org-element-put-property
-                       headline :title text)))
+         (alt-headline (org-element-put-property
+                        headline :title text)))
     (org-org-headline alt-headline contents info)))
 
 (with-eval-after-load 'ox-pandoc
@@ -72,33 +72,32 @@
   (eval
    '(progn
       (setf (alist-get 'timestamp
-                            ;; org-export-backend is a struct
-                            ;; and transcoders a slot
-                            (org-export-backend-transcoders
-                             (org-export-get-backend 'pandoc)))
-            'my-org-pandoc-timestamp)
+                       ;; org-export-backend is a struct
+                       ;; and transcoders, a slot
+                       (org-export-backend-transcoders (org-export-get-backend
+                                                        'pandoc)))
+            'my-org-pandoc-timestamp-transcoder)
       (setf (alist-get 'headline
-                            (org-export-backend-transcoders
-                             (org-export-get-backend 'pandoc)))
-            'my-org-pandoc-headline))))
+                       (org-export-backend-transcoders (org-export-get-backend
+                                                        'pandoc)))
+            'my-org-pandoc-headline-transcoder))))
 
 ;; customizing the export menu
-;; for each menu key in my-org-pandoc-menu-keys, replace the current
+;; for each menu key in org-pandoc-menu-keys, replace the current
 ;; action with a "my-" prefixed function
 (with-eval-after-load 'ox-pandoc
-  (cl-labels ((my-org-pandoc-menu-keys
-               () '(?$ ?4 ?% ?5))
-              (customize-menu-entries
-               (as)
-               (unless (null as)
-                 (let* ((a (car as))
-                        (description-action (alist-get a org-pandoc-menu-entry))
-                        (description (car description-action))
-                        (action (car (cdr description-action))))
-                   (setf
-                    (alist-get a org-pandoc-menu-entry)
-                    (list description
-                          (intern-soft
-                           (concat "my-" (symbol-name action)))))
-                   (customize-menu-entries (cdr as))))))
-    (customize-menu-entries (my-org-pandoc-menu-keys))))
+  (let ((org-pandoc-menu-keys '(?$ ?4 ?% ?5)))
+    (cl-labels ((customize-menu-entries
+                 (as)
+                 (unless (null as)
+                   (let* ((a (car as))
+                          (description-action (alist-get a org-pandoc-menu-entry))
+                          (description (car description-action))
+                          (action (car (cdr description-action))))
+                     (setf
+                      (alist-get a org-pandoc-menu-entry)
+                      (list description
+                            (intern-soft
+                             (concat "my-" (symbol-name action)))))
+                     (customize-menu-entries (cdr as))))))
+      (customize-menu-entries org-pandoc-menu-keys))))

@@ -24,7 +24,7 @@
 
   ;; from solarized-theme's solarized-dark
 (let ((yellow "#b58900"))
-  (when my-display-line-numbers-should-be-enabled
+  (when display-line-numbers-should-be-enabled
     (set-face-attribute 'line-number-current-line nil
                         :weight 'bold
                         :foreground yellow)))

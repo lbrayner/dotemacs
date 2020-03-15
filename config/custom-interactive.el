@@ -11,12 +11,12 @@
 
 ;; recompile all github directories
 
-(defun my-byte-recompile-github-subdirectories ()
+(defun byte-recompile-github-subdirectories ()
   "Recompiles all packages and color themes under
-  `my-emacs-github-packages-dir'."
+  `emacs-github-packages-dir'."
   (interactive)
-  (let* ((github-packages (concat my-emacs-github-packages-dir "packages/"))
-         (github-color-themes (concat my-emacs-github-packages-dir "color-themes/")))
+  (let* ((github-packages (concat emacs-github-packages-dir "packages/"))
+         (github-color-themes (concat emacs-github-packages-dir "color-themes/")))
     (if (file-directory-p github-packages)
         (let ((subdirs (append (f-directories github-packages)
                                (f-directories github-color-themes))))

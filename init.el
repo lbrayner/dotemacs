@@ -65,9 +65,9 @@
 (with-eval-after-load 'dired (require 'dired-x))
 (add-hook 'dired-mode-hook (lambda () (dired-omit-mode 1)))
     ;; Display-Line-Numbers
-(defvar my-display-line-numbers-should-be-enabled (version<= "26.0.50" emacs-version)
+(defvar display-line-numbers-should-be-enabled (version<= "26.0.50" emacs-version)
   "If `display-line-numbers' should be enabled.")
-(when my-display-line-numbers-should-be-enabled
+(when display-line-numbers-should-be-enabled
   (setq-default display-line-numbers 'relative))
 (setq global-visual-line-mode t)
     ;; disabling annoying commands
@@ -98,11 +98,11 @@
 ;; | GitHub PACKAGES |
 ;; |                 |
 
-(defvar my-emacs-github-packages-dir (concat user-emacs-directory "github/")
+(defvar emacs-github-packages-dir (concat user-emacs-directory "github/")
   "Where Github packages are stored.")
 
-(let ((github-packages (concat my-emacs-github-packages-dir "packages/"))
-      (github-color-themes (concat my-emacs-github-packages-dir "color-themes/")))
+(let ((github-packages (concat emacs-github-packages-dir "packages/"))
+      (github-color-themes (concat emacs-github-packages-dir "color-themes/")))
   (if (file-directory-p github-packages)
       (let ((subdirs (append (f-directories github-packages)
                              (f-directories github-color-themes))))

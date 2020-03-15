@@ -1,5 +1,5 @@
 ;; https://stackoverflow.com/a/37132338/2856535
-(defun my-org-inline-css-hook (exporter)
+(defun org-inline-css (exporter)
   "Insert custom inline css"
   (when (eq exporter 'html)
     (let* ((dir (ignore-errors (file-name-directory (buffer-file-name))))
@@ -20,7 +20,7 @@
                               "/*]]>*/-->\n"
                               "</style>\n"))))))
 
-(defun lbrayner-org-mode-hook ()
+(defun org-mode-setup ()
       (visual-line-mode t)
       (setq truncate-lines nil))
 
@@ -32,8 +32,8 @@
 (setq-default org-export-with-toc nil)
 (setq-default org-use-sub-superscripts '{})
 (setq-default org-export-with-sub-superscripts '{})
-(add-hook 'org-mode-hook #'lbrayner-org-mode-hook)
-(add-hook 'org-export-before-processing-hook #'my-org-inline-css-hook)
+(add-hook 'org-mode-hook #'org-mode-setup)
+(add-hook 'org-export-before-processing-hook #'org-inline-css)
         ;; babel
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -56,30 +56,29 @@
      #'org-time-stamp-custom-formats-safep)
 
 ;; creates "my-"-prefixed wrappers for functions inside
-;; my-org-export-functions-to-wrap:
-(cl-labels ((my-org-export-functions-to-wrap
-             () '(org-html-export-as-html
-                  org-html-export-to-html
-                  org-pandoc-export-as-html5
-                  org-pandoc-export-to-html5
-                  org-pandoc-export-to-html5-and-open
-                  org-pandoc-export-to-html5-pdf
-                  org-pandoc-export-to-html5-pdf-and-open))
-            (create-wrapper
-             (as)
-             (unless (null as)
-               (let ((a (car as)))
-                 (fset (intern (concat "my-" (symbol-name a)))
-                       ;; see `org-export-to-file'
-                       `(lambda (&optional y s v b e)
-                          (interactive)
-                          (let ((org-display-custom-times t)
-                                (system-time-locale (alist-get
-                                                     'file-local-time-locale
-                                                     file-local-variables-alist)))
-                            (,a y s v b e))))
-                 (create-wrapper (cdr as))))))
-  (create-wrapper (my-org-export-functions-to-wrap)))
+(let ((org-export-functions-to-wrap '(org-html-export-as-html
+                                      org-html-export-to-html
+                                      org-pandoc-export-as-html5
+                                      org-pandoc-export-to-html5
+                                      org-pandoc-export-to-html5-and-open
+                                      org-pandoc-export-to-html5-pdf
+                                      org-pandoc-export-to-html5-pdf-and-open)))
+  (cl-labels
+      ((create-wrapper
+        (as)
+        (unless (null as)
+          (let ((a (car as)))
+            (fset (intern (concat "my-" (symbol-name a)))
+                  ;; see `org-export-to-file'
+                  `(lambda (&optional y s v b e)
+                     (interactive)
+                     (let ((org-display-custom-times t)
+                           (system-time-locale (alist-get
+                                                'file-local-time-locale
+                                                file-local-variables-alist)))
+                       (,a y s v b e))))
+            (create-wrapper (cdr as))))))
+    (create-wrapper org-export-functions-to-wrap)))
 
     ;; melpa
         ;; ox-reveal

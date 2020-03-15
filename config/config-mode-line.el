@@ -36,7 +36,7 @@
 
 ;; slime
 
-(defun my-slime-pretty-package-name (name)
+(defun slime-pretty-package-name (name)
   "Return a pretty shortened version of a package name NAME."
   (cl-labels ((package-suffix (package-name)
                               (car (reverse (split-string package-name "\\.")))))
@@ -49,7 +49,7 @@
           (t name))))
 
 (with-eval-after-load 'slime
-  (advice-add 'slime-pretty-package-name :override 'my-slime-pretty-package-name))
+  (advice-add 'slime-pretty-package-name :override 'slime-pretty-package-name))
 
 ;; https://www.masteringemacs.org/article/hiding-replacing-modeline-strings
 
