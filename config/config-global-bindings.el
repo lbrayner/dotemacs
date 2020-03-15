@@ -1,9 +1,12 @@
 (global-set-key (kbd "C-x C-b") #'ibuffer)
 
-(global-set-key (kbd "C-.") #'other-frame)
+(defun other-frame-reverse (arg)
+  "Negates arg and sends it to `other-frame'."
+  (interactive "p")
+  (other-frame (- arg)))
 
-(with-eval-after-load 'custom-interactive
-  (global-set-key (kbd "C-,") #'other-frame-reverse))
+(global-set-key (kbd "C-.") #'other-frame)
+(global-set-key (kbd "C-,") #'other-frame-reverse)
 
 ;; windmove on hold (in favor of paredit) till I find a suitable modifier
 ;; (windmove-default-keybindings)

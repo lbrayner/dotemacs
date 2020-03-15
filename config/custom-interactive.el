@@ -1,8 +1,3 @@
-(defun other-frame-reverse (arg)
-  "Negates arg and sends it to `other-frame'."
-  (interactive "p")
-  (other-frame (- arg)))
-
 ;; https://stackoverflow.com/a/9414763/2856535
 (defun copy-file-name-to-clipboard ()
   "Copy the current buffer file name to the clipboard."
@@ -38,7 +33,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; https://stackoverflow.com/a/36551971
 
-(defvar other/help-window-names
+(defvar help-window-names
   '(
     ;; Ubiquitous help buffers
     "*Help*"
@@ -51,9 +46,9 @@
     "*disabled command*"
     ;; Custom buffers
     "*Frames*")
-  "Names of buffers that `other/quit-help-windows' should quit.")
+  "Names of buffers that `quit-help-windows' should quit.")
 
-(defun other/quit-help-windows (&optional kill frame)
+(defun quit-help-windows (&optional kill frame)
   "Quit all windows with help-like buffers.
 
 Call `quit-windows-on' for every buffer named in
@@ -66,10 +61,8 @@ omitted parameter and will be ignored; use some other value if
 you want to quit windows on all frames."
   (interactive)
   (let ((frame (or frame t)))
-    (dolist (name other/help-window-names)
+    (dolist (name help-window-names)
       (ignore-errors
         (quit-windows-on name kill frame)))))
-
-(global-set-key (kbd "C-c q") 'other/quit-help-windows)
 
 (provide 'custom-interactive)
