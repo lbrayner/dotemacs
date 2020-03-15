@@ -6,8 +6,6 @@
         ;; evil-surround
 (global-evil-surround-mode 1)
 
-;; custom bindings
-
 (defun my-evil-normal-eval-print-last-sexp ()
   "`eval-print-last-sexp' adjusted for Evil's normal mode."
   (interactive)
@@ -17,28 +15,18 @@
   (evil-define-key 'normal map (kbd "C-c j") #'my-evil-normal-eval-print-last-sexp)
   (evil-define-key 'insert map (kbd "C-c j") #'eval-print-last-sexp))
 
-(defun my-evil-paredit-define-keys (map)
-  (evil-define-key 'insert map (kbd "ESC <left>") #'paredit-backward-barf-sexp)
-  (evil-define-key 'insert map (kbd "ESC <right>") #'paredit-forward-barf-sexp)
-  (evil-define-key 'insert map (kbd "<M-left>") #'paredit-backward-barf-sexp)
-  (evil-define-key 'insert map (kbd "<M-right>") #'paredit-forward-barf-sexp)
-  (evil-define-key 'insert map (kbd "<S-left>") #'paredit-backward-slurp-sexp)
-  (evil-define-key 'insert map (kbd "<S-right>") #'paredit-forward-slurp-sexp))
-
-(with-eval-after-load 'paredit
-  (let ((lisp-modes '(lisp-mode
-                      lisp-interaction-mode
-                      emacs-lisp-mode)))
-    (cl-labels
-        ((evil-define-paredit
-          (modes)
-          (unless (null modes)
-            (let* ((mode (car modes))
-                   (map (concat (symbol-name mode) "-map")))
-              (my-evil-eval-print-define-keys (symbol-value (intern map)))
-              (my-evil-paredit-define-keys (symbol-value (intern map)))
-              (evil-define-paredit (cdr modes))))))
-      (evil-define-paredit lisp-modes))))
+(let ((lisp-modes '(lisp-mode
+                    lisp-interaction-mode
+                    emacs-lisp-mode)))
+  (cl-labels
+      ((evil-custom-bindings
+        (modes)
+        (unless (null modes)
+          (let* ((mode (car modes))
+                 (map (concat (symbol-name mode) "-map")))
+            (my-evil-eval-print-define-keys (symbol-value (intern map)))
+            (evil-custom-bindings (cdr modes))))))
+    (evil-custom-bindings lisp-modes)))
 
 (define-key evil-motion-state-map "ç" #'evil-ex)
 (define-key evil-visual-state-map "ç" #'evil-ex)
@@ -46,7 +34,7 @@
 (define-key evil-motion-state-map (kbd "<f6>") #'evil-write)
 (define-key evil-motion-state-map (kbd "<f9>") #'delete-window)
 
-(defun my-kill-line ()
+(defun my-kill-line-reverse ()
   "Kills text before point."
   (interactive) (kill-line 0))
 
@@ -55,7 +43,7 @@
   (interactive)
   (evil-normal-state) (save-buffer))
 
-(define-key evil-insert-state-map "\C-u" #'my-kill-line)
+(define-key evil-insert-state-map "\C-u" #'my-kill-line-reverse)
 (define-key evil-insert-state-map (kbd "<f6>") #'my-evil-save-buffer)
 
 (define-key evil-motion-state-map "\C-h" #'evil-window-left)
