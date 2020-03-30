@@ -44,7 +44,9 @@
   (setq hippie-expand-try-functions-list
         (add-to-last 'try-complete-file-name
                      (add-to-last 'try-complete-file-name-partially
-                                  hippie-expand-try-functions-list))))
+                                  (add-to-last 'try-expand-line
+                                               (add-to-last 'try-expand-list
+                                                            hippie-expand-try-functions-list))))))
 
 (defconst my-hippie-expand-try-functions-list
   (remq 'try-expand-list (remq 'try-expand-line hippie-expand-try-functions-list))
