@@ -3,9 +3,6 @@
 (setq evil-want-Y-yank-to-eol nil)
 (setq evil-search-module 'evil-search)
 
-        ;; evil-surround
-(global-evil-surround-mode 1)
-
 (defun evil-normal-eval-print-last-sexp ()
   "`eval-print-last-sexp' adjusted for Evil's normal mode."
   (interactive)
@@ -150,6 +147,7 @@
 
 (let ((emacs-state-major-modes
         '(eshell-mode
+          shell-mode
           term-mode
           calculator-mode
           dired-mode
@@ -206,3 +204,6 @@
         (insert "'<,'>"))))
 
 (advice-add #'evil-command-window-ex :after #'my-evil-command-window-ex-after)
+
+        ;; EVIL-SURROUND
+(global-evil-surround-mode 1)
