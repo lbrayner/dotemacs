@@ -40,13 +40,19 @@
 (cl-labels
     ((add-to-last (item list)
                   "Adds ITEM to the end of LIST uniquely. No side effects."
-                  (append (remq item list) (list item))))
+                  (append (remq item list) (list item)))
+     (add-all-to-last (items list)
+                      "Applies `add-to-last' to the first item in
+ITEMS and LIST; and then to the second and the resulting list and so on."
+                      (if (null items)
+                          list
+                        (add-all-to-last (cdr items) (add-to-last (car items) list)))))
   (setq hippie-expand-try-functions-list
-        (add-to-last 'try-complete-file-name
-                     (add-to-last 'try-complete-file-name-partially
-                                  (add-to-last 'try-expand-line
-                                               (add-to-last 'try-expand-list
-                                                            hippie-expand-try-functions-list))))))
+        (add-all-to-last '(try-expand-list
+                           try-expand-line
+                           try-complete-file-name-partially
+                           try-complete-file-name)
+                         hippie-expand-try-functions-list)))
 
 (defconst my-hippie-expand-try-functions-list
   (remq 'try-expand-list (remq 'try-expand-line hippie-expand-try-functions-list))
