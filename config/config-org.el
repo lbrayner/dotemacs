@@ -37,7 +37,6 @@
 (setq-default org-use-sub-superscripts '{})
 (setq-default org-export-with-sub-superscripts '{})
 (add-hook 'org-mode-hook #'org-mode-setup)
-(add-hook 'org-mode-hook #'org-mode-evil-setup)
 (with-eval-after-load 'evil
   (add-hook 'org-mode-hook #'org-mode-evil-setup))
 (add-hook 'org-export-before-processing-hook #'org-inline-css)
