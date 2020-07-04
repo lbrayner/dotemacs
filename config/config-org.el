@@ -21,8 +21,12 @@
                               "</style>\n"))))))
 
 (defun org-mode-setup ()
-      (visual-line-mode t)
-      (setq truncate-lines nil))
+  (visual-line-mode t)
+  (setq truncate-lines nil)
+  (flyspell-mode))
+
+(defun org-mode-evil-setup ()
+  (setq evil-auto-indent nil))
 
 ;; major modes
     ;; org
@@ -33,6 +37,9 @@
 (setq-default org-use-sub-superscripts '{})
 (setq-default org-export-with-sub-superscripts '{})
 (add-hook 'org-mode-hook #'org-mode-setup)
+(add-hook 'org-mode-hook #'org-mode-evil-setup)
+(with-eval-after-load 'evil
+  (add-hook 'org-mode-hook #'org-mode-evil-setup))
 (add-hook 'org-export-before-processing-hook #'org-inline-css)
         ;; babel
 (org-babel-do-load-languages
