@@ -67,6 +67,8 @@
     (undo-tree-mode . "")
     (auto-dim-other-buffers-mode . "")
     (smart-tab-mode . " ➤")
+    (visual-line-mode . " ←")
+    (flyspell-mode . "")
     ;; Major modes
     (fundamental-mode . "Φ")
     (lisp-interaction-mode . "λ")
@@ -74,6 +76,7 @@
     (python-mode . "Py")
     (emacs-lisp-mode . "Ɛ")
     (lisp-mode . "£")
+    (org-mode . "Ω")
     (nxhtml-mode . "nx"))
   "Alist for `clean-mode-line'.
 
