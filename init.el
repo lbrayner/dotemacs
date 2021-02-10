@@ -28,7 +28,9 @@
 ;; |               |
 
     ;; server-socket-dir override
-(setq server-socket-dir (format "/tmp/emacs%d" (user-uid)))
+(setq server-socket-dir
+      (concat temporary-file-directory
+              (format "emacs%d" (user-uid))))
     ;; default-directory
 (setq default-directory "~/")
     ;; cursor
