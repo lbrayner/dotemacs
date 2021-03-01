@@ -1,24 +1,24 @@
-(defun get-line-mode-column-mode-format (mode-line-position)
-  "Gets `mode-line-position's construct when both `line-number-mode'
-  and `column-number-mode' are set."
-  (if (version<= "26.0.50" emacs-version)
-      (cadr (cadr (cadr (car (cadr (nth 2 mode-line-position))))))
-    (cadr (cadr (car (cadr (nth 2 mode-line-position)))))))
+;; (defun get-line-mode-column-mode-format (mode-line-position)
+;;   "Gets `mode-line-position's construct when both `line-number-mode'
+;;   and `column-number-mode' are set."
+;;   (if (version<= "26.0.50" emacs-version)
+;;       (cadr (cadr (cadr (car (cadr (nth 2 mode-line-position))))))
+;;     (cadr (cadr (car (cadr (nth 2 mode-line-position)))))))
 
-(defun set-line-mode-column-mode-format (mode-line-position value)
-  "Sets `mode-line-position's construct to VALUE when both
-  `line-number-mode'and `column-number-mode' are set."
-  (if (version<= "26.0.50" emacs-version)
-      (setf (cadr (cadr (cadr (car (cadr (nth 2 mode-line-position)))))) value)
-    (setf (cadr (cadr (car (cadr (nth 2 mode-line-position))))) value)))
+;; (defun set-line-mode-column-mode-format (mode-line-position value)
+;;   "Sets `mode-line-position's construct to VALUE when both
+;;   `line-number-mode'and `column-number-mode' are set."
+;;   (if (version<= "26.0.50" emacs-version)
+;;       (setf (cadr (cadr (cadr (car (cadr (nth 2 mode-line-position)))))) value)
+;;     (setf (cadr (cadr (car (cadr (nth 2 mode-line-position))))) value)))
 
-(gv-define-simple-setter get-line-mode-column-mode-format
-                         set-line-mode-column-mode-format)
+;; (gv-define-simple-setter get-line-mode-column-mode-format
+;;                          set-line-mode-column-mode-format)
 
-(defconst line-mode-column-mode-original-format
-  (get-line-mode-column-mode-format mode-line-position)
-  "`mode-line-position's original construct when `line-number-mode'
-  and `column-number-mode' are set.")
+;; (defconst line-mode-column-mode-original-format
+;;   (get-line-mode-column-mode-format mode-line-position)
+;;   "`mode-line-position's original construct when `line-number-mode'
+;;   and `column-number-mode' are set.")
 
 ;; modifying the mode-line
 
@@ -30,9 +30,9 @@
     (backward-char)
     (format-mode-line "%l")))
 
-(setf (get-line-mode-column-mode-format mode-line-position)
-      `(:eval (concat ,line-mode-column-mode-original-format " "
-                      (total-lines-as-string))))
+;; (setf (get-line-mode-column-mode-format mode-line-position)
+;;       `(:eval (concat ,line-mode-column-mode-original-format " "
+;;                       (total-lines-as-string))))
 
 ;; slime
 
@@ -182,3 +182,13 @@
 
 ;; Mode line construct for identifying the buffer being displayed.
 (setq-default mode-line-buffer-identification '(:eval (mode-line-buffer-name)))
+
+(setq-default mode-line-position
+              '((-3 "%p")
+                (:eval (concat " %" (number-to-string
+                                     (ceiling
+                                      (log
+                                       (string-to-number (total-lines-as-string))
+                                       10)))
+                               "l "
+                               (total-lines-as-string) "L"))))
