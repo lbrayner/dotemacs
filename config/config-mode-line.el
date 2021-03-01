@@ -148,20 +148,6 @@
 (defun window-active-p ()
   (eq selected-window (selected-window)))
 
-;; (setq-default mode-line-modified
-;;               '(:eval
-;;                 (cond (buffer-read-only
-;;                        (propertize " R " 'face
-;;                                    (if (window-active-p)
-;;                                        'mode-line-read-only-face
-;;                                      'mode-line-read-only-face-inactive)))
-;;                       ((buffer-modified-p)
-;;                        (propertize " * " 'face
-;;                                    (if (window-active-p)
-;;                                        'mode-line-modified-face
-;;                                      'mode-line-modified-face-inactive)))
-;;                       (t "   "))))
-
 (setq-default mode-line-modified
               '(:eval
                 (cond (buffer-read-only
@@ -185,10 +171,7 @@
 
 (setq-default mode-line-position
               '((-3 "%p")
-                (:eval (concat " %" (number-to-string
-                                     (ceiling
-                                      (log
-                                       (string-to-number (total-lines-as-string))
-                                       10)))
-                               "l "
-                               (total-lines-as-string) "L"))))
+                (:eval (let ((total-lines (total-lines-as-string)))
+                         (concat " %" (number-to-string
+                                       (ceiling (log (string-to-number total-lines) 10)))
+                                 "l " total-lines "L")))))
