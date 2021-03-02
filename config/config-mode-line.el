@@ -123,18 +123,8 @@
                     :foreground nil
                     :background "Purple")
 
-(make-face 'mode-line-read-only-face-inactive)
-(set-face-attribute 'mode-line-read-only-face-inactive nil :inherit 'mode-line-inactive
-                    :foreground nil
-                    :background "Purple")
-
 (make-face 'mode-line-modified-face)
 (set-face-attribute 'mode-line-modified-face nil :inherit 'mode-line
-                    :foreground nil
-                    :background "Red")
-
-(make-face 'mode-line-modified-face-inactive)
-(set-face-attribute 'mode-line-modified-face-inactive nil :inherit 'mode-line-inactive
                     :foreground nil
                     :background "Red")
 
@@ -150,13 +140,14 @@
 
 (setq-default mode-line-modified
               '(:eval
-                (cond (buffer-read-only
-                       (if (window-active-p)
-                           (propertize " [R] " 'face 'mode-line-read-only-face) " [R] "))
-                      ((buffer-modified-p)
-                       (if (window-active-p)
-                           (propertize " [+] " 'face 'mode-line-modified-face) " [+] "))
-                      (t "     "))))
+                (cond
+                 (buffer-read-only
+                  (if (window-active-p)
+                      (propertize " [R] " 'face 'mode-line-read-only-face) " [R] "))
+                 ((buffer-modified-p)
+                  (if (window-active-p)
+                      (propertize " [+] " 'face 'mode-line-modified-face) " [+] "))
+                 (t "     "))))
 
 (defun mode-line-project-root ()
   (or (cdr (project-current)) default-directory))
@@ -166,8 +157,28 @@
          (s-chop-prefix (modeline-project-root) (abbreviate-file-name buffer-file-name)))
         (t "%b")))
 
+;; TODO make this functional
+(defun truncate-file-name (file-name max-length)
+  "Show FILE-NAME with up to MAX-LENGTH characters."
+  (let ((path (reverse (split-string (abbreviate-file-name file-name) "/")))
+        (output ""))
+    (when (and path (equal "" (car path)))
+      (setq path (cdr path)))
+    (while (and path (< (length output) (- max-length 4)))
+      (setq output (concat (car path) "/" output))
+      (setq path (cdr path)))
+    (when path
+      (setq output (concat "…/" output)))
+    output))
+
 ;; Mode line construct for identifying the buffer being displayed.
-(setq-default mode-line-buffer-identification '(:eval (mode-line-buffer-name)))
+(setq-default mode-line-buffer-identification
+              '((:eval (when buffer-file-name
+                         (truncate-file-name (mode-line-project-root)
+                                             (- (window-width)
+                                                (length (mode-line-buffer-name))
+                                                60))))
+                (:eval (mode-line-buffer-name))))
 
 (setq-default mode-line-position
               '((-3 "%p")
