@@ -115,8 +115,6 @@
 (setq-default mode-line-frame-identification "")
 ;; Mode line construct to put at the end of the mode line.
 (setq-default mode-line-end-spaces "")
-;; Mode line construct for displaying major and minor modes.
-(setq-default mode-line-modes '("%[" mode-name mode-line-process "%n" "%]"))
 
 (make-face 'mode-line-read-only-face)
 (set-face-attribute 'mode-line-read-only-face nil :inherit 'mode-line
@@ -180,6 +178,7 @@
                                                 60))))
                 (:eval (mode-line-buffer-name))))
 
+;; Mode line construct for displaying the position in the buffer.
 (setq-default mode-line-position
               '((-3 "%p")
                 " "
@@ -187,3 +186,15 @@
                          (concat "%" (number-to-string
                                        (ceiling (log (string-to-number total-lines) 10)))
                                  "l,%2C " total-lines "L")))))
+
+;; Mode line construct for displaying major and minor modes.
+(setq-default mode-line-modes
+              '(:eval (let ((mode (format-mode-line
+                                   (concat "%[" mode-name mode-line-process "%n%]"))))
+                        (concat
+                         (propertize
+                          " " 'display
+                          `((space :align-to
+                                   (- (+ right right-fringe right-margin)
+                                      ,(+ 3 (string-width mode))))))
+                         mode))))
