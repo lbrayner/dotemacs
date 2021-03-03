@@ -80,7 +80,7 @@
 (evil-define-command my-evil-fill (beg end)
   "Fill text from BED to END."
   (interactive "<r>")
-  (fill-region beg end))
+  (fill-region-as-paragraph beg end))
 
 (define-key evil-normal-state-map "gq" #'my-evil-fill)
 (define-key evil-visual-state-map "gq" #'my-evil-fill)
