@@ -141,11 +141,11 @@
                 (cond
                  (buffer-read-only
                   (if (window-active-p)
-                      (propertize " [R] " 'face 'mode-line-read-only-face) " [R] "))
+                      (propertize " R " 'face 'mode-line-read-only-face) " R "))
                  ((buffer-modified-p)
                   (if (window-active-p)
-                      (propertize " [+] " 'face 'mode-line-modified-face) " [+] "))
-                 (t "     "))))
+                      (propertize " + " 'face 'mode-line-modified-face) " + "))
+                 (t "   "))))
 
 (defun mode-line-project-root ()
   (or (cdr (project-current)) default-directory))
