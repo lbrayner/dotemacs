@@ -23,7 +23,8 @@
 (defun org-mode-setup ()
   (visual-line-mode t)
   (setq truncate-lines nil)
-  (flyspell-mode))
+  (flyspell-mode)
+  (electric-indent-local-mode 0))
 
 (defun org-mode-evil-setup ()
   (setq evil-auto-indent nil))
