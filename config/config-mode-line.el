@@ -180,13 +180,13 @@
 
 ;; Mode line construct for displaying the position in the buffer.
 (setq-default mode-line-position
-              '((-3 "%p")
-                " "
-                (:eval (let ((total-lines (total-lines-as-string)))
-                         (concat "%" (number-to-string
-                                       (ceiling (log (string-to-number total-lines) 10)))
-                                 "l,%2C " total-lines "L")))))
+              '((:eval (let ((total-lines (total-lines-as-string)))
+                         (concat "%"
+                                 (number-to-string
+                                  (ceiling (log (string-to-number total-lines) 10)))
+                                 "l,%2C " (format-mode-line '(-3 "%p")) " " total-lines)))))
 
+;; https://www.gonsie.com/blorg/modeline.html
 ;; Mode line construct for displaying major and minor modes.
 (setq-default mode-line-modes
               '(:eval (let ((mode (format-mode-line
