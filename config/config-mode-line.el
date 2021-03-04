@@ -183,8 +183,9 @@
               '((:eval (let ((total-lines (total-lines-as-string)))
                          (concat "%"
                                  (number-to-string
-                                  (ceiling (log (string-to-number total-lines) 10)))
-                                 "l,%2C " (format-mode-line '(-3 "%p")) " " total-lines)))))
+                                  (ceiling (log (string-to-number total-lines) 10))) "l,"
+                                 (format-mode-line '(2 "%C")) " "
+                                 (format-mode-line '(-3 "%p")) " " total-lines)))))
 
 ;; https://www.gonsie.com/blorg/modeline.html
 ;; Mode line construct for displaying major and minor modes.
