@@ -152,7 +152,7 @@
 
 (defun mode-line-buffer-name ()
   (cond (buffer-file-name
-         (s-chop-prefix (modeline-project-root) (abbreviate-file-name buffer-file-name)))
+         (s-chop-prefix (mode-line-project-root) (abbreviate-file-name buffer-file-name)))
         (t "%b")))
 
 ;; TODO make this functional
