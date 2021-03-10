@@ -141,11 +141,17 @@
                 (cond
                  (buffer-read-only
                   (if (window-active-p)
-                      (propertize " R " 'face 'mode-line-read-only-face) " R "))
+                      (propertize " R" 'face 'mode-line-read-only-face) " R"))
                  ((buffer-modified-p)
                   (if (window-active-p)
-                      (propertize " + " 'face 'mode-line-modified-face) " + "))
-                 (t "   "))))
+                      (propertize " +" 'face 'mode-line-modified-face) " +"))
+                 (t "  "))))
+
+;; Removing `mode-line-modified'
+(delq 'mode-line-modified mode-line-format)
+;; Adding `mode-line-modified' back after `mode-line-buffer-identification'
+(let ((buffer-id-sublist (memq 'mode-line-buffer-identification mode-line-format)))
+  (setf (cdr buffer-id-sublist) (cons 'mode-line-modified (cdr buffer-id-sublist))))
 
 (defun mode-line-project-root ()
   (or (cdr (project-current)) default-directory))
@@ -172,7 +178,8 @@
 
 ;; Mode line construct for identifying the buffer being displayed.
 (setq-default mode-line-buffer-identification
-              '((:eval (when buffer-file-name
+              '(" "
+                (:eval (when buffer-file-name
                          (truncate-file-name (mode-line-project-root)
                                              (- (window-width)
                                                 (length (mode-line-buffer-name))
@@ -185,7 +192,7 @@
                                (number-to-string
                                 (ceiling (log (string-to-number (total-lines-as-string)) 10)))
                                "l"))
-                "," (2 "%C") " " (-3 "%p") " " (:eval (total-lines-as-string))))
+                "," (3 "%C") " " (-3 "%p") " " (:eval (total-lines-as-string))))
 
 ;; https://www.gonsie.com/blorg/modeline.html
 ;; Mode line construct for displaying major and minor modes.
