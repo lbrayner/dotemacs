@@ -63,6 +63,7 @@
 (show-paren-mode 1)
     ;; autorevert
 (global-auto-revert-mode)
+(setq auto-revert-check-vc-info t)
     ;; dired
 (setq dired-listing-switches "-alh")
 (setq dired-isearch-filenames t)
