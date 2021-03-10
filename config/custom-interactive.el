@@ -7,7 +7,7 @@
                                           (buffer-file-name)))))
     (when filename
       (kill-new filename)
-      (message "Saved file name '%s' to the kill-ring." filename))))
+      (message "Saved file name '%s' to the kill ring." filename))))
 
 ;; recompile all github directories
 
