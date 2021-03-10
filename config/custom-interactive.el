@@ -1,13 +1,17 @@
 ;; https://stackoverflow.com/a/9414763/2856535
 (defun kill-file-name ()
-  "Copy the current buffer file name to the clipboard."
+  "Make the current buffer's file name (when visiting a file) the
+latest kill in the kill ring."
   (interactive)
-  (let ((filename (abbreviate-file-name (if (equal major-mode 'dired-mode)
-                                            default-directory
-                                          (buffer-file-name)))))
-    (when filename
-      (kill-new filename)
-      (message "Saved file name '%s' to the kill ring." filename))))
+  (let* ((unabbreviated-file-name (if (equal major-mode 'dired-mode)
+                                      default-directory
+                                    (buffer-file-name)))
+         (filename (if unabbreviated-file-name
+                       (abbreviate-file-name unabbreviated-file-name))))
+    (cond (filename
+           (kill-new filename)
+           (message "Saved file name '%s' to the kill ring." filename))
+          (t (message "Not visiting a file.")))))
 
 ;; recompile all github directories
 
