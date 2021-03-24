@@ -162,28 +162,66 @@
                         (abbreviate-file-name buffer-file-name)))
         (t "%b")))
 
-;; TODO make this functional
-(defun truncate-file-name (file-name max-length)
-  "Show FILE-NAME with up to MAX-LENGTH characters."
-  (let ((path (reverse (split-string (abbreviate-file-name file-name) "/")))
-        (output ""))
-    (when (and path (equal "" (car path)))
-      (setq path (cdr path)))
-    (while (and path (< (length output) (- max-length 4)))
-      (setq output (concat (car path) "/" output))
-      (setq path (cdr path)))
-    (when path
-      (setq output (concat "…/" output)))
-    output))
+;; ;; TODO make this functional
+;; (defun truncate-file-name (file-name max-length)
+;;   "Show FILE-NAME with up to MAX-LENGTH characters."
+;;   (let ((path (reverse (split-string (abbreviate-file-name file-name) "/")))
+;;         (output ""))
+;;     (when (and path (equal "" (car path)))
+;;       (setq path (cdr path)))
+;;     (while (and path (< (length output) (- max-length 4)))
+;;       (setq output (concat (car path) "/" output))
+;;       (setq path (cdr path)))
+;;     (when path
+;;       (setq output (concat "…/" output)))
+;;     output))
+
+(defun mode-line--path-as-list (path)
+  (let* ((path-as-file (directory-file-name path))
+         (parent (file-name-directory path-as-file)))
+    (if (or (not parent) (equal path-as-file parent))
+        (list path-as-file)
+      (append (mode-line--path-as-list parent)
+              (list (file-name-nondirectory path-as-file))))))
+
+(defun mode-line--truncate-path-component (component)
+  (replace-regexp-in-string "\\([^[:alpha:]]*[[:alpha:]]\\).*" "\\1" component))
+
+(defun mode-line--shorten-path-worker (ts ps m)
+  (let* ((path (append ts ps))
+         (length (apply #'+ (mapcar #'length path))))
+    (if (or (not ps) (< length m))
+        path
+      (let ((remaining-ps (cdr ps))
+            (resulting-ts (append ts (list (mode-line--truncate-path-component (car ps))))))
+        (mode-line--shorten-path-worker resulting-ts remaining-ps m)))))
+
+;; https://stackoverflow.com/a/13473856
+(defun mode-line--joinnodes (root &rest dirs)
+  "Joins a series of directories together, like Python's
+os.path.join,(dotemacs-joindirs \"/tmp\" \"a\" \"b\" \"c\") =>
+/tmp/a/b/c"
+  (if (not dirs)
+      root
+    (apply #'mode-line--joinnodes
+           (expand-file-name (car dirs) root)
+           (cdr dirs))))
+
+(defun mode-line-shorten-path (path max-length)
+  (let* ((as-list (mode-line--path-as-list path))
+         (shortended (mode-line--shorten-path-worker nil as-list max-length)))
+    (apply #'mode-line--joinnodes shortended)))
 
 ;; Mode line construct for identifying the buffer being displayed.
 (setq-default mode-line-buffer-identification
               '(" "
                 (:eval (when buffer-file-name
-                         (truncate-file-name (mode-line-project-root)
-                                             (- (window-width)
-                                                (length (mode-line-buffer-name))
-                                                60))))
+                         (abbreviate-file-name
+                          (file-name-as-directory
+                           (mode-line-shorten-path (mode-line-project-root)
+                                                   (- (window-width)
+                                                      (length (mode-line-buffer-name))
+                                                      60))))))
                 (:eval (mode-line-buffer-name))))
 
 ;; Mode line construct for displaying the position in the buffer.
