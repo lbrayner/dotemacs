@@ -210,18 +210,17 @@ os.path.join,(dotemacs-joindirs \"/tmp\" \"a\" \"b\" \"c\") =>
 (defun mode-line-shorten-path (path max-length)
   (let* ((as-list (mode-line--path-as-list path))
          (shortended (mode-line--shorten-path-worker nil as-list max-length)))
-    (apply #'mode-line--joinnodes shortended)))
+    (abbreviate-file-name (apply #'mode-line--joinnodes shortended))))
 
 ;; Mode line construct for identifying the buffer being displayed.
 (setq-default mode-line-buffer-identification
               '(" "
                 (:eval (when buffer-file-name
-                         (abbreviate-file-name
-                          (file-name-as-directory
-                           (mode-line-shorten-path (mode-line-project-root)
-                                                   (- (window-width)
-                                                      (length (mode-line-buffer-name))
-                                                      60))))))
+                         (file-name-as-directory
+                          (mode-line-shorten-path (mode-line-project-root)
+                                                  (- (window-width)
+                                                     (length (mode-line-buffer-name))
+                                                     60)))))
                 (:eval (mode-line-buffer-name))))
 
 ;; Mode line construct for displaying the position in the buffer.
