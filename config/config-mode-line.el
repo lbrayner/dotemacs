@@ -217,7 +217,7 @@ os.path.join,(dotemacs-joindirs \"/tmp\" \"a\" \"b\" \"c\") =>
                           (mode-line-shorten-path (mode-line-project-root)
                                                   (- (window-width)
                                                      (length (mode-line-buffer-name))
-                                                     60)))))
+                                                     (/ (window-total-width) 2))))))
                 (:eval (mode-line-buffer-name))))
 
 ;; Mode line construct for displaying the position in the buffer.
