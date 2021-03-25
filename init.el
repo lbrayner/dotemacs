@@ -69,11 +69,12 @@
 (setq dired-isearch-filenames t)
 (with-eval-after-load 'dired (require 'dired-x))
 (add-hook 'dired-mode-hook (lambda () (dired-omit-mode 1)))
-    ;; Display-Line-Numbers
-(defvar display-line-numbers-should-be-enabled (version<= "26.0.50" emacs-version)
-  "If `display-line-numbers' should be enabled.")
-(when display-line-numbers-should-be-enabled
-  (setq-default display-line-numbers 'relative))
+    ;; Display-Line-Numbers mode
+(when (version<= "26.0.50" emacs-version)
+  (setq display-line-numbers-type 'relative)
+  (setq display-line-numbers-width-start t)
+  (global-display-line-numbers-mode))
+    ;; visual-line-mode
 (setq global-visual-line-mode t)
     ;; disabling annoying commands
 (put 'view-hello-file 'disabled t)
