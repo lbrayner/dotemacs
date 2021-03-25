@@ -153,6 +153,17 @@
 (let ((buffer-id-sublist (memq 'mode-line-buffer-identification mode-line-format)))
   (setf (cdr buffer-id-sublist) (cons 'mode-line-modified (cdr buffer-id-sublist))))
 
+(defvar mode-line-vc
+  '(:eval (when-let (vc vc-mode)
+            (list " " (substring vc 5)))))
+(put 'mode-line-vc 'risky-local-variable t)
+
+;; Removing '(vc-mode vc-mode)
+(delete '(vc-mode vc-mode) mode-line-format)
+;; Adding `mode-line-vc' after `evil-mode-line-tag'
+(let ((evil-tag-sublist (memq 'evil-mode-line-tag mode-line-format)))
+  (setf (cdr evil-tag-sublist) (cons 'mode-line-vc (cdr evil-tag-sublist))))
+
 (defun mode-line-project-root ()
   (or (cdr (project-current)) default-directory))
 
@@ -161,20 +172,6 @@
          (s-chop-prefix (abbreviate-file-name (mode-line-project-root))
                         (abbreviate-file-name buffer-file-name)))
         (t "%b")))
-
-;; ;; TODO make this functional
-;; (defun truncate-file-name (file-name max-length)
-;;   "Show FILE-NAME with up to MAX-LENGTH characters."
-;;   (let ((path (reverse (split-string (abbreviate-file-name file-name) "/")))
-;;         (output ""))
-;;     (when (and path (equal "" (car path)))
-;;       (setq path (cdr path)))
-;;     (while (and path (< (length output) (- max-length 4)))
-;;       (setq output (concat (car path) "/" output))
-;;       (setq path (cdr path)))
-;;     (when path
-;;       (setq output (concat "…/" output)))
-;;     output))
 
 (defun mode-line--path-as-list (path)
   (let* ((path-as-file (directory-file-name path))
