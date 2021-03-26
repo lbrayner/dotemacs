@@ -101,20 +101,20 @@
 
 ;; https://amitp.blogspot.com/2019/07/emacs-mode-line-simplified.html
 
-;; Mode line construct to put at the front of the mode line.
-(setq-default mode-line-front-space "")
-;; Mode line construct to report the multilingual environment.
-(setq-default mode-line-mule-info "")
-;; Mode line construct for identifying emacsclient frames.
-(setq-default mode-line-client "")
-;; Mode line construct for displaying whether current buffer is modified.
-;; (setq-default mode-line-modified '(" %1* "))
-;; Mode line construct to indicate a remote buffer.
-(setq-default mode-line-remote "")
-;; Mode line construct to describe the current frame.
-(setq-default mode-line-frame-identification "")
-;; Mode line construct to put at the end of the mode line.
-(setq-default mode-line-end-spaces "")
+;; ;; Mode line construct to put at the front of the mode line.
+;; (setq-default mode-line-front-space "")
+;; ;; Mode line construct to report the multilingual environment.
+;; (setq-default mode-line-mule-info "")
+;; ;; Mode line construct for identifying emacsclient frames.
+;; (setq-default mode-line-client "")
+;; ;; Mode line construct for displaying whether current buffer is modified.
+;; ;; (setq-default mode-line-modified '(" %1* "))
+;; ;; Mode line construct to indicate a remote buffer.
+;; (setq-default mode-line-remote "")
+;; ;; Mode line construct to describe the current frame.
+;; (setq-default mode-line-frame-identification "")
+;; ;; Mode line construct to put at the end of the mode line.
+;; (setq-default mode-line-end-spaces "")
 
 (make-face 'mode-line-read-only-face)
 (set-face-attribute 'mode-line-read-only-face nil :inherit 'mode-line
@@ -147,22 +147,10 @@
                       (propertize " +" 'face 'mode-line-modified-face) " +"))
                  (t "  "))))
 
-;; Removing `mode-line-modified'
-(delq 'mode-line-modified mode-line-format)
-;; Adding `mode-line-modified' back after `mode-line-buffer-identification'
-(let ((buffer-id-sublist (memq 'mode-line-buffer-identification mode-line-format)))
-  (setf (cdr buffer-id-sublist) (cons 'mode-line-modified (cdr buffer-id-sublist))))
-
 (defvar mode-line-vc
   '(:eval (when-let (vc vc-mode)
             (substring vc 5))))
 (put 'mode-line-vc 'risky-local-variable t)
-
-;; Removing '(vc-mode vc-mode)
-(delete '(vc-mode vc-mode) mode-line-format)
-;; Adding `mode-line-vc' after `evil-mode-line-tag'
-(let ((evil-tag-sublist (memq 'evil-mode-line-tag mode-line-format)))
-  (setf (cdr evil-tag-sublist) (cons 'mode-line-vc (cddr evil-tag-sublist))))
 
 (defun mode-line-project-root ()
   (or (cdr (project-current)) default-directory))
@@ -240,3 +228,7 @@ os.path.join,(dotemacs-joindirs \"/tmp\" \"a\" \"b\" \"c\") =>
                                    (- (+ right right-fringe right-margin)
                                       ,(+ 3 (string-width mode))))))
                          mode))))
+
+(setq-default mode-line-format '("%e" mode-line-buffer-identification
+                                 mode-line-modified "   " mode-line-position
+                                 evil-mode-line-tag mode-line-vc mode-line-modes))
