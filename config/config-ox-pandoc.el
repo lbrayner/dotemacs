@@ -82,9 +82,34 @@
                                                         'pandoc)))
             'org-pandoc-headline-transcoder))))
 
-;; customizing the export menu
+;; creates "my-"-prefixed wrappers for pandoc export commands
+(let ((org-export-functions-to-wrap '(org-html-export-as-html
+                                      org-html-export-to-html
+                                      org-pandoc-export-as-html5
+                                      org-pandoc-export-to-html5
+                                      org-pandoc-export-to-html5-and-open
+                                      org-pandoc-export-to-html5-pdf
+                                      org-pandoc-export-to-html5-pdf-and-open)))
+  (cl-labels
+      ((create-wrapper
+        (as)
+        (unless (null as)
+          (let ((a (car as)))
+            (fset (intern (concat "my-" (symbol-name a)))
+                  ;; see `org-export-to-file'
+                  `(lambda (&optional y s v b e)
+                     (interactive)
+                     (let ((org-display-custom-times t)
+                           (system-time-locale (alist-get
+                                                'file-local-time-locale
+                                                file-local-variables-alist)))
+                       (,a y s v b e))))
+            (create-wrapper (cdr as))))))
+    (create-wrapper org-export-functions-to-wrap)))
+
+;; customizing the export dispatcher
 ;; for each menu key in org-pandoc-menu-keys, replace the current
-;; action with a "my-" prefixed function
+;; action with a "my-" prefixed command
 (with-eval-after-load 'ox-pandoc
   (let ((org-pandoc-menu-keys '(?$ ?4 ?% ?5)))
     (cl-labels ((customize-menu-entries

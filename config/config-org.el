@@ -62,31 +62,6 @@
 (put 'org-time-stamp-custom-formats 'safe-local-variable
      #'org-time-stamp-custom-formats-safep)
 
-;; creates "my-"-prefixed wrappers for functions inside
-(let ((org-export-functions-to-wrap '(org-html-export-as-html
-                                      org-html-export-to-html
-                                      org-pandoc-export-as-html5
-                                      org-pandoc-export-to-html5
-                                      org-pandoc-export-to-html5-and-open
-                                      org-pandoc-export-to-html5-pdf
-                                      org-pandoc-export-to-html5-pdf-and-open)))
-  (cl-labels
-      ((create-wrapper
-        (as)
-        (unless (null as)
-          (let ((a (car as)))
-            (fset (intern (concat "my-" (symbol-name a)))
-                  ;; see `org-export-to-file'
-                  `(lambda (&optional y s v b e)
-                     (interactive)
-                     (let ((org-display-custom-times t)
-                           (system-time-locale (alist-get
-                                                'file-local-time-locale
-                                                file-local-variables-alist)))
-                       (,a y s v b e))))
-            (create-wrapper (cdr as))))))
-    (create-wrapper org-export-functions-to-wrap)))
-
     ;; melpa
         ;; ox-reveal
 (require 'ox-reveal)
