@@ -145,19 +145,22 @@ Dired mode is a special case, in which the parent directory of
                                "l"))
                 "," (3 "%C") " " (-3 "%p") " " (:eval (total-lines-as-string))))
 
+(defvar mode-line-custom-modes nil
+  "Custom mode line construct for displaying major and minor modes.")
+(put 'mode-line-custom-modes 'risky-local-variable t)
+
 ;; https://www.gonsie.com/blorg/modeline.html
-;; Mode line construct for displaying major and minor modes.
-(setq-default mode-line-modes
-              '(:eval (let ((mode (format-mode-line
-                                   (concat "%[" mode-name mode-line-process "%n%]"))))
-                        (concat
-                         (propertize
-                          " " 'display
-                          `((space :align-to
-                                   (- (+ right right-fringe right-margin)
-                                      ,(+ 3 (string-width mode))))))
-                         mode))))
+(setq mode-line-custom-modes
+      '(:eval (let ((mode (format-mode-line
+                           (concat "%[" mode-name mode-line-process "%n%]"))))
+                (concat
+                 (propertize
+                  " " 'display
+                  `((space :align-to
+                           (- (+ right right-fringe right-margin)
+                              ,(+ 3 (string-width mode))))))
+                 mode))))
 
 (setq-default mode-line-format '("%e" mode-line-custom-buffer-identification
                                  mode-line-modified "   " mode-line-position
-                                 evil-mode-line-tag mode-line-vc mode-line-modes))
+                                 evil-mode-line-tag mode-line-vc mode-line-custom-modes))
