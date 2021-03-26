@@ -51,9 +51,6 @@
             (substring vc 5))))
 (put 'mode-line-vc 'risky-local-variable t)
 
-(defun mode-line-project-root ()
-  (or (cdr (project-current)) default-directory))
-
 (defun mode-line--path-as-list (path)
   (let* ((path-as-file (directory-file-name path))
          (parent (file-name-directory path-as-file)))
@@ -92,6 +89,9 @@ os.path.join,(dotemacs-joindirs \"/tmp\" \"a\" \"b\" \"c\") =>
 
 (defvar mode-line-custom-buffer-identification)
 (put 'mode-line-custom-buffer-identification 'risky-local-variable t)
+
+(defun mode-line-project-root ()
+  (or (cdr (project-current)) default-directory))
 
 (defun mode-line-buffer-name ()
   (cond ((eq major-mode 'dired-mode)
