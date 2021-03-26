@@ -5,7 +5,7 @@
                                      "margin-right:15")
                            (pdf-engine . "wkhtmltopdf")))
 
-(defvar my-org-pandoc-temporary-css-file nil
+(defvar org-pandoc-temporary-css-file nil
   "Temporary css file to be deleted.")
 
 (defun org-pandoc-inline-css (exporter)
@@ -20,7 +20,7 @@
       (if (file-exists-p final)
           (setf (alist-get 'include-before-body org-pandoc-options)
                 (let ((temp-file (make-temp-name "pandoc-css.")))
-                  (setq my-org-pandoc-temporary-css-file temp-file)
+                  (setq org-pandoc-temporary-css-file temp-file)
                   (with-temp-file temp-file
                     (insert (concat "<style type=\"text/css\">\n"
                                     "<!--/*--><![CDATA[/*><!--*/\n"))
@@ -32,9 +32,9 @@
 
 (defun org-pandoc-delete-temporary-css-file ()
   "Deletes the temporary css file."
-  (if my-org-pandoc-temporary-css-file
-      (delete-file my-org-pandoc-temporary-css-file))
-  (setq my-org-pandoc-temporary-css-file nil))
+  (if org-pandoc-temporary-css-file
+      (delete-file org-pandoc-temporary-css-file))
+  (setq org-pandoc-temporary-css-file nil))
 
 (add-hook 'org-export-before-processing-hook #'org-pandoc-inline-css)
 (add-hook 'org-pandoc-after-processing-html5-pdf-hook
@@ -55,12 +55,12 @@
 
 ;; filters timestamps through org-timestamp-translate
 
-(defun my-org-pandoc-timestamp-transcoder (timestamp _contents info)
+(defun org-pandoc-timestamp-transcoder (timestamp _contents info)
   (org-timestamp-translate timestamp))
 
 ;; interprets the title of a headline before sending it to the
 ;; underlying transcoder
-(defun my-org-pandoc-headline-transcoder (headline contents info)
+(defun org-pandoc-headline-transcoder (headline contents info)
   (let* ((text (org-export-data
                 (org-element-property :title headline) info))
          (alt-headline (org-element-put-property
@@ -76,11 +76,11 @@
                        ;; and transcoders, a slot
                        (org-export-backend-transcoders (org-export-get-backend
                                                         'pandoc)))
-            'my-org-pandoc-timestamp-transcoder)
+            'org-pandoc-timestamp-transcoder)
       (setf (alist-get 'headline
                        (org-export-backend-transcoders (org-export-get-backend
                                                         'pandoc)))
-            'my-org-pandoc-headline-transcoder))))
+            'org-pandoc-headline-transcoder))))
 
 ;; customizing the export menu
 ;; for each menu key in org-pandoc-menu-keys, replace the current
