@@ -96,16 +96,18 @@ os.path.join,(dotemacs-joindirs \"/tmp\" \"a\" \"b\" \"c\") =>
          (shortened (mode-line--shorten-path-worker nil as-list max-length)))
     (abbreviate-file-name (apply #'mode-line--joinnodes shortened))))
 
-;; Mode line construct for identifying the buffer being displayed.
-(setq-default mode-line-buffer-identification
-              '(" "
-                (:eval (when buffer-file-name
-                         (file-name-as-directory
-                          (mode-line-shorten-path (mode-line-project-root)
-                                                  (- (window-width)
-                                                     (length (mode-line-buffer-name))
-                                                     (/ (window-total-width) 2))))))
-                (:eval (mode-line-buffer-name))))
+(defvar mode-line-custom-buffer-identification)
+(put 'mode-line-custom-buffer-identification 'risky-local-variable t)
+
+(setq mode-line-custom-buffer-identification
+      '(" "
+        (:eval (when buffer-file-name
+                 (file-name-as-directory
+                  (mode-line-shorten-path (mode-line-project-root)
+                                          (- (window-width)
+                                             (length (mode-line-buffer-name))
+                                             (/ (window-total-width) 2))))))
+        (:eval (mode-line-buffer-name))))
 
 ;; https://emacs.stackexchange.com/a/26724
 (defun total-lines-as-string ()
@@ -136,6 +138,6 @@ os.path.join,(dotemacs-joindirs \"/tmp\" \"a\" \"b\" \"c\") =>
                                       ,(+ 3 (string-width mode))))))
                          mode))))
 
-(setq-default mode-line-format '("%e" mode-line-buffer-identification
+(setq-default mode-line-format '("%e" mode-line-custom-buffer-identification
                                  mode-line-modified "   " mode-line-position
                                  evil-mode-line-tag mode-line-vc mode-line-modes))
