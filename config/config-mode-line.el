@@ -91,19 +91,25 @@ os.path.join,(dotemacs-joindirs \"/tmp\" \"a\" \"b\" \"c\") =>
 (put 'mode-line-custom-buffer-identification 'risky-local-variable t)
 
 (defun mode-line-project-root ()
-  (or (cdr (project-current)) default-directory))
+  (cond ((eq major-mode 'dired-mode)
+         (file-name-directory (directory-file-name default-directory)))
+        (t
+         (or (cdr (project-current)) default-directory))))
+
+(defun mode-line-buffer-file-name ()
+  (if (eq major-mode 'dired-mode)
+      (file-name-as-directory (file-name-nondirectory (directory-file-name default-directory)))
+    buffer-file-name))
 
 (defun mode-line-buffer-name ()
-  (cond ((eq major-mode 'dired-mode)
-         (abbreviate-file-name default-directory))
-        (buffer-file-name
+  (cond ((mode-line-buffer-file-name)
          (s-chop-prefix (abbreviate-file-name (mode-line-project-root))
-                        (abbreviate-file-name buffer-file-name)))
+                        (abbreviate-file-name (mode-line-buffer-file-name))))
         (t "%b")))
 
 (setq mode-line-custom-buffer-identification
       '(" "
-        (:eval (when buffer-file-name
+        (:eval (when (mode-line-buffer-file-name)
                  (file-name-as-directory
                   (mode-line-shorten-path (mode-line-project-root)
                                           (- (window-width)
