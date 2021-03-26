@@ -25,18 +25,18 @@
                     :foreground nil
                     :background "Red")
 
-(defvar selected-window nil
-  "The currently selected window.")
+(defvar active-window nil
+  "The currently active window.")
 
-(defun record-selected-window ()
-  "Save the currently active window to `selected-window'."
-  (setq selected-window (selected-window)))
+(defun record-active-window ()
+  "Save the currently active window to `active-window'."
+  (setq active-window (selected-window)))
 
-(add-hook 'buffer-list-update-hook #'record-selected-window)
+(add-hook 'buffer-list-update-hook #'record-active-window)
 
 (defun window-active-p ()
   "Return t if the window is active."
-  (eq selected-window (selected-window)))
+  (eq active-window (selected-window)))
 
 (setq-default mode-line-modified
               '(:eval
