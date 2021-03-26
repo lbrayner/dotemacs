@@ -54,12 +54,6 @@
 (defun mode-line-project-root ()
   (or (cdr (project-current)) default-directory))
 
-(defun mode-line-buffer-name ()
-  (cond (buffer-file-name
-         (s-chop-prefix (abbreviate-file-name (mode-line-project-root))
-                        (abbreviate-file-name buffer-file-name)))
-        (t "%b")))
-
 (defun mode-line--path-as-list (path)
   (let* ((path-as-file (directory-file-name path))
          (parent (file-name-directory path-as-file)))
@@ -98,6 +92,14 @@ os.path.join,(dotemacs-joindirs \"/tmp\" \"a\" \"b\" \"c\") =>
 
 (defvar mode-line-custom-buffer-identification)
 (put 'mode-line-custom-buffer-identification 'risky-local-variable t)
+
+(defun mode-line-buffer-name ()
+  (cond ((eq major-mode 'dired-mode)
+         (abbreviate-file-name default-directory))
+        (buffer-file-name
+         (s-chop-prefix (abbreviate-file-name (mode-line-project-root))
+                        (abbreviate-file-name buffer-file-name)))
+        (t "%b")))
 
 (setq mode-line-custom-buffer-identification
       '(" "
