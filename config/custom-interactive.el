@@ -3,7 +3,7 @@
   "Make the current buffer's file name (when visiting a file) the
 latest kill in the kill ring."
   (interactive)
-  (let* ((unabbreviated-file-name (if (equal major-mode 'dired-mode)
+  (let* ((unabbreviated-file-name (if (eq major-mode 'dired-mode)
                                       default-directory
                                     (buffer-file-name)))
          (filename (if unabbreviated-file-name
