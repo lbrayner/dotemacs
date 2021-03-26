@@ -155,14 +155,14 @@
 
 (defvar mode-line-vc
   '(:eval (when-let (vc vc-mode)
-            (list " " (substring vc 5)))))
+            (substring vc 5))))
 (put 'mode-line-vc 'risky-local-variable t)
 
 ;; Removing '(vc-mode vc-mode)
 (delete '(vc-mode vc-mode) mode-line-format)
 ;; Adding `mode-line-vc' after `evil-mode-line-tag'
 (let ((evil-tag-sublist (memq 'evil-mode-line-tag mode-line-format)))
-  (setf (cdr evil-tag-sublist) (cons 'mode-line-vc (cdr evil-tag-sublist))))
+  (setf (cdr evil-tag-sublist) (cons 'mode-line-vc (cddr evil-tag-sublist))))
 
 (defun mode-line-project-root ()
   (or (cdr (project-current)) default-directory))
