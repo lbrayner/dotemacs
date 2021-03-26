@@ -194,8 +194,8 @@ os.path.join,(dotemacs-joindirs \"/tmp\" \"a\" \"b\" \"c\") =>
 
 (defun mode-line-shorten-path (path max-length)
   (let* ((as-list (mode-line--path-as-list path))
-         (shortended (mode-line--shorten-path-worker nil as-list max-length)))
-    (abbreviate-file-name (apply #'mode-line--joinnodes shortended))))
+         (shortened (mode-line--shorten-path-worker nil as-list max-length)))
+    (abbreviate-file-name (apply #'mode-line--joinnodes shortened))))
 
 ;; Mode line construct for identifying the buffer being displayed.
 (setq-default mode-line-buffer-identification
