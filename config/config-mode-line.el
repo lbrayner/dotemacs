@@ -25,14 +25,17 @@
                     :foreground nil
                     :background "Red")
 
-(defvar selected-window nil)
+(defvar selected-window nil
+  "The currently selected window.")
 
 (defun record-selected-window ()
+  "Save the currently active window to `selected-window'."
   (setq selected-window (selected-window)))
 
 (add-hook 'buffer-list-update-hook #'record-selected-window)
 
 (defun window-active-p ()
+  "Return t if the window is active."
   (eq selected-window (selected-window)))
 
 (setq-default mode-line-modified
@@ -48,7 +51,8 @@
 
 (defvar mode-line-vc
   '(:eval (when-let (vc vc-mode)
-            (substring vc 5))))
+            (substring vc 5)))
+  "Custom mode line construct that holds VC information.")
 (put 'mode-line-vc 'risky-local-variable t)
 
 (defun mode-line--path-as-list (path)
@@ -83,25 +87,33 @@ os.path.join,(dotemacs-joindirs \"/tmp\" \"a\" \"b\" \"c\") =>
            (cdr dirs))))
 
 (defun mode-line-shorten-path (path max-length)
+  "Shorten a PATH given a MAX-LENGTH for displaying in the mode line."
   (let* ((as-list (mode-line--path-as-list path))
          (shortened (mode-line--shorten-path-worker nil as-list max-length)))
     (abbreviate-file-name (apply #'mode-line--joinnodes shortened))))
 
-(defvar mode-line-custom-buffer-identification)
+(defvar mode-line-custom-buffer-identification nil
+  "Custom mode line construct for identifying the buffer being displayed.")
 (put 'mode-line-custom-buffer-identification 'risky-local-variable t)
 
 (defun mode-line-project-root ()
+  "Return either `project-current' or `default-directory' by default.
+
+Dired mode is a special case, in which the parent directory of
+`default-directory' is returned."
   (cond ((eq major-mode 'dired-mode)
          (file-name-directory (directory-file-name default-directory)))
         (t
          (or (cdr (project-current)) default-directory))))
 
 (defun mode-line-buffer-file-name ()
+  "Return `buffer-file-name' or an equivalent for use in the mode line."
   (if (eq major-mode 'dired-mode)
       (file-name-as-directory (file-name-nondirectory (directory-file-name default-directory)))
     buffer-file-name))
 
 (defun mode-line-buffer-name ()
+  "Return the buffer name for use in the mode line."
   (cond ((mode-line-buffer-file-name)
          (s-chop-prefix (abbreviate-file-name (mode-line-project-root))
                         (abbreviate-file-name (mode-line-buffer-file-name))))
