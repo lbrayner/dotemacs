@@ -35,13 +35,13 @@
   "Kills text before point."
   (interactive) (kill-line 0))
 
-(defun my-evil-save-buffer ()
+(defun evil-save-buffer ()
   "Enters `evil-normal-state' and saves the buffer."
   (interactive)
   (evil-normal-state) (save-buffer))
 
 (define-key evil-insert-state-map "\C-u" #'kill-line-reverse)
-(define-key evil-insert-state-map (kbd "<f6>") #'my-evil-save-buffer)
+(define-key evil-insert-state-map (kbd "<f6>") #'evil-save-buffer)
 
 (define-key evil-motion-state-map "\C-h" #'evil-window-left)
 (define-key evil-motion-state-map "\C-j" #'evil-window-down)
@@ -53,7 +53,7 @@
 (with-eval-after-load 'custom-interactive
   (define-key evil-motion-state-map "gT" #'other-frame-reverse))
 
-(defun my-evil-record-macro (register)
+(defun evil-record-macro-wrapper (register)
   "For recursive binding of keys following q."
  (interactive
    (list (unless (and evil-this-macro defining-kbd-macro)
@@ -62,11 +62,11 @@
         (evil-command-window-ex))
        (t (evil-record-macro register))))
 
-(define-key evil-normal-state-map "q" #'my-evil-record-macro)
+(define-key evil-normal-state-map "q" #'evil-record-macro-wrapper)
 
 ;; Tim Pope's vim-commentary-like functionality
 
-(evil-define-command my-evil-comment (beg end)
+(evil-define-command evil-comment (beg end)
   "Comment text from BEG to END."
   (interactive "<r>")
   (comment-or-uncomment-region beg end))
@@ -74,16 +74,20 @@
 ;; Makes `g' a prefix key in evil-normal-state-map
 (define-key evil-normal-state-map "g" nil)
 
-(define-key evil-normal-state-map "gc" #'my-evil-comment)
-(define-key evil-visual-state-map "gc" #'my-evil-comment)
+(define-key evil-normal-state-map "gc" #'evil-comment)
+(define-key evil-visual-state-map "gc" #'evil-comment)
 
-(evil-define-command my-evil-fill (beg end)
-  "Fill text from BED to END."
-  (interactive "<r>")
-  (fill-region-as-paragraph beg end))
+(evil-define-operator evil-custom-fill (beg end)
+  "Fill text as one paragraph."
+  :move-point nil
+  :type line
+  (save-excursion
+    (condition-case nil
+        (fill-region-as-paragraph beg end)
+      (error nil))))
 
-(define-key evil-normal-state-map "gq" #'my-evil-fill)
-(define-key evil-visual-state-map "gq" #'my-evil-fill)
+(define-key evil-normal-state-map "gq" #'evil-custom-fill)
+(define-key evil-visual-state-map "gq" #'evil-custom-fill)
 
 (defun evil-unimpaired-open-line (n)
   "Performs Tim Pope's unimpaired ]<Space>."
@@ -189,13 +193,13 @@
 
 ;; https://emacs.stackexchange.com/a/31649
 ;; Advise end-of-buffer to just go up a line if it leaves you on an empty line
-(defun my-evil-window-bottom-after (&rest _)
+(defun evil-advice-avoid-ghost-line (&rest _)
   "If current line is empty, call `evil-previous-line'."
   (when (looking-at-p "^$") (evil-previous-line)))
 
-(advice-add #'evil-window-bottom :after #'my-evil-window-bottom-after)
+(advice-add #'evil-window-bottom :after #'evil-advice-avoid-ghost-line)
 
-(defun my-evil-command-window-ex-after (&rest _)
+(defun evil-advice-insert-visual-marks (&rest _)
   "Insert last selected visual area marks."
   (let ((previous-window-evil-visual-state-p
          (save-selected-window (select-window (previous-window))
@@ -203,7 +207,7 @@
     (if previous-window-evil-visual-state-p
         (insert "'<,'>"))))
 
-(advice-add #'evil-command-window-ex :after #'my-evil-command-window-ex-after)
+(advice-add #'evil-command-window-ex :after #'evil-advice-insert-visual-marks)
 
         ;; EVIL-SURROUND
 (global-evil-surround-mode 1)
