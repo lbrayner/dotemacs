@@ -83,14 +83,17 @@
 (put 'view-hello-file 'disabled t)
     ;; highlighting trailing whitespace
 (setq-default show-trailing-whitespace t)
-(let ((no-show-trailing-space '(slime-repl-mode
+(defun no-show-trailing-whitespace ()
+  "Set `show-trailing-whitespace' to nil."
+  (setq show-trailing-whitespace nil))
+(let ((no-show-trailing-whitespace-modes '(slime-repl-mode
                                 help-mode
                                 eshell-mode
                                 shell-mode
                                 term-mode)))
-  (cl-loop for mode in no-show-trailing-space
+  (cl-loop for mode in no-show-trailing-whitespace-modes
            do (let ((hook (concat (symbol-name mode) "-hook")))
-                (add-hook (intern hook) (lambda () (setq show-trailing-whitespace nil))))))
+                (add-hook (intern hook) #'no-show-trailing-whitespace))))
 
 ;; |                             |
 ;; | MELPA PACKAGE CONFIGURATION |
@@ -100,7 +103,10 @@
 (setq inferior-lisp-program "sbcl")
 (setq slime-contribs '(slime-fancy))
     ;; haskell-mode
-(add-hook 'haskell-mode-hook (lambda () (setq-local eldoc-documentation-function nil)))
+(defun no-eldoc-documentation-function ()
+  "Set `eldoc-documentation-function' to nil."
+  (setq show-trailing-whitespace nil))
+(add-hook 'haskell-mode-hook #'no-eldoc-documentation-function)
     ;; auto-dim-other-buffers
 (auto-dim-other-buffers-mode)
     ;; f
