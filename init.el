@@ -107,11 +107,17 @@
 ;; | GitHub PACKAGES |
 ;; |                 |
 
-(defvar emacs-github-packages-dir (concat user-emacs-directory "github/")
+(defun expand-directory-name (name &optional default-directory)
+  "Convert directory NAME to absolute, and canonicalize it. See
+`expand-file-name'."
+  (file-name-as-directory (expand-file-name name default-directory)))
+
+(defvar emacs-github-packages-dir
+  (expand-directory-name "github" user-emacs-directory)
   "Where Github packages are stored.")
 
-(let ((github-packages (concat emacs-github-packages-dir "packages/"))
-      (github-color-themes (concat emacs-github-packages-dir "color-themes/")))
+(let ((github-packages (expand-directory-name "packages" emacs-github-packages-dir))
+      (github-color-themes (expand-directory-name "color-themes" emacs-github-packages-dir)))
   (if (file-directory-p github-packages)
       (let ((subdirs (append (f-directories github-packages)
                              (f-directories github-color-themes))))
@@ -128,9 +134,8 @@
 ;; loading files from config folder
 ;; from Bailey Ling's dotemacs
 
-(let* ((config-directory (concat user-emacs-directory "config/"))
-       (directory-exists? (file-directory-p config-directory)))
-  (if directory-exists?
+(let ((config-directory (expand-directory-name "config" user-emacs-directory)))
+  (if (file-directory-p config-directory)
       (cl-loop for file in (directory-files-recursively config-directory "\\.el$")
                do (condition-case ex
                       (load (file-name-sans-extension file))

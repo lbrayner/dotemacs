@@ -17,10 +17,10 @@ latest kill in the kill ring."
 
 (defun byte-recompile-github-subdirectories ()
   "Recompiles all packages and color themes under
-  `emacs-github-packages-dir'."
+`emacs-github-packages-dir'."
   (interactive)
-  (let* ((github-packages (concat emacs-github-packages-dir "packages/"))
-         (github-color-themes (concat emacs-github-packages-dir "color-themes/")))
+  (let ((github-packages (expand-directory-name "packages" emacs-github-packages-dir))
+        (github-color-themes (expand-directory-name "color-themes" emacs-github-packages-dir)))
     (if (file-directory-p github-packages)
         (let ((subdirs (append (f-directories github-packages)
                                (f-directories github-color-themes))))
