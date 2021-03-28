@@ -35,12 +35,13 @@
   "Kills text before point."
   (interactive) (kill-line 0))
 
+(define-key evil-insert-state-map "\C-u" #'kill-line-reverse)
+
 (defun evil-save-buffer ()
   "Enters `evil-normal-state' and saves the buffer."
   (interactive)
   (evil-normal-state) (save-buffer))
 
-(define-key evil-insert-state-map "\C-u" #'kill-line-reverse)
 (define-key evil-insert-state-map (kbd "<f6>") #'evil-save-buffer)
 
 (define-key evil-motion-state-map "\C-h" #'evil-window-left)
