@@ -37,7 +37,6 @@
 (setq blink-cursor-blinks 1)
     ;; menus and scroll bar
 (menu-bar-mode -1)
-    ;; (toggle-scroll-bar -1)
 (add-to-list 'default-frame-alist '(vertical-scroll-bars . nil))
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 (tool-bar-mode -1)
