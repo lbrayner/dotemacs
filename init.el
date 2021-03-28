@@ -86,10 +86,10 @@
   "Set `show-trailing-whitespace' to nil."
   (setq show-trailing-whitespace nil))
 (let ((no-show-trailing-whitespace-modes '(slime-repl-mode
-                                help-mode
-                                eshell-mode
-                                shell-mode
-                                term-mode)))
+                                           help-mode
+                                           eshell-mode
+                                           shell-mode
+                                           term-mode)))
   (cl-loop for mode in no-show-trailing-whitespace-modes
            do (let ((hook (concat (symbol-name mode) "-hook")))
                 (add-hook (intern hook) #'no-show-trailing-whitespace))))
