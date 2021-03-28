@@ -21,6 +21,7 @@
                               "</style>\n"))))))
 
 (defun org-mode-setup ()
+  "Setup Org mode."
   (visual-line-mode t)
   (setq truncate-lines nil)
   (flyspell-mode)

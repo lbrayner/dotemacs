@@ -17,7 +17,7 @@
       (isearch-yank-regexp
        (concat "\\_<" (regexp-quote sym) "\\_>")))))
 
-(define-key isearch-mode-map (kbd "M-s C-s") 'isearch-yank-symbol)
+(define-key isearch-mode-map (kbd "M-s C-s") #'isearch-yank-symbol)
 
     ;; IBUFFER
 ;; https://www.emacswiki.org/emacs/IbufferMode#toc11

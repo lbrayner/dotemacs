@@ -68,7 +68,10 @@
 (setq dired-listing-switches "-alh")
 (setq dired-isearch-filenames t)
 (with-eval-after-load 'dired (require 'dired-x))
-(add-hook 'dired-mode-hook (lambda () (dired-omit-mode 1)))
+(defun dired-mode-setup ()
+  "Setup Dired mode."
+  (dired-omit-mode 1))
+(add-hook 'dired-mode-hook #'dired-mode-setup)
     ;; Display-Line-Numbers mode
 (when (version<= "26.0.50" emacs-version)
   (setq display-line-numbers-type 'relative)
