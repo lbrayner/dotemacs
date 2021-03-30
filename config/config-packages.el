@@ -1,6 +1,6 @@
-;; |       |
-;; | MELPA |
-;; |       |
+;;
+;; MELPA
+;;
 
     ;; SMARTPARENS
 (require 'smartparens-config)
@@ -27,9 +27,9 @@
   (global-set-key (vector (list modifier 'left))  #'sp-forward-barf-sexp)
   (global-set-key (vector (list modifier 'right)) #'sp-forward-slurp-sexp))
 
-;; |        |
-;; | GitHub |
-;; |        |
+;;
+;; Git
+;;
 
     ;; FRAMES
 (require 'frames)

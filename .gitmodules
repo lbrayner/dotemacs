@@ -1,12 +1,12 @@
 [submodule "github/icicles"]
-	path = github/packages/icicles
+	path = git/packages/icicles
 	url = https://github.com/emacsmirror/icicles
 [submodule "github/elisp-custom-features"]
-	path = github/packages/elisp-custom-features
+	path = git/packages/elisp-custom-features
 	url = https://github.com/lbrayner/elisp-custom-features
 [submodule "github/color-themes/emacs-color-theme-solarized"]
-	path = github/color-themes/emacs-color-theme-solarized
+	path = git/color-themes/emacs-color-theme-solarized
 	url = https://github.com/sellout/emacs-color-theme-solarized
 [submodule "github/packages/smart-tab"]
-	path = github/packages/smart-tab
+	path = git/packages/smart-tab
 	url = https://github.com/genehack/smart-tab

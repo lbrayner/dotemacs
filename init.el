@@ -23,9 +23,9 @@
  ;; If there is more than one, they won't work right.
  )
 
-;; |               |
-;; | CONFIGURATION |
-;; |               |
+;;
+;; CONFIGURATION
+;;
 
     ;; server-socket-dir override
 (setq server-socket-dir
@@ -94,9 +94,9 @@
            do (let ((hook (concat (symbol-name mode) "-hook")))
                 (add-hook (intern hook) #'no-show-trailing-whitespace))))
 
-;; |                             |
-;; | MELPA PACKAGE CONFIGURATION |
-;; |                             |
+;;
+;; MELPA PACKAGE CONFIGURATION
+;;
 
     ;; slime
 (setq inferior-lisp-program "sbcl")
@@ -111,33 +111,33 @@
     ;; f
 (require 'f)
 
-;; |                 |
-;; | GitHub PACKAGES |
-;; |                 |
+;;
+;; Git PACKAGES
+;;
 
 (defun expand-directory-name (name &optional default-directory)
   "Convert directory NAME to absolute, and canonicalize it. See
 `expand-file-name'."
   (file-name-as-directory (expand-file-name name default-directory)))
 
-(defvar emacs-github-packages-dir
-  (expand-directory-name "github" user-emacs-directory)
-  "Where Github packages are stored.")
+(defvar emacs-git-packages-dir
+  (expand-directory-name "git" user-emacs-directory)
+  "Where Git packages are stored.")
 
-(let ((github-packages (expand-directory-name "packages" emacs-github-packages-dir))
-      (github-color-themes (expand-directory-name "color-themes" emacs-github-packages-dir)))
-  (if (file-directory-p github-packages)
-      (let ((subdirs (append (f-directories github-packages)
-                             (f-directories github-color-themes))))
+(let ((git-packages (expand-directory-name "packages" emacs-git-packages-dir))
+      (git-color-themes (expand-directory-name "color-themes" emacs-git-packages-dir)))
+  (if (file-directory-p git-packages)
+      (let ((subdirs (append (f-directories git-packages)
+                             (f-directories git-color-themes))))
         (cl-loop for dir in subdirs
                  do (add-to-list 'load-path dir))))
-  (if (file-directory-p github-color-themes)
-      (cl-loop for dir in (f-directories github-color-themes)
+  (if (file-directory-p git-color-themes)
+      (cl-loop for dir in (f-directories git-color-themes)
                do (add-to-list 'custom-theme-load-path dir))))
 
-;; |               |
-;; | CONFIG FOLDER |
-;; |               |
+;;
+;; CONFIG FOLDER
+;;
 
 ;; loading files from config folder
 ;; from Bailey Ling's dotemacs

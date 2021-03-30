@@ -13,17 +13,17 @@ latest kill in the kill ring."
            (message "Saved file name '%s' to the kill ring." filename))
           (t (message "Not visiting a file.")))))
 
-;; recompile all github directories
+;; recompile all Git directories
 
-(defun byte-recompile-github-subdirectories ()
+(defun byte-recompile-git-subdirectories ()
   "Recompiles all packages and color themes under
-`emacs-github-packages-dir'."
+`emacs-git-packages-dir'."
   (interactive)
-  (let ((github-packages (expand-directory-name "packages" emacs-github-packages-dir))
-        (github-color-themes (expand-directory-name "color-themes" emacs-github-packages-dir)))
-    (if (file-directory-p github-packages)
-        (let ((subdirs (append (f-directories github-packages)
-                               (f-directories github-color-themes))))
+  (let ((git-packages (expand-directory-name "packages" emacs-git-packages-dir))
+        (git-color-themes (expand-directory-name "color-themes" emacs-git-packages-dir)))
+    (if (file-directory-p git-packages)
+        (let ((subdirs (append (f-directories git-packages)
+                               (f-directories git-color-themes))))
           (cl-labels ((recompile-dirs
                        (as)
                        (unless (null as)
