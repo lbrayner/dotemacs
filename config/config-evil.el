@@ -4,7 +4,9 @@
 (setq evil-search-module 'evil-search)
 
 (defun evil-normal-eval-print-last-sexp ()
-  "`eval-print-last-sexp' adjusted for Evil's normal mode."
+  "Evaluate sexp before point; print value into current buffer.
+
+Adjusted for Evil's normal mode. See `eval-print-last-sexp'."
   (interactive)
   (evil-append 1) (eval-print-last-sexp) (evil-normal-state) (message nil))
 
@@ -32,13 +34,13 @@
 (define-key evil-motion-state-map (kbd "<f9>") #'delete-window)
 
 (defun kill-line-reverse ()
-  "Kills text before point."
+  "Kill text before point."
   (interactive) (kill-line 0))
 
 (define-key evil-insert-state-map "\C-u" #'kill-line-reverse)
 
 (defun evil-save-buffer ()
-  "Enters `evil-normal-state' and saves the buffer."
+  "Enter `evil-normal-state' and save the buffer."
   (interactive)
   (evil-normal-state) (save-buffer))
 
@@ -55,7 +57,7 @@
   (define-key evil-motion-state-map "gT" #'other-frame-reverse))
 
 (defun evil-record-macro-wrapper (register)
-  "For recursive binding of keys following q."
+  "Wrap `evil-record-macro' for recursive binding of keys following q."
  (interactive
    (list (unless (and evil-this-macro defining-kbd-macro)
            (or evil-this-register (evil-read-key)))))
@@ -72,7 +74,7 @@
   (interactive "<r>")
   (comment-or-uncomment-region beg end))
 
-;; Makes `g' a prefix key in evil-normal-state-map
+;; Makes g a prefix key in evil-normal-state-map
 (define-key evil-normal-state-map "g" nil)
 
 (define-key evil-normal-state-map "gc" #'evil-comment)
@@ -91,14 +93,14 @@
 (define-key evil-visual-state-map "gq" #'evil-custom-fill)
 
 (defun evil-unimpaired-open-line (n)
-  "Performs Tim Pope's unimpaired ]<Space>."
+  "Perform Tim Pope's unimpaired ]<Space>."
   (interactive "p")
   (save-excursion
     (move-end-of-line 1)
     (open-line n)))
 
 (defun evil-unimpaired-open-line-above (n)
-  "Performs Tim Pope's unimpaired [<Space>."
+  "Perform Tim Pope's unimpaired [<Space>."
   (interactive "p")
   (cond ((bolp)
          (open-line n)
@@ -134,7 +136,7 @@
                 :around 'evil-collection-slime-last-sexp)))
 
 (defun evil-collection-setup ()
-  "Sets up evil-collection bindings."
+  "Set up evil-collection bindings."
   (evil-collection-slime-setup))
 
 (with-eval-after-load 'slime
@@ -195,7 +197,7 @@
 ;; https://emacs.stackexchange.com/a/31649
 ;; Advise end-of-buffer to just go up a line if it leaves you on an empty line
 (defun evil-advice-avoid-ghost-line (&rest _)
-  "If current line is empty, call `evil-previous-line'."
+  "Call `evil-previous-line' if current line is empty."
   (when (looking-at-p "^$") (evil-previous-line)))
 
 (advice-add #'evil-window-bottom :after #'evil-advice-avoid-ghost-line)
