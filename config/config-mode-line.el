@@ -92,10 +92,6 @@ os.path.join,(dotemacs-joindirs \"/tmp\" \"a\" \"b\" \"c\") =>
          (shortened (mode-line--shorten-path-worker nil as-list max-length)))
     (abbreviate-file-name (apply #'mode-line--joinnodes shortened))))
 
-(defvar mode-line-custom-buffer-identification nil
-  "Custom mode line construct for identifying the buffer being displayed.")
-(put 'mode-line-custom-buffer-identification 'risky-local-variable t)
-
 (defun mode-line-project-root ()
   "Return either `project-current' or `default-directory' by default.
 
@@ -119,15 +115,17 @@ Dired mode is a special case, in which the parent directory of
                         (abbreviate-file-name (mode-line-buffer-file-name))))
         (t "%b")))
 
-(setq mode-line-custom-buffer-identification
-      '(" "
-        (:eval (when (mode-line-buffer-file-name)
-                 (file-name-as-directory
-                  (mode-line-shorten-path (mode-line-project-root)
-                                          (- (window-width)
-                                             (length (mode-line-buffer-name))
-                                             (/ (window-total-width) 2))))))
-        (:eval (mode-line-buffer-name))))
+(defvar mode-line-custom-buffer-identification
+  '(" "
+    (:eval (when (mode-line-buffer-file-name)
+             (file-name-as-directory
+              (mode-line-shorten-path (mode-line-project-root)
+                                      (- (window-width)
+                                         (length (mode-line-buffer-name))
+                                         (/ (window-total-width) 2))))))
+    (:eval (mode-line-buffer-name)))
+  "Custom mode line construct for identifying the buffer being displayed.")
+(put 'mode-line-custom-buffer-identification 'risky-local-variable t)
 
 ;; https://emacs.stackexchange.com/a/26724
 (defun total-lines-as-string ()
@@ -145,21 +143,19 @@ Dired mode is a special case, in which the parent directory of
                                "l"))
                 "," (3 "%C") " " (-3 "%p") " " (:eval (total-lines-as-string))))
 
-(defvar mode-line-custom-modes nil
+;; https://www.gonsie.com/blorg/modeline.html
+(defvar mode-line-custom-modes
+  '(:eval (let ((mode (format-mode-line
+                       (concat "%[" mode-name mode-line-process "%n%]"))))
+            (concat
+             (propertize
+              " " 'display
+              `((space :align-to
+                       (- (+ right right-fringe right-margin)
+                          ,(+ 3 (string-width mode))))))
+             mode)))
   "Custom mode line construct for displaying major and minor modes.")
 (put 'mode-line-custom-modes 'risky-local-variable t)
-
-;; https://www.gonsie.com/blorg/modeline.html
-(setq mode-line-custom-modes
-      '(:eval (let ((mode (format-mode-line
-                           (concat "%[" mode-name mode-line-process "%n%]"))))
-                (concat
-                 (propertize
-                  " " 'display
-                  `((space :align-to
-                           (- (+ right right-fringe right-margin)
-                              ,(+ 3 (string-width mode))))))
-                 mode))))
 
 (setq-default mode-line-format '("%e" mode-line-custom-buffer-identification
                                  mode-line-modified "   " mode-line-position
