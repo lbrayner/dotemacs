@@ -8,4 +8,4 @@ It's fun reproducing my Vim workflow on Emacs. Plus Lisp is such a nice
 
 ![Screenshot](https://user-images.githubusercontent.com/5733531/113137631-27791e80-91fb-11eb-8584-440de202f68f.png)
 
-Yes, it looks great on a terminal with `tmux`, and I use it! See?
+Yes, it looks great on a terminal, and I use it! See?
