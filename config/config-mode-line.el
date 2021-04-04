@@ -160,3 +160,7 @@ Dired mode is a special case, in which the parent directory of
 (setq-default mode-line-format '("%e" mode-line-custom-buffer-identification
                                  mode-line-modified "   " mode-line-position
                                  evil-mode-line-tag mode-line-vc mode-line-custom-modes))
+
+;; Reverting buffer-local variable to the global value
+(with-current-buffer "*Messages*"
+  (setq mode-line-format (default-value 'mode-line-format)))
