@@ -85,6 +85,12 @@
   (setq display-line-numbers-type 'relative)
   (setq display-line-numbers-width-start t)
   (global-display-line-numbers-mode))
+(defun display-line-numbers-mode-setup ()
+  "Setup `display-line-numbers-mode'."
+  (when (and display-line-numbers-width (> display-line-numbers-width 3))
+    (setq-local display-line-numbers-current-absolute nil)
+    (setq display-line-numbers-width (ceiling (log (window-total-height) 10)))))
+(add-hook 'display-line-numbers-mode-hook #'display-line-numbers-mode-setup)
     ;; visual-line-mode
 (setq global-visual-line-mode t)
     ;; disabling annoying commands
