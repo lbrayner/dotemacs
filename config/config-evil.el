@@ -8,17 +8,19 @@
 
 Adjusted for Evil's normal mode. See `eval-print-last-sexp'."
   (interactive)
-  (evil-append 1) (eval-print-last-sexp) (evil-normal-state) (message nil))
-
-(defun evil-eval-print-define-keys (map)
-  (evil-define-key 'normal map (kbd "C-c j") #'evil-normal-eval-print-last-sexp)
-  (evil-define-key 'insert map (kbd "C-c j") #'eval-print-last-sexp))
+  (evil-append 1)
+  (eval-print-last-sexp)
+  (evil-normal-state))
 
 (let ((lisp-modes '(lisp-mode
                     lisp-interaction-mode
                     emacs-lisp-mode)))
   (cl-labels
-      ((evil-custom-bindings
+      ((evil-eval-print-define-keys
+        (map)
+        (evil-define-key 'normal map (kbd "C-c j") #'evil-normal-eval-print-last-sexp)
+        (evil-define-key 'insert map (kbd "C-c j") #'eval-print-last-sexp))
+       (evil-custom-bindings
         (modes)
         (unless (null modes)
           (let* ((mode (car modes))
@@ -33,16 +35,18 @@ Adjusted for Evil's normal mode. See `eval-print-last-sexp'."
 (define-key evil-motion-state-map (kbd "<f6>") #'evil-write)
 (define-key evil-motion-state-map (kbd "<f9>") #'delete-window)
 
-(defun kill-line-reverse ()
+(defun evil-kill-line-reverse ()
   "Kill text before point."
-  (interactive) (kill-line 0))
+  (interactive)
+  (kill-line 0))
 
-(define-key evil-insert-state-map "\C-u" #'kill-line-reverse)
+(define-key evil-insert-state-map "\C-u" #'evil-kill-line-reverse)
 
 (defun evil-save-buffer ()
   "Enter `evil-normal-state' and save the buffer."
   (interactive)
-  (evil-normal-state) (save-buffer))
+  (evil-normal-state)
+  (save-buffer))
 
 (define-key evil-insert-state-map (kbd "<f6>") #'evil-save-buffer)
 
@@ -198,7 +202,8 @@ Adjusted for Evil's normal mode. See `eval-print-last-sexp'."
 ;; Advise end-of-buffer to just go up a line if it leaves you on an empty line
 (defun evil-advice-avoid-ghost-line (&rest _)
   "Call `evil-previous-line' if current line is empty."
-  (when (looking-at-p "^$") (evil-previous-line)))
+  (when (looking-at-p "^$")
+    (evil-previous-line)))
 
 (advice-add #'evil-window-bottom :after #'evil-advice-avoid-ghost-line)
 
