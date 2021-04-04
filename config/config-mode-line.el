@@ -146,7 +146,7 @@ Dired mode is a special case, in which the parent directory of
 ;; https://www.gonsie.com/blorg/modeline.html
 (defvar mode-line-custom-modes
   '(:eval (let ((mode (format-mode-line
-                       (concat "%[" mode-name mode-line-process "%n%]"))))
+                       '("%[" mode-name mode-line-process "%n%]"))))
             (concat
              (propertize
               " " 'display
