@@ -30,8 +30,6 @@
 (defun org-mode-evil-setup ()
   (setq evil-auto-indent nil))
 
-;; major modes
-    ;; org
 (setq org-export-time-stamp-file nil)
 (setq org-html-validation-link nil)
 (setq-default org-export-with-author nil)
@@ -42,7 +40,7 @@
 (with-eval-after-load 'evil
   (add-hook 'org-mode-hook #'org-mode-evil-setup))
 (add-hook 'org-export-before-processing-hook #'org-inline-css)
-        ;; babel
+;; babel
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((emacs-lisp . t)

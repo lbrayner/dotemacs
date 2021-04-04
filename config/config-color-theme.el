@@ -1,5 +1,3 @@
-;; themes
-    ;; emacs-color-theme-solarized
 (customize-set-variable 'frame-background-mode 'dark)
 (load-theme 'solarized t)
 (set-face-attribute 'default nil :height 105)

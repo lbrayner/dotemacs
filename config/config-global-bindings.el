@@ -1,7 +1,7 @@
 (global-set-key (kbd "C-x C-b") #'ibuffer)
 
 (defun other-frame-reverse (arg)
-  "Negates arg and sends it to `other-frame'."
+  "Call `other-frame' with negated ARG."
   (interactive "p")
   (other-frame (- arg)))
 
@@ -54,7 +54,7 @@ ITEMS and LIST; and then to the second and the resulting list and so on."
 ;; https://emacs.stackexchange.com/a/31649
 ;; Advise end-of-buffer to just go up a line if it leaves you on an empty line
 (defun global-advice-avoid-ghost-line (&rest _)
-  "If current line is empty, call `previous-line'."
+  "Call `previous-line' if current line is empty."
   (when (looking-at-p "^$")
     (cond ((eq major-mode 'dired-mode)
            (dired-previous-line 1))

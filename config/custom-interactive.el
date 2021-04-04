@@ -16,7 +16,7 @@ latest kill in the kill ring."
 ;; recompile all Git directories
 
 (defun byte-recompile-git-subdirectories ()
-  "Recompiles all packages and color themes under
+  "Recompile all packages and color themes under
 `emacs-git-packages-dir'."
   (interactive)
   (let ((git-packages (expand-directory-name "packages" emacs-git-packages-dir))

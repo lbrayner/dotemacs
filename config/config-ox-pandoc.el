@@ -31,7 +31,7 @@
         (setq org-pandoc-options (assq-delete-all 'include-before-body org-pandoc-options))))))
 
 (defun org-pandoc-delete-temporary-css-file ()
-  "Deletes the temporary css file."
+  "Delete the temporary css file."
   (if org-pandoc-temporary-css-file
       (delete-file org-pandoc-temporary-css-file))
   (setq org-pandoc-temporary-css-file nil))
@@ -42,10 +42,8 @@
 (add-hook 'org-pandoc-after-processing-html5-hook
           #'org-pandoc-delete-temporary-css-file)
 
-;; custom vars
-
 (defvar-local file-local-time-locale nil
-  "Overrides system-time-locale.")
+  "Override system-time-locale.")
 
 (defun file-local-time-locale-safep (value)
   (stringp value))
