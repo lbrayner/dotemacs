@@ -118,8 +118,10 @@ Adjusted for Evil's normal mode. See `eval-print-last-sexp'."
 
 ;; https://github.com/emacs-evil/evil-collection
 
-;;; evil-collection has too many features for my current needs
-;;; (i.e. it's bloated).
+;; evil-collection has too many features for my current needs
+;; (i.e. it's bloated).
+
+;; Copied verbatim from evil-collection
 
 (defun evil-collection-slime-last-sexp (command &rest args)
   "In normal-state or motion-state, last sexp ends at point."
@@ -128,7 +130,7 @@ Adjusted for Evil's normal mode. See `eval-print-last-sexp'."
       (save-excursion
         (unless (or (eobp) (eolp)) (forward-char))
         (apply command args))
-(apply command args)))
+    (apply command args)))
 
 (defun evil-collection-slime-setup ()
   "Set up `evil' bindings for `slime'."
@@ -138,6 +140,8 @@ Adjusted for Evil's normal mode. See `eval-print-last-sexp'."
     (advice-add 'slime-eval-print-last-expression :around 'evil-collection-slime-last-sexp)
     (advice-add 'slime-eval-last-expression-in-repl
                 :around 'evil-collection-slime-last-sexp)))
+
+;; End of snipptes from evil-collection
 
 (defun evil-collection-setup ()
   "Set up evil-collection bindings."
