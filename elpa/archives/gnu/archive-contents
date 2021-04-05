@@ -63,6 +63,16 @@
 		 (:authors
 		  ("Stefan Monnier" . "monnier@iro.umontreal.ca"))
 		 (:maintainer "Stefan Monnier" . "monnier@iro.umontreal.ca"))])
+ (aggressive-completion .
+			[(1 4)
+			 ((emacs
+			   (27 1)))
+			 "Automatic minibuffer completion" tar
+			 ((:maintainer "Tassilo Horn" . "tsdh@gnu.org")
+			  (:authors
+			   ("Tassilo Horn" . "tsdh@gnu.org"))
+			  (:keywords "minibuffer" "completion")
+			  (:url . "https://elpa.gnu.org/packages/aggressive-completion.html"))])
  (aggressive-indent .
 		    [(1 8 3)
 		     ((emacs
@@ -131,11 +141,9 @@
 	   ("John Wiegley" . "jwiegley@gmail.com"))
 	  (:keywords "async"))])
  (auctex .
-	 [(13 0 5)
+	 [(13 0 6)
 	  ((emacs
-	    (24 3))
-	   (cl-lib
-	    (1 0)))
+	    (24 3)))
 	  "Integrated environment for *TeX*" tar
 	  ((:url . "https://www.gnu.org/software/auctex/")
 	   (:maintainer nil . "auctex-devel@gnu.org")
@@ -1653,13 +1661,13 @@
 	      ("Nicolas Goaziou" . "mail@nicolasgoaziou.fr"))
 	     (:maintainer "Nicolas Goaziou" . "mail@nicolasgoaziou.fr"))])
  (osc .
-      [(0 2)
-       nil "Open Sound Control protocol library" single
-       ((:url . "http://elpa.gnu.org/packages/osc.html")
-	(:keywords "comm" "processes" "multimedia")
+      [(0 3)
+       nil "Open Sound Control protocol library" tar
+       ((:maintainer "Mario Lang" . "mlang@blind.guru")
 	(:authors
 	 ("Mario Lang" . "mlang@blind.guru"))
-	(:maintainer "Mario Lang" . "mlang@blind.guru"))])
+	(:keywords "comm" "processes" "multimedia")
+	(:url . "https://elpa.gnu.org/packages/osc.html"))])
  (other-frame-window .
 		     [(1 0 6)
 		      ((emacs
@@ -1753,7 +1761,7 @@
 	   ("Mario Lang" . "mlang@delysid.org"))
 	  (:maintainer "Mario Lang" . "mlang@delysid.org"))])
  (posframe .
-	   [(0 8 8)
+	   [(0 9 0)
 	    ((emacs
 	      (26)))
 	    "Pop a posframe (just a frame) at point" tar
@@ -2369,7 +2377,7 @@
 	  ("Oleh Krehel" . "ohwoeowho@gmail.com"))
 	 (:keywords "convenience"))])
  (tramp .
-	[(2 5 0 2)
+	[(2 5 0 3)
 	 ((emacs
 	   (25 1)))
 	 "Transparent Remote Access, Multiple Protocol" tar
@@ -2506,7 +2514,7 @@
 	   ("Justin Burkett" . "justin@burkett.cc"))
 	  (:keywords "diff"))])
  (verilog-mode .
-	       [(2021 2 2 263931197)
+	       [(2021 3 30 243771231)
 		nil "major mode for editing verilog source in Emacs" tar
 		((:url . "https://www.veripool.org")
 		 (:maintainer "Michael McNamara" . "mac@verilog.com")
@@ -2525,15 +2533,15 @@
 	     (:maintainer "Ian Dunn" . "dunni@gnu.org")
 	     (:url . "https://elpa.gnu.org/packages/vigenere.html"))])
  (visual-filename-abbrev .
-			 [(1 0)
+			 [(1 1)
 			  ((emacs
 			    (26 1)))
-			  "Visually abbreviate filenames" single
-			  ((:url . "http://elpa.gnu.org/packages/visual-filename-abbrev.html")
-			   (:keywords "tools")
+			  "Visually abbreviate filenames" tar
+			  ((:maintainer "Tassilo Horn" . "tsdh@gnu.org")
 			   (:authors
 			    ("Tassilo Horn" . "tsdh@gnu.org"))
-			   (:maintainer "Tassilo Horn" . "tsdh@gnu.org"))])
+			   (:keywords "tools")
+			   (:url . "https://elpa.gnu.org/packages/visual-filename-abbrev.html"))])
  (visual-fill .
 	      [(0 1)
 	       nil "Auto-refill paragraphs without modifying the buffer" single
