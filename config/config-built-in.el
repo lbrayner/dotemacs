@@ -41,7 +41,8 @@
 
     ;; package
 (defun package-install-no-read-only-mode (command &rest args)
-  "Remove hook `elpa-enable-read-only-mode' during the execution of `package-install'"
+  "Remove hook `elpa-enable-read-only-mode' during the execution of
+`package-install'."
   (remove-hook 'find-file-hook #'elpa-enable-read-only-mode)
   (apply command args)
   (add-hook 'find-file-hook #'elpa-enable-read-only-mode))
