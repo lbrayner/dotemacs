@@ -1,4 +1,4 @@
-    ;; ISEARCH
+    ;; isearch
 ;; https://www.emacswiki.org/emacs/SearchAtPoint
 (defun isearch-yank-regexp (regexp)
   "Pull REGEXP into search regexp."
@@ -19,7 +19,7 @@
 
 (define-key isearch-mode-map (kbd "M-s C-s") #'isearch-yank-symbol)
 
-    ;; IBUFFER
+    ;; ibuffer
 ;; https://www.emacswiki.org/emacs/IbufferMode#toc11
 ;; https://github.com/purcell/emacs.d/blob/master/lisp/init-ibuffer.el
 (with-eval-after-load 'ibuffer
@@ -38,3 +38,11 @@
               (mode 16 16 :left :elide)
               " "
               filename-and-process)))
+
+    ;; package
+(defun package-install-no-read-only-mode (command &rest args)
+  "Remove hook `elpa-enable-read-only-mode' during the execution of `package-install'"
+  (remove-hook 'find-file-hook #'elpa-enable-read-only-mode)
+  (apply command args)
+  (add-hook 'find-file-hook #'elpa-enable-read-only-mode))
+(advice-add #'package-install :around #'package-install-no-read-only-mode)
