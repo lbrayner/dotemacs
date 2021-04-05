@@ -71,14 +71,14 @@
   "Setup Dired mode."
   (dired-omit-mode 1))
 (add-hook 'dired-mode-hook #'dired-mode-setup)
-    ;; MELPA read-only-mode
+    ;; ELPA read-only-mode
 (defun elpa-enable-read-only-mode ()
-    "Enable Read-Only mode when visiting an ELPA file."
+  "Enable Read-Only mode when visiting an ELPA file."
   (when buffer-file-name
     (let ((elpa (expand-file-name "elpa" user-emacs-directory))
           (file-name (expand-file-name buffer-file-name)))
-      (if (not (eq (s-chop-prefix elpa file-name) file-name))
-          (read-only-mode)))))
+      (unless (eq (s-chop-prefix elpa file-name) file-name)
+        (read-only-mode)))))
 (add-hook 'find-file-hook #'elpa-enable-read-only-mode)
     ;; Display-Line-Numbers mode
 (when (version<= "26.0.50" emacs-version)
