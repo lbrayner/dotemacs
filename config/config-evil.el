@@ -1,3 +1,4 @@
+(setq evil-want-keybinding nil)
 (evil-mode t)
 (global-evil-leader-mode)
 (setq evil-want-Y-yank-to-eol nil)
@@ -116,40 +117,6 @@ Adjusted for Evil's normal mode. See `eval-print-last-sexp'."
 (define-key evil-normal-state-map "] " #'evil-unimpaired-open-line)
 (define-key evil-normal-state-map "[ " #'evil-unimpaired-open-line-above)
 
-;; https://github.com/emacs-evil/evil-collection
-
-;; evil-collection has too many features for my current needs
-;; (i.e. it's bloated).
-
-;; Copied verbatim from evil-collection
-
-(defun evil-collection-slime-last-sexp (command &rest args)
-  "In normal-state or motion-state, last sexp ends at point."
-  (if (and (not evil-move-beyond-eol)
-           (or (evil-normal-state-p) (evil-motion-state-p)))
-      (save-excursion
-        (unless (or (eobp) (eolp)) (forward-char))
-        (apply command args))
-    (apply command args)))
-
-(defun evil-collection-slime-setup ()
-  "Set up `evil' bindings for `slime'."
-  (unless evil-move-beyond-eol
-    (advice-add 'slime-eval-last-expression :around 'evil-collection-slime-last-sexp)
-    (advice-add 'slime-pprint-eval-last-expression :around 'evil-collection-slime-last-sexp)
-    (advice-add 'slime-eval-print-last-expression :around 'evil-collection-slime-last-sexp)
-    (advice-add 'slime-eval-last-expression-in-repl
-                :around 'evil-collection-slime-last-sexp)))
-
-;; End of snipptes from evil-collection
-
-(defun evil-collection-setup ()
-  "Set up evil-collection bindings."
-  (evil-collection-slime-setup))
-
-(with-eval-after-load 'slime
-  (evil-collection-setup))
-
 ;; Bailey Ling's snippets
 
 (setq evil-emacs-state-cursor '("red" box))
@@ -221,5 +188,12 @@ Adjusted for Evil's normal mode. See `eval-print-last-sexp'."
 
 (advice-add #'evil-command-window-ex :after #'evil-advice-insert-visual-marks)
 
-        ;; EVIL-SURROUND
+    ;; evil-surround
 (global-evil-surround-mode 1)
+
+    ;; evil-collection
+(require 'evil-collection)
+(with-eval-after-load 'elfeed
+  (evil-collection-elfeed-setup))
+(with-eval-after-load 'slime
+  (evil-collection-slime-setup))

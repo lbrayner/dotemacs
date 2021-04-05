@@ -13,7 +13,7 @@
  '(frame-background-mode 'dark)
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(markdown-mode evil-smartparens smartparens auto-dim-other-buffers ace-window haskell-mode f ox-pandoc slime org htmlize ox-reveal org-plus-contrib org-edna evil-surround evil-leader evil)))
+   '(evil-collection elfeed markdown-mode evil-smartparens smartparens auto-dim-other-buffers ace-window haskell-mode f ox-pandoc slime org htmlize ox-reveal org-plus-contrib org-edna evil-surround evil-leader evil)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -102,7 +102,9 @@
                                            help-mode
                                            eshell-mode
                                            shell-mode
-                                           term-mode)))
+                                           term-mode
+                                           elfeed-search-mode
+                                           elfeed-show-mode)))
   (cl-loop for mode in no-show-trailing-whitespace-modes
            do (let ((hook (concat (symbol-name mode) "-hook")))
                 (add-hook (intern hook) #'no-show-trailing-whitespace))))
