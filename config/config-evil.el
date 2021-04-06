@@ -180,11 +180,10 @@ Adjusted for Evil's normal mode. See `eval-print-last-sexp'."
 
 (defun evil-advice-insert-visual-marks (&rest _)
   "Insert last selected visual area marks."
-  (let ((previous-window-evil-visual-state-p
-         (save-selected-window (select-window (previous-window))
-                               (evil-visual-state-p))))
-    (if previous-window-evil-visual-state-p
-        (insert "'<,'>"))))
+  (if (save-selected-window
+        (select-window (previous-window))
+        (evil-visual-state-p))
+      (insert "'<,'>")))
 
 (advice-add #'evil-command-window-ex :after #'evil-advice-insert-visual-marks)
 
