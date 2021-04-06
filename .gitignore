@@ -3,3 +3,4 @@
 /config/config-local.el
 \#*
 .\#*
+/srecode-map.el
