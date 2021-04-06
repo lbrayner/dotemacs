@@ -193,10 +193,8 @@ Adjusted for Evil's normal mode. See `eval-print-last-sexp'."
     ;; evil-collection
 (require 'evil-collection)
 (with-eval-after-load 'elfeed
-  (evil-collection-elfeed-setup))
-;; unshadowing C-j & C-k bindings in elfeed-show-mode-map
-(with-eval-after-load 'evil-collection-elfeed
-  (dolist (key (list (kbd "C-j") (kbd "C-k")))
+  (evil-collection-elfeed-setup)
+  (dolist (key (list (kbd "C-j") (kbd "C-k"))) ; unshadowing C-j & C-k
     (evil-define-key 'normal elfeed-show-mode-map key nil)))
 (with-eval-after-load 'slime
   (evil-collection-slime-setup))
