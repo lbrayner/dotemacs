@@ -4,7 +4,7 @@
   "Pull REGEXP into search regexp."
   (let ((isearch-regexp nil)) ;; Dynamic binding of global.
     (isearch-yank-string regexp))
-  (if (not isearch-regexp)
+  (unless isearch-regexp
       (isearch-toggle-regexp))
   (isearch-search-and-update))
 
