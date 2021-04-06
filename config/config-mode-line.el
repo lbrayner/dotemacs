@@ -58,7 +58,7 @@
 (defun mode-line--path-as-list (path)
   (let* ((path-as-file (directory-file-name path))
          (parent (file-name-directory path-as-file)))
-    (if (or (not parent) (equal path-as-file parent))
+    (if (or (null parent) (equal path-as-file parent))
         (list path-as-file)
       (append (mode-line--path-as-list parent)
               (list (file-name-nondirectory path-as-file))))))
@@ -69,7 +69,7 @@
 (defun mode-line--shorten-path-worker (ts ps m)
   (let* ((path (append ts ps))
          (length (apply #'+ (mapcar #'length path))))
-    (if (or (not ps) (< length m))
+    (if (or (null ps) (< length m))
         path
       (let ((remaining-ps (cdr ps))
             (resulting-ts (append ts (list (mode-line--truncate-path-component (car ps))))))
