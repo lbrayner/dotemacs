@@ -2,7 +2,7 @@
 ;; MELPA
 ;;
 
-    ;; SMARTPARENS
+    ;; smartparens
 (require 'smartparens-config)
 
 (let ((smartparens-evil-major-modes '(emacs-lisp-mode
@@ -27,15 +27,21 @@
   (global-set-key (vector (list modifier 'left))  #'sp-forward-barf-sexp)
   (global-set-key (vector (list modifier 'right)) #'sp-forward-slurp-sexp))
 
+    ;; ace-window
+(global-set-key (kbd "<f10>") 'ace-window)
+
+    ;; elfeed
+(setq elfeed-search-remain-on-entry t)
+
 ;;
 ;; Git
 ;;
 
-    ;; FRAMES
+    ;; frames
 (require 'frames)
 (global-set-key (kbd "<f8>") #'frames)
 
-    ;; ICICLES
+    ;; icicles
 (require 'icicles)
 
 (defun icicle-select-window (win-name &optional window-alist)
@@ -49,13 +55,10 @@ set to \\='- and then selects window via
 
 (global-set-key (kbd "<f5>") 'icicle-select-window)
 
-    ;; SMART-TAB
+    ;; smart-tab
 (require 'smart-tab)
 (global-smart-tab-mode 1)
 ;; see function `smart-tab-call-completion-function'
 (setq smart-tab-using-hippie-expand t)
 (setq smart-tab-user-provided-completion-function 'completion-at-point)
 (add-to-list 'smart-tab-disabled-major-modes 'slime-repl-mode)
-
-    ;; ACE-WINDOW
-(global-set-key (kbd "<f10>") 'ace-window)
