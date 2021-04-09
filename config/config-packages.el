@@ -32,6 +32,7 @@
 
     ;; elfeed
 (setq elfeed-search-remain-on-entry t)
+(setq elfeed-search-date-format '("%Y-%m-%d %H:%M" 16 :left))
 
 ;;
 ;; Git
