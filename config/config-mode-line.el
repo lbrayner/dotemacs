@@ -119,7 +119,7 @@ Dired mode is a special case, in which the parent directory of
   '(" "
     (:eval (when (mode-line-buffer-file-name)
              (file-name-as-directory
-              (mode-line-shorten-path (mode-line-project-root)
+              (mode-line-shorten-path (abbreviate-file-name (mode-line-project-root))
                                       (- (window-width)
                                          (length (mode-line-buffer-name))
                                          (/ (window-total-width) 2))))))
