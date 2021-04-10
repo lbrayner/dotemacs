@@ -22,7 +22,7 @@
  )
 
 ;;
-;; CONFIGURATION
+;; BASIC CONFIGURATION
 ;;
 
     ;; server-socket-dir override
