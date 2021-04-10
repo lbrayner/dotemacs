@@ -110,23 +110,6 @@
                 (add-hook (intern hook) #'no-show-trailing-whitespace))))
 
 ;;
-;; MELPA PACKAGE CONFIGURATION
-;;
-
-    ;; slime
-(setq inferior-lisp-program "sbcl")
-(setq slime-contribs '(slime-fancy))
-    ;; haskell-mode
-(defun no-eldoc-documentation-function ()
-  "Set `eldoc-documentation-function' to nil."
-  (setq show-trailing-whitespace nil))
-(add-hook 'haskell-mode-hook #'no-eldoc-documentation-function)
-    ;; auto-dim-other-buffers
-(auto-dim-other-buffers-mode)
-    ;; f
-(require 'f)
-
-;;
 ;; Git PACKAGES
 ;;
 
@@ -139,6 +122,8 @@
   (expand-directory-name "git" user-emacs-directory)
   "Where Git packages are stored.")
 
+;; f.el --- Modern API for working with files and directories
+(require 'f)
 (let ((git-packages (expand-directory-name "packages" emacs-git-packages-dir))
       (git-color-themes (expand-directory-name "color-themes" emacs-git-packages-dir)))
   (if (file-directory-p git-packages)

@@ -2,6 +2,22 @@
 ;; MELPA
 ;;
 
+    ;; slime
+(setq inferior-lisp-program "sbcl")
+(setq slime-contribs '(slime-fancy))
+    ;; haskell-mode
+(defun no-eldoc-documentation-function ()
+  "Set `eldoc-documentation-function' to nil."
+  (setq show-trailing-whitespace nil))
+(add-hook 'haskell-mode-hook #'no-eldoc-documentation-function)
+    ;; auto-dim-other-buffers
+(auto-dim-other-buffers-mode)
+    ;; ace-window
+(global-set-key (kbd "<f10>") 'ace-window)
+    ;; elfeed
+(setq elfeed-search-remain-on-entry t)
+(setq elfeed-search-date-format '("%Y-%m-%d %H:%M" 16 :left))
+
     ;; smartparens
 (require 'smartparens-config)
 
@@ -26,13 +42,6 @@
   (global-set-key (vector (list modifier 'down))  #'sp-backward-barf-sexp)
   (global-set-key (vector (list modifier 'left))  #'sp-forward-barf-sexp)
   (global-set-key (vector (list modifier 'right)) #'sp-forward-slurp-sexp))
-
-    ;; ace-window
-(global-set-key (kbd "<f10>") 'ace-window)
-
-    ;; elfeed
-(setq elfeed-search-remain-on-entry t)
-(setq elfeed-search-date-format '("%Y-%m-%d %H:%M" 16 :left))
 
 ;;
 ;; Git
