@@ -12,6 +12,7 @@
    '("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" default))
  '(frame-background-mode 'dark)
  '(inhibit-startup-screen t)
+ '(minibuffer-prompt-properties '(read-only t cursor-intangible t face minibuffer-prompt))
  '(package-selected-packages
    '(evil-collection elfeed markdown-mode evil-smartparens smartparens auto-dim-other-buffers ace-window haskell-mode f ox-pandoc slime org htmlize ox-reveal org-plus-contrib org-edna evil-surround evil-leader evil)))
 (custom-set-faces
