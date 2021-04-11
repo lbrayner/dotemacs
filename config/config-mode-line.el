@@ -78,7 +78,7 @@
 ;; https://stackoverflow.com/a/13473856
 (defun mode-line--joinnodes (root &rest dirs)
   "Joins a series of directories together, like Python's
-os.path.join,(dotemacs-joindirs \"/tmp\" \"a\" \"b\" \"c\") =>
+os.path.join, (dotemacs-joindirs \"/tmp\" \"a\" \"b\" \"c\") =>
 /tmp/a/b/c"
   (if (null dirs)
       root
