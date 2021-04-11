@@ -59,8 +59,13 @@
     ;; paren
 (show-paren-mode 1)
     ;; autorevert
+;; Background calls to git lead to high CPU usage on Windows
+;; https://emacs.stackexchange.com/a/36518
 (global-auto-revert-mode)
-(setq auto-revert-check-vc-info t)
+(or (eq system-type 'windows-nt)
+    (eq system-type 'ms-dos)
+    (eq system-type 'cygwin)
+    (setq auto-revert-check-vc-info t))
     ;; dired
 (setq dired-listing-switches "-alh")
 (setq dired-isearch-filenames t)
