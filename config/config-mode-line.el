@@ -68,8 +68,8 @@
 
 (defun mode-line--shorten-path-worker (ts ps m)
   (let* ((path (append ts ps))
-         (length (apply #'+ (mapcar #'length path))))
-    (if (or (null ps) (< length m))
+         (path-length (+ (apply #'+ (mapcar #'length path)) (length path))))
+    (if (or (null ps) (< path-length m))
         path
       (let ((remaining-ps (cdr ps))
             (resulting-ts (append ts (list (mode-line--truncate-path-component (car ps))))))
@@ -122,7 +122,7 @@ Dired mode is a special case, in which the parent directory of
               (mode-line-shorten-path (abbreviate-file-name (mode-line-project-root))
                                       (- (window-width)
                                          (length (mode-line-buffer-name))
-                                         (/ (window-total-width) 2))))))
+                                         (/ (window-width) 2))))))
     (:eval (mode-line-buffer-name)))
   "Custom mode line construct for identifying the buffer being displayed.")
 (put 'mode-line-custom-buffer-identification 'risky-local-variable t)
