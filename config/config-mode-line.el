@@ -64,7 +64,7 @@
               (list (file-name-nondirectory path-as-file))))))
 
 (defun mode-line--truncate-path-component (component)
-  (replace-regexp-in-string "\\([^[:alpha:]]*[[:alpha:]]\\).*" "\\1" component))
+  (replace-regexp-in-string "\\([^[:alnum:]]*[[:alnum:]]\\).*" "\\1" component))
 
 (defun mode-line--shorten-path-worker (ts ps m)
   (let* ((path (append ts ps))
