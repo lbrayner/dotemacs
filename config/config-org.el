@@ -5,16 +5,15 @@
 (setq-default org-use-sub-superscripts '{})
 (setq-default org-export-with-sub-superscripts '{})
 
-;; babel
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((emacs-lisp . t)
    (shell . t)))
 
-;; allows org-time-stamp-custom-formats to be file-local:
-
 ;; https://emacs.stackexchange.com/a/2247
 (defun org-time-stamp-custom-formats-safep (value)
+  "Return t if VALUE is safe for `org-time-stamp-custom-formats' as a
+file-local variable."
   (and (consp value)
        (stringp (car value))
        (stringp (cdr value))))
