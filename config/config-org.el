@@ -26,7 +26,8 @@
   "Setup Org mode."
   (visual-line-mode t)
   (setq truncate-lines nil)
-  (flyspell-mode)
+  (if (executable-find ispell-program-name)
+      (flyspell-mode))
   (electric-indent-local-mode 0))
 
 (add-hook 'org-mode-hook #'org-mode-setup)

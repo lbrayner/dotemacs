@@ -46,7 +46,9 @@
     ;; narrow mode
 (put 'narrow-to-region 'disabled nil)
     ;; ispell
-(setq ispell-program-name "aspell")
+(let ((ispell-backend "aspell"))
+  (if (executable-find ispell-backend)
+      (setq ispell-program-name ispell-backend)))
     ;; auto-backup
 (setq make-backup-files nil)
     ;; tabs
