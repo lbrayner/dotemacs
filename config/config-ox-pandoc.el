@@ -30,35 +30,25 @@
                   temp-file))
         (setq org-pandoc-options (assq-delete-all 'include-before-body org-pandoc-options))))))
 
+(add-hook 'org-export-before-processing-hook #'org-pandoc-inline-css)
+
 (defun org-pandoc-delete-temporary-css-file ()
   "Delete the temporary css file."
   (if org-pandoc-temporary-css-file
       (delete-file org-pandoc-temporary-css-file))
   (setq org-pandoc-temporary-css-file nil))
 
-(add-hook 'org-export-before-processing-hook #'org-pandoc-inline-css)
 (add-hook 'org-pandoc-after-processing-html5-pdf-hook
           #'org-pandoc-delete-temporary-css-file)
 (add-hook 'org-pandoc-after-processing-html5-hook
           #'org-pandoc-delete-temporary-css-file)
 
-(defvar-local file-local-time-locale nil
-  "Override system-time-locale.")
-
-(defun file-local-time-locale-safep (value)
-  (stringp value))
-
-(put 'file-local-time-locale 'safe-local-variable
-     #'file-local-time-locale-safep)
-
-;; filters timestamps through org-timestamp-translate
-
 (defun org-pandoc-timestamp-transcoder (timestamp _contents info)
+  "Filter TIMESTAMP through `org-timestamp-translate'."
   (org-timestamp-translate timestamp))
 
-;; interprets the title of a headline before sending it to the
-;; underlying transcoder
 (defun org-pandoc-headline-transcoder (headline contents info)
+  "Interpret the title of HEADLINE before sending it to the underlying transcoder."
   (let* ((text (org-export-data
                 (org-element-property :title headline) info))
          (alt-headline (org-element-put-property
@@ -80,30 +70,40 @@
                                                         'pandoc)))
             'org-pandoc-headline-transcoder))))
 
-;; creates "my-"-prefixed wrappers for pandoc export commands
-(let ((org-export-functions-to-wrap '(org-html-export-as-html
-                                      org-html-export-to-html
-                                      org-pandoc-export-as-html5
-                                      org-pandoc-export-to-html5
-                                      org-pandoc-export-to-html5-and-open
-                                      org-pandoc-export-to-html5-pdf
-                                      org-pandoc-export-to-html5-pdf-and-open)))
-  (cl-labels
-      ((create-wrapper
-        (as)
-        (unless (null as)
-          (let ((a (car as)))
-            (fset (intern (concat "my-" (symbol-name a)))
-                  ;; see `org-export-to-file'
-                  `(lambda (&optional y s v b e)
-                     (interactive)
-                     (let ((org-display-custom-times t)
-                           (system-time-locale (alist-get
-                                                'file-local-time-locale
-                                                file-local-variables-alist)))
-                       (,a y s v b e))))
-            (create-wrapper (cdr as))))))
-    (create-wrapper org-export-functions-to-wrap)))
+(defvar-local file-local-time-locale nil
+  "To override `system-time-locale' in ox commands.")
+
+(defun file-local-time-locale-safep (value)
+  (stringp value))
+
+(put 'file-local-time-locale 'safe-local-variable
+     #'file-local-time-locale-safep)
+
+(with-eval-after-load 'ox-pandoc
+  (let ((org-export-functions-to-wrap '(org-html-export-as-html
+                                        org-html-export-to-html
+                                        org-pandoc-export-as-html5
+                                        org-pandoc-export-to-html5
+                                        org-pandoc-export-to-html5-and-open
+                                        org-pandoc-export-to-html5-pdf
+                                        org-pandoc-export-to-html5-pdf-and-open)))
+    (cl-labels
+        ((create-wrappers
+          (as)
+          "Create 'my-'-prefixed wrappers for ox commands."
+          (unless (null as)
+            (let ((a (car as)))
+              (fset (intern (concat "my-" (symbol-name a)))
+                    ;; see `org-export-to-file'
+                    `(lambda (&optional y s v b e)
+                       (interactive)
+                       (let ((org-display-custom-times t)
+                             (system-time-locale (alist-get
+                                                  'file-local-time-locale
+                                                  file-local-variables-alist)))
+                         (,a y s v b e))))
+              (create-wrappers (cdr as))))))
+      (create-wrappers org-export-functions-to-wrap))))
 
 ;; customizing the export dispatcher
 ;; for each menu key in org-pandoc-menu-keys, replace the current
