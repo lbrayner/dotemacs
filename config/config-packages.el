@@ -37,11 +37,14 @@
 
 (sp-use-smartparens-bindings)
 
+(define-key smartparens-mode-map (kbd "<C-left>") nil)
+(define-key smartparens-mode-map (kbd "<C-right>") nil)
+
 (let ((modifier 'shift))
-  (global-set-key (vector (list modifier 'up))    #'sp-backward-slurp-sexp)
-  (global-set-key (vector (list modifier 'down))  #'sp-backward-barf-sexp)
-  (global-set-key (vector (list modifier 'left))  #'sp-forward-barf-sexp)
-  (global-set-key (vector (list modifier 'right)) #'sp-forward-slurp-sexp))
+  (define-key smartparens-mode-map (vector (list modifier 'up))    #'sp-backward-slurp-sexp)
+  (define-key smartparens-mode-map (vector (list modifier 'down))  #'sp-backward-barf-sexp)
+  (define-key smartparens-mode-map (vector (list modifier 'left))  #'sp-forward-barf-sexp)
+  (define-key smartparens-mode-map (vector (list modifier 'right)) #'sp-forward-slurp-sexp))
 
 ;;
 ;; Git
