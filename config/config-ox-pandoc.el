@@ -105,13 +105,13 @@
               (create-wrappers (cdr as))))))
       (create-wrappers org-export-functions-to-wrap))))
 
-;; customizing the export dispatcher
-;; for each menu key in org-pandoc-menu-keys, replace the current
-;; action with a "my-" prefixed command
+;; Customizing the export dispatcher
 (with-eval-after-load 'ox-pandoc
   (let ((org-pandoc-menu-keys '(?$ ?4 ?% ?5)))
     (cl-labels ((customize-menu-entries
                  (as)
+                 "For each menu key in AS, replace the current action
+with a 'my-' prefixed command."
                  (unless (null as)
                    (let* ((a (car as))
                           (description-action (alist-get a org-pandoc-menu-entry))
